@@ -37,9 +37,11 @@ export const UpdateUser = ({}) => {
       })
       .catch((err) => console.log(err));
   };
+
   useEffect(() => {
     loadById(id);
   }, []);
+
   const loadById = (id) => {
     setLoading(true);
     UsersRepository.get(id)
@@ -47,6 +49,8 @@ export const UpdateUser = ({}) => {
         setUser(res.data);
         setUpdateMode(true);
         setLoading(false);
+        setChecked(res.data.groups);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -94,9 +98,9 @@ export const UpdateUser = ({}) => {
 
   const handleChangeGroups = (group, event) => {
     let currentCheckedList = [...checked];
-    if (currentCheckedList.includes(group)) {
+    if (currentCheckedList.map((g) => g.id).includes(group.id)) {
       //remove
-      const index = currentCheckedList.indexOf(group);
+      const index = currentCheckedList.map((g) => g.id).indexOf(group.id);
       if (index > -1) {
         currentCheckedList.splice(index, 1);
       }
@@ -148,7 +152,11 @@ export const UpdateUser = ({}) => {
                     control={
                       <Checkbox
                         style={{ color: "#E27575" }}
-                        checked={checked.includes(group) ? true : false}
+                        checked={
+                          checked?.map((g) => g.id).includes(group.id)
+                            ? true
+                            : false
+                        }
                         onChange={(e) => handleChangeGroups(group, e)}
                         inputProps={{ "aria-label": "controlled" }}
                       />

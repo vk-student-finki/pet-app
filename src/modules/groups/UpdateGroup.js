@@ -38,6 +38,7 @@ export const UpdateGroup = ({}) => {
       .then((res) => {
         setGroup(res.data);
         setLoading(false);
+        setChecked(res.data.privileges);
       })
       .catch((err) => {
         console.log(err);
@@ -87,9 +88,9 @@ export const UpdateGroup = ({}) => {
 
   const handleChangePrivileges = (privilege, event) => {
     let currentCheckedList = [...checked];
-    if (currentCheckedList.includes(privilege)) {
+    if (currentCheckedList.map((p) => p.id).includes(privilege.id)) {
       //remove
-      const index = currentCheckedList.indexOf(privilege);
+      const index = currentCheckedList.map((p) => p.id).indexOf(privilege.id);
       if (index > -1) {
         currentCheckedList.splice(index, 1);
       }
@@ -140,7 +141,11 @@ export const UpdateGroup = ({}) => {
                     control={
                       <Checkbox
                         style={{ color: "#E27575" }}
-                        checked={checked.includes(privilege) ? true : false}
+                        checked={
+                          checked?.map((p) => p.id).includes(privilege.id)
+                            ? true
+                            : false
+                        }
                         onChange={(e) => handleChangePrivileges(privilege, e)}
                         inputProps={{ "aria-label": "controlled" }}
                       />
