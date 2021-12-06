@@ -9,7 +9,7 @@ import {
   Hidden,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Navigate } from "react-router-dom";
 import { UserForm } from "./UserForm";
 import { UsersRepository } from "./UsersRepository";
 import { UpdateUserValidator } from "./UserValidator";
@@ -25,6 +25,7 @@ export const UpdateUser = ({}) => {
   const [groups, setGroups] = useState();
   const [checked, setChecked] = useState([]);
   const [updateMode, setUpdateMode] = useState();
+  const [redirectTo, setRedirectTo] = useState();
 
   useEffect(() => {
     loadData(0, 1000);
@@ -115,6 +116,7 @@ export const UpdateUser = ({}) => {
 
   return (
     <>
+      {redirectTo && <Navigate to={redirectTo} push />}
       <h1 style={{ textAlign: "center", marginTop: "20px" }}>
         Update existing user
       </h1>
@@ -141,7 +143,10 @@ export const UpdateUser = ({}) => {
               user={user}
               updateMode={updateMode}
             />
-            <Grid xs={12} md={12} style={{ textAlign: "center" }}>
+            <Hidden smDown>
+              <Grid item md={3.1}></Grid>
+            </Hidden>
+            <Grid xs={12} md={6.1} style={{ textAlign: "center" }}>
               {groups?.content?.map((group) => (
                 <FormGroup
                   style={{
@@ -151,7 +156,7 @@ export const UpdateUser = ({}) => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        style={{ color: "#E27575" }}
+                        style={{ color: "#D35400" }}
                         checked={
                           checked?.map((g) => g.id).includes(group.id)
                             ? true
@@ -168,7 +173,7 @@ export const UpdateUser = ({}) => {
             </Grid>
             <Grid item xs={12}>
               <Grid container spacing={2}>
-                <Hidden smDown={true}>
+                <Hidden smDown>
                   <Grid item xs={4}></Grid>
                 </Hidden>
                 <Grid item xs={12} md={4}>
@@ -186,6 +191,28 @@ export const UpdateUser = ({}) => {
                     }}
                   >
                     Update user
+                  </Button>
+                </Grid>
+
+                <Hidden smDown>
+                  <Grid item xs={12} style={{ marginTop: "-30px" }}></Grid>
+                  <Grid item xs={4}></Grid>
+                </Hidden>
+                <Grid item xs={12} md={4}>
+                  <Button
+                    onClick={() => {
+                      setRedirectTo(`/users/details/${user?.id}`);
+                    }}
+                    fullWidth
+                    size="large"
+                    variant="outlined"
+                    style={{
+                      backgroundColor: "#17202A",
+                      color: "#D9D9D9",
+                      borderColor: "#17202A",
+                    }}
+                  >
+                    Back to user
                   </Button>
                 </Grid>
               </Grid>

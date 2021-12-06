@@ -12,6 +12,7 @@ import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
+import HomeIcon from "@mui/icons-material/Home";
 
 export default function Header({}) {
   const [state, setState] = React.useState({
@@ -35,30 +36,26 @@ export default function Header({}) {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List style={{ backgroundColor: "#F5F5F5" }}>
-        {["Home", "Users", "Groups", "Privileges", "Create New User"].map(
-          (text, index) => (
-            <Link
-              to={
-                index === 0
-                  ? "/"
-                  : index === 1
-                  ? "/users"
-                  : index === 2
-                  ? "/groups"
-                  : index === 3
-                  ? "/privileges"
-                  : index === 4
-                  ? "/users/create"
-                  : ""
-              }
-              style={{ textDecoration: "none", color: "#1F393C" }}
-            >
-              <ListItem button key={text}>
-                <ListItemText primary={text} />
-              </ListItem>
-            </Link>
-          )
-        )}
+        {["Home", "Users", "Groups", "Privileges"].map((text, index) => (
+          <Link
+            to={
+              index === 0
+                ? "/"
+                : index === 1
+                ? "/users"
+                : index === 2
+                ? "/groups"
+                : index === 3
+                ? "/privileges"
+                : ""
+            }
+            style={{ textDecoration: "none", color: "#1F393C" }}
+          >
+            <ListItem button key={text}>
+              <ListItemText primary={text} />
+            </ListItem>
+          </Link>
+        ))}
       </List>
     </Box>
   );
@@ -91,13 +88,10 @@ export default function Header({}) {
         >
           <Grid item xs={6} md={1}>
             <Link to="/" style={{ textDecoration: "none" }}>
-              <Button
-                size="medium"
-                variant="outlined"
-                style={{ color: "#D9D9D9", borderColor: "#D9D9D9" }}
-              >
-                HOME
-              </Button>
+              <HomeIcon
+                sx={{ fontSize: 40 }}
+                style={{ color: "#D35400" }}
+              ></HomeIcon>
             </Link>
           </Grid>
           <Grid item xs={6} md={1}>
@@ -105,7 +99,12 @@ export default function Header({}) {
               <Button
                 size="medium"
                 variant="outlined"
-                style={{ color: "#D9D9D9", borderColor: "#D9D9D9" }}
+                style={{
+                  color: "#D9D9D9",
+                  borderColor: "#17202A",
+                  fontSize: "18px",
+                  fontFamily: "Helvetica, sans-serif",
+                }}
               >
                 USERS
               </Button>
@@ -116,7 +115,12 @@ export default function Header({}) {
               <Button
                 size="medium"
                 variant="outlined"
-                style={{ color: "#D9D9D9", borderColor: "#D9D9D9" }}
+                style={{
+                  color: "#D9D9D9",
+                  borderColor: "#17202A",
+                  fontFamily: "Helvetica, sans-serif",
+                  fontSize: "18px",
+                }}
               >
                 GROUPS
               </Button>
@@ -129,22 +133,13 @@ export default function Header({}) {
                 variant="outlined"
                 style={{
                   color: "#D9D9D9",
-                  borderColor: "#D9D9D9",
+                  borderColor: "#17202A",
                   marginLeft: "10px",
+                  fontFamily: "Helvetica, sans-serif",
+                  fontSize: "18px",
                 }}
               >
                 PRIVILEGES
-              </Button>
-            </Link>
-          </Grid>
-          <Grid item xs={6} md={2}>
-            <Link to="/users/create" style={{ textDecoration: "none" }}>
-              <Button
-                size="medium"
-                variant="outlined"
-                style={{ color: "#D9D9D9", borderColor: "#D9D9D9" }}
-              >
-                CREATE USERS
               </Button>
             </Link>
           </Grid>

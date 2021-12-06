@@ -5,7 +5,6 @@ import { Routes, Route } from "react-router-dom";
 import { Home } from "./modules/home/Home";
 import { Users } from "./modules/users/Users";
 import { UserDetails } from "./modules/users/UserDetails";
-import { DeleteUser } from "./modules/users/DeleteUser";
 import { UpdateUser } from "./modules/users/UpdateUser";
 import { CreateUser } from "./modules/users/CreateUser";
 import { Groups } from "./modules/groups/Groups";
@@ -15,6 +14,7 @@ import { UpdateGroup } from "./modules/groups/UpdateGroup";
 import { GroupDetails } from "./modules/groups/GroupDetails";
 import { Privileges } from "./modules/privileges/Privileges";
 import { PrivilegeDetails } from "./modules/privileges/PrivilegeDetails";
+import { DeleteUser } from "./modules/users/DeleteUser";
 
 export default function App() {
   return (
@@ -25,10 +25,10 @@ export default function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/users" element={<Users />}></Route>
           <Route path="/users/details/:id" element={<UserDetails />}></Route>
-          <Route path="/users/delete/:id" element={<DeleteUser />}></Route>
           <Route path="/users/edit/:id" element={<UpdateUser />}></Route>
           <Route path="/users/create" element={<CreateUser />}></Route>
           <Route path="/groups" element={<Groups />}></Route>
+          <Route path="/users/delete/:id" element={<DeleteUser />}></Route>
           <Route path="/groups/create" element={<CreateGroup />}></Route>
           <Route path="/groups/delete/:id" element={<DeleteGroup />}></Route>
           <Route path="/groups/edit/:id" element={<UpdateGroup />}></Route>

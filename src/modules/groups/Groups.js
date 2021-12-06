@@ -7,6 +7,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  Hidden,
   TableRow,
 } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -37,7 +38,7 @@ export const Groups = () => {
   };
 
   const handleChange = (e, value) => {
-    loadData(value, 10);
+    loadData(value - 1, 10);
   };
   return (
     <>
@@ -80,20 +81,38 @@ export const Groups = () => {
               {!loading &&
                 groups?.content?.map((group, index) => (
                   <TableRow>
-                    <TableCell
-                      style={{
-                        fontFamily: "Helvetica, sans-serif",
-                        color: "#1F393C",
-                        fontSize: "18px",
-                        width: "980px",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => {
-                        setRedirectTo(`/groups/details/${group.id}`);
-                      }}
-                    >
-                      {group.name}
-                    </TableCell>
+                    <Hidden smDown>
+                      <TableCell
+                        style={{
+                          fontFamily: "Helvetica, sans-serif",
+                          color: "#1F393C",
+                          fontSize: "18px",
+                          width: "980px",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => {
+                          setRedirectTo(`/groups/details/${group.id}`);
+                        }}
+                      >
+                        {group.name}
+                      </TableCell>
+                    </Hidden>
+                    <Hidden smUp>
+                      <TableCell
+                        style={{
+                          fontFamily: "Helvetica, sans-serif",
+                          color: "#1F393C",
+                          fontSize: "18px",
+                          width: "200px",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => {
+                          setRedirectTo(`/groups/details/${group.id}`);
+                        }}
+                      >
+                        {group.name}
+                      </TableCell>
+                    </Hidden>
                     <TableCell>
                       <EditIcon
                         fontSize="large"
@@ -110,9 +129,9 @@ export const Groups = () => {
                         fontSize="large"
                         style={{
                           cursor: "pointer",
+                          color: "#989292",
                         }}
                         onClick={() => {
-                          GroupsRepository.deleteGroup(group?.id);
                           setRedirectTo(`/groups/delete/${group?.id}`);
                         }}
                       ></DeleteIcon>
@@ -121,10 +140,13 @@ export const Groups = () => {
                 ))}
             </TableBody>
           </Table>
-          {!loading && groups && groups.pageable !== undefined && (
+          {!loading && groups && groups.number !== undefined && (
             <Pagination
-              count={Math.floor(groups?.totalPages / groups?.size)}
-              page={groups.pageable}
+              count={Math.floor(groups?.totalElements / groups?.size) + 1}
+              shape="rounded"
+              showFirstButton
+              showLastButton
+              page={groups.number + 1}
               onChange={handleChange}
             />
           )}

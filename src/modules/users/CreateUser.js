@@ -126,7 +126,10 @@ export const CreateUser = (props) => {
                 />
               </Grid>
             </Grid>
-            <Grid xs={12} md={12} style={{ textAlign: "center" }}>
+            <Hidden smDown>
+              <Grid item md={3.1}></Grid>
+            </Hidden>
+            <Grid xs={12} md={6.1} style={{ textAlign: "center" }}>
               {groups?.content?.map((group) => (
                 <FormGroup
                   style={{
@@ -136,7 +139,7 @@ export const CreateUser = (props) => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        style={{ color: "#E27575" }}
+                        style={{ color: "#D35400" }}
                         checked={checked.includes(group) ? true : false}
                         onChange={(e) => handleChangeGroups(group, e)}
                         inputProps={{ "aria-label": "controlled" }}
@@ -158,7 +161,7 @@ export const CreateUser = (props) => {
                       handleSubmit();
                     }}
                     fullWidth
-                    size="small"
+                    size="large"
                     variant="outlined"
                     style={{
                       backgroundColor: "#17202A",

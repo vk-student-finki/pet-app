@@ -1,31 +1,94 @@
 import { Button, Grid } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
+import { UsersRepository } from "./UsersRepository";
 
-export const DeleteUser = (props) => {
+export const DeleteUser = ({}) => {
+  const { id } = useParams();
+  const [deleteError, setDeleteError] = useState(false);
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = () => {
+    UsersRepository.get(id)
+      .then((res) => {
+        setUser(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    deleteThisUser(id);
+  }, []);
+
+  const deleteThisUser = (id) => {
+    setDeleteError(false);
+    UsersRepository.deleteUser(id)
+      .then((res) => {
+        console.log(res.data);
+        setDeleteError(false);
+      })
+      .catch((err) => {
+        setDeleteError(true);
+        console.log(err.data);
+      });
+  };
+
   const [redirectTo, setRedirectTo] = useState();
   return (
     <>
       {redirectTo && <Navigate to={redirectTo} push></Navigate>}
-      <h1>The user was successfully deleted!</h1>
-      <Grid xs={4}>
-        <Button
-          variant="outlined"
-          size="large"
-          style={{
-            backgroundColor: "#17202A",
-            color: "#D9D9D9",
-            borderColor: "#17202A",
-          }}
-          size="medium"
-          fullWidth
-          onClick={() => {
-            setRedirectTo(`/users`);
-          }}
-        >
-          Back to Users
-        </Button>
-      </Grid>
+      {!deleteError && (
+        <>
+          <h1>The user was successfully deleted!</h1>
+          <Grid xs={4}>
+            <Button
+              variant="outlined"
+              size="large"
+              style={{
+                backgroundColor: "#17202A",
+                color: "#D9D9D9",
+                borderColor: "#17202A",
+              }}
+              size="medium"
+              fullWidth
+              onClick={() => {
+                setRedirectTo(`/users`);
+              }}
+            >
+              Back to Users
+            </Button>
+          </Grid>
+        </>
+      )}
+      {deleteError && (
+        <>
+          <h1>The user can not be deleted!</h1>
+          <Grid xs={4}>
+            <Button
+              variant="outlined"
+              size="large"
+              style={{
+                backgroundColor: "#17202A",
+                color: "#D9D9D9",
+                borderColor: "#17202A",
+              }}
+              size="medium"
+              fullWidth
+              onClick={() => {
+                setRedirectTo(`/users`);
+              }}
+            >
+              Back to Users
+            </Button>
+          </Grid>
+        </>
+      )}
     </>
   );
 };

@@ -68,7 +68,7 @@ export const CreateGroup = (props) => {
       });
   };
 
-  const handleChange = (name, value) => {
+  const handleChangeGroupData = (name, value) => {
     let data = { ...group };
     data[name] = value;
     setGroup(data);
@@ -89,7 +89,7 @@ export const CreateGroup = (props) => {
     }
     console.log(currentCheckedList);
     setChecked(currentCheckedList);
-    handleChange("privileges", currentCheckedList);
+    handleChangeGroupData("privileges", currentCheckedList);
   };
 
   return (
@@ -117,7 +117,7 @@ export const CreateGroup = (props) => {
                   formError={globalFormError}
                   formFieldErrors={formFieldErrors}
                   handleSubmit={handleSubmit}
-                  handleChangeGroupData={handleChange}
+                  handleChangeGroupData={handleChangeGroupData}
                   group={group}
                 />
               </Grid>
@@ -138,7 +138,7 @@ export const CreateGroup = (props) => {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            style={{ color: "#E27575" }}
+                            style={{ color: "#D35400" }}
                             checked={checked.includes(privilege) ? true : false}
                             onChange={(e) =>
                               handleChangePrivileges(privilege, e)

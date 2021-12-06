@@ -3,7 +3,9 @@ import React from "react";
 export const Home = ({}) => {
   return (
     <>
-      <h1>Home page</h1>
+      <h1 style={{ fontFamily: "Helvetica, sans-serif", color: "#1F393C" }}>
+        Home page
+      </h1>
     </>
   );
 };

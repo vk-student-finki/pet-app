@@ -18,7 +18,7 @@ export const GroupForm = ({
   formError,
   formFieldErrors,
   group,
-  handleChange,
+  handleChangeGroupData,
 }) => {
   return (
     <>
@@ -40,7 +40,7 @@ export const GroupForm = ({
                 variant="outlined"
                 fullWidth
                 value={group?.name ? group?.name : ""}
-                onChange={(e) => handleChange("name", e.target.value)}
+                onChange={(e) => handleChangeGroupData("name", e.target.value)}
                 error={formFieldErrors?.name}
                 helperText={formFieldErrors?.name}
               />

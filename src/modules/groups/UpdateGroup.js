@@ -1,6 +1,6 @@
 import { Alert, Button, CircularProgress, Grid, Hidden } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Navigate } from "react-router-dom";
 import { UpdateGroupValidator } from "./GroupValidator";
 import { GroupsRepository } from "./GroupsRepository";
 import { GroupForm } from "./GroupForm";
@@ -18,6 +18,7 @@ export const UpdateGroup = ({}) => {
   const [loading, setLoading] = useState(false);
   const [privileges, setPrivileges] = useState();
   const [checked, setChecked] = React.useState([]);
+  const [redirectTo, setRedirectTo] = useState();
 
   useEffect(() => {
     loadData(0, 1000);
@@ -104,6 +105,7 @@ export const UpdateGroup = ({}) => {
   };
   return (
     <>
+      {redirectTo && <Navigate to={redirectTo} push />}
       <h1 style={{ textAlign: "center", marginTop: "20px" }}>
         Update existing group
       </h1>
@@ -140,7 +142,7 @@ export const UpdateGroup = ({}) => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        style={{ color: "#E27575" }}
+                        style={{ color: "#D35400" }}
                         checked={
                           checked?.map((p) => p.id).includes(privilege.id)
                             ? true
@@ -175,6 +177,27 @@ export const UpdateGroup = ({}) => {
                     }}
                   >
                     Update group
+                  </Button>
+                </Grid>
+                <Hidden smDown={true}>
+                  <Grid item xs={12} style={{ marginTop: "-20px" }}></Grid>
+                  <Grid item xs={4}></Grid>
+                </Hidden>
+                <Grid item xs={12} md={4}>
+                  <Button
+                    onClick={() => {
+                      setRedirectTo(`/groups/details/${group?.id}`);
+                    }}
+                    fullWidth
+                    size="large"
+                    variant="outlined"
+                    style={{
+                      backgroundColor: "#17202A",
+                      color: "#D9D9D9",
+                      borderColor: "#17202A",
+                    }}
+                  >
+                    Back to group
                   </Button>
                 </Grid>
               </Grid>

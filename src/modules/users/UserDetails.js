@@ -7,7 +7,6 @@ import {
   Button,
   Hidden,
 } from "@mui/material";
-import { fontSize } from "@mui/system";
 import { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router";
 import { UsersRepository } from "./UsersRepository";
@@ -46,9 +45,6 @@ export const UserDetails = ({}) => {
     ),
   ];
 
-  const handleDelete = () => {
-    UsersRepository.deleteUser(user?.id);
-  };
   return (
     <>
       {redirectTo && <Navigate to={redirectTo} push></Navigate>}
@@ -125,7 +121,6 @@ export const UserDetails = ({}) => {
                   size="medium"
                   fullWidth
                   onClick={() => {
-                    handleDelete();
                     setRedirectTo(`/users/delete/${id}`);
                   }}
                 >

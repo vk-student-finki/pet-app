@@ -42,9 +42,6 @@ export const GroupDetails = ({}) => {
     ),
   ];
 
-  const handleDelete = () => {
-    GroupsRepository.deleteGroup(group?.id);
-  };
   return (
     <>
       {redirectTo && <Navigate to={redirectTo} push></Navigate>}
@@ -120,7 +117,6 @@ export const GroupDetails = ({}) => {
                   size="medium"
                   fullWidth
                   onClick={() => {
-                    handleDelete();
                     setRedirectTo(`/groups/delete/${id}`);
                   }}
                 >

@@ -1,18 +1,22 @@
 import {
+  Alert,
   CircularProgress,
   Grid,
   Pagination,
+  Stack,
   Table,
   TableBody,
+  Hidden,
   TableCell,
   TableRow,
+  Link,
+  Button,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { UsersRepository } from "./UsersRepository";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import IconButton from "@mui/material/IconButton";
 
 export const Users = () => {
   const [users, setUsers] = useState();
@@ -37,14 +41,43 @@ export const Users = () => {
   };
 
   const handleChange = (e, value) => {
-    loadData(value, 10);
+    loadData(value - 1, 10);
   };
 
   return (
     <>
       {redirectTo && <Navigate to={redirectTo} push />}
-      <h1>Users</h1>
       <Grid container spacing={2}>
+        <Grid item xs={12} md={6}>
+          <h1 style={{ fontFamily: "Helvetica, sans-serif", color: "#1F393C" }}>
+            Users
+          </h1>
+        </Grid>
+        <Grid md={4}></Grid>
+        <Grid
+          item
+          xs={12}
+          md={2}
+          style={{ textAlign: "right", marginTop: "25px" }}
+        >
+          <Button
+            size="medium"
+            variant="outlined"
+            fullWidth
+            style={{
+              color: "#D9D9D9",
+              borderColor: "#D9D9D9",
+              backgroundColor: "#17202A",
+              marginBottom: "10px",
+            }}
+            onClick={() => {
+              setRedirectTo(`/users/create`);
+            }}
+          >
+            CREATE NEW USER
+          </Button>
+        </Grid>
+
         <Grid item xs={12}>
           <Table>
             <TableBody>
@@ -62,20 +95,38 @@ export const Users = () => {
               {!loading &&
                 users?.content?.map((user, index) => (
                   <TableRow>
-                    <TableCell
-                      style={{
-                        fontFamily: "Helvetica, sans-serif",
-                        color: "#1F393C",
-                        fontSize: "18px",
-                        width: "980px",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => {
-                        setRedirectTo(`/users/details/${user.id}`);
-                      }}
-                    >
-                      {user.firstName} {user.lastName}
-                    </TableCell>
+                    <Hidden smDown>
+                      <TableCell
+                        style={{
+                          fontFamily: "Helvetica, sans-serif",
+                          color: "#1F393C",
+                          fontSize: "18px",
+                          width: "980px",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => {
+                          setRedirectTo(`/users/details/${user.id}`);
+                        }}
+                      >
+                        {user.firstName} {user.lastName}
+                      </TableCell>
+                    </Hidden>
+                    <Hidden smUp>
+                      <TableCell
+                        style={{
+                          fontFamily: "Helvetica, sans-serif",
+                          color: "#1F393C",
+                          fontSize: "18px",
+                          width: "200px",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => {
+                          setRedirectTo(`/users/details/${user.id}`);
+                        }}
+                      >
+                        {user.firstName} {user.lastName}
+                      </TableCell>
+                    </Hidden>
                     <TableCell>
                       <EditIcon
                         fontSize="large"
@@ -92,9 +143,9 @@ export const Users = () => {
                         fontSize="large"
                         style={{
                           cursor: "pointer",
+                          color: "#989292",
                         }}
                         onClick={() => {
-                          UsersRepository.deleteUser(user?.id);
                           setRedirectTo(`/users/delete/${user?.id}`);
                         }}
                       ></DeleteIcon>
@@ -103,12 +154,19 @@ export const Users = () => {
                 ))}
             </TableBody>
           </Table>
-          {!loading && users && users?.pageable?.pageNumber !== undefined && (
-            <Pagination
-              count={Math.floor(users?.totalElements / users?.size + 1)}
-              page={users?.pageable?.pageNumber}
-              onChange={handleChange}
-            />
+
+          {!loading && users && users.number !== undefined && (
+            <Stack spacing={2}>
+              <Pagination
+                count={Math.floor(users.totalElements / users.size) + 1}
+                shape="rounded"
+                showFirstButton
+                showLastButton
+                style={{ color: "#D35400" }}
+                page={users.number + 1}
+                onChange={handleChange}
+              />
+            </Stack>
           )}
         </Grid>
       </Grid>
