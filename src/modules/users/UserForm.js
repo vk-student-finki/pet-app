@@ -21,9 +21,8 @@ export const UserForm = ({
   formFieldErrors,
   user,
   handleChangeUserData,
+  updateMode,
 }) => {
-  var mode = ["update", "create"];
-
   return (
     <>
       <Grid container spacing={2} style={{ marginLeft: "10px" }}>
@@ -80,22 +79,23 @@ export const UserForm = ({
                 helperText={formFieldErrors?.username}
               />
             </Grid>
-
-            <Grid item xs={12}>
-              <TextField
-                label="Password"
-                size="small"
-                variant="outlined"
-                type="password"
-                fullWidth
-                value={user?.password ? user?.password : ""}
-                onChange={(e) =>
-                  handleChangeUserData("password", e.target.value)
-                }
-                error={formFieldErrors?.password}
-                helperText={formFieldErrors?.password}
-              />
-            </Grid>
+            {!updateMode && (
+              <Grid item xs={12}>
+                <TextField
+                  label="Password"
+                  size="small"
+                  variant="outlined"
+                  type="password"
+                  fullWidth
+                  value={user?.password ? user?.password : ""}
+                  onChange={(e) =>
+                    handleChangeUserData("password", e.target.value)
+                  }
+                  error={formFieldErrors?.password}
+                  helperText={formFieldErrors?.password}
+                />
+              </Grid>
+            )}
           </Grid>
         </Grid>
       </Grid>

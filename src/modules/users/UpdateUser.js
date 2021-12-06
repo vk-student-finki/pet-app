@@ -24,6 +24,7 @@ export const UpdateUser = ({}) => {
   const [loading, setLoading] = useState(false);
   const [groups, setGroups] = useState();
   const [checked, setChecked] = useState([]);
+  const [updateMode, setUpdateMode] = useState();
 
   useEffect(() => {
     loadData(0, 1000);
@@ -44,6 +45,7 @@ export const UpdateUser = ({}) => {
     UsersRepository.get(id)
       .then((res) => {
         setUser(res.data);
+        setUpdateMode(true);
         setLoading(false);
       })
       .catch((err) => {
@@ -133,6 +135,7 @@ export const UpdateUser = ({}) => {
               handleSubmit={handleSubmit}
               handleChangeUserData={handleChangeUserData}
               user={user}
+              updateMode={updateMode}
             />
             <Grid xs={12} md={12} style={{ textAlign: "center" }}>
               {groups?.content?.map((group) => (
