@@ -92,7 +92,13 @@ export const Groups = () => {
               )}
               {!loading &&
                 groups?.content?.map((group, index) => (
-                  <TableRow>
+                  <TableRow
+                    style={{
+                      cursor: "pointer",
+                      backgroundColor:
+                        index % 2 === 0 ? "#ecf0f1" : "transparent",
+                    }}
+                  >
                     <Hidden smDown>
                       <TableCell
                         style={{
@@ -101,6 +107,8 @@ export const Groups = () => {
                           fontSize: "18px",
                           width: "980px",
                           cursor: "pointer",
+                          backgroundColor:
+                            index % 2 === 0 ? "#ecf0f1" : "transparent",
                         }}
                         onClick={() => {
                           setRedirectTo(`/groups/details/${group.id}`);

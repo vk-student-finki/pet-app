@@ -94,7 +94,13 @@ export const Users = () => {
               )}
               {!loading &&
                 users?.content?.map((user, index) => (
-                  <TableRow>
+                  <TableRow
+                    style={{
+                      cursor: "pointer",
+                      backgroundColor:
+                        index % 2 === 0 ? "#ecf0f1" : "transparent",
+                    }}
+                  >
                     <Hidden smDown>
                       <TableCell
                         style={{
@@ -102,7 +108,6 @@ export const Users = () => {
                           color: "#1F393C",
                           fontSize: "18px",
                           width: "980px",
-                          cursor: "pointer",
                         }}
                         onClick={() => {
                           setRedirectTo(`/users/details/${user.id}`);
