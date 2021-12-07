@@ -9,6 +9,7 @@ import {
   TableCell,
   Hidden,
   TableRow,
+  Container,
   Stack,
 } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -46,19 +47,12 @@ export const Groups = () => {
       {redirectTo && <Navigate to={redirectTo} push />}
 
       <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={9}>
           <h1 style={{ fontFamily: "Helvetica, sans-serif", color: "#1F393C" }}>
             Groups
           </h1>
         </Grid>
-        <Grid md={2}></Grid>
-        <Grid md={1}></Grid>
-        <Grid
-          item
-          xs={12}
-          md={2.5}
-          style={{ textAlign: "right", marginTop: "25px" }}
-        >
+        <Grid item xs={12} md={3}>
           <Button
             size="medium"
             variant="outlined"
@@ -67,7 +61,7 @@ export const Groups = () => {
               color: "#D9D9D9",
               borderColor: "#D9D9D9",
               backgroundColor: "#17202A",
-              marginBottom: "10px",
+              marginTop: "20px",
             }}
             onClick={() => {
               setRedirectTo(`/groups/create`);
@@ -87,7 +81,7 @@ export const Groups = () => {
                     marginTop: "150px",
                   }}
                 >
-                  <CircularProgress />
+                  <CircularProgress style={{ color: "black" }} />
                 </div>
               )}
               {!loading &&
@@ -105,7 +99,7 @@ export const Groups = () => {
                           fontFamily: "Helvetica, sans-serif",
                           color: "#1F393C",
                           fontSize: "18px",
-                          width: "980px",
+                          width: "900px",
                           cursor: "pointer",
                           backgroundColor:
                             index % 2 === 0 ? "#F4F6F6" : "transparent",
@@ -123,7 +117,7 @@ export const Groups = () => {
                           fontFamily: "Helvetica, sans-serif",
                           color: "#1F393C",
                           fontSize: "18px",
-                          width: "200px",
+
                           cursor: "pointer",
                         }}
                         onClick={() => {
@@ -133,7 +127,11 @@ export const Groups = () => {
                         {group.name}
                       </TableCell>
                     </Hidden>
-                    <TableCell>
+                    <TableCell
+                      style={{
+                        textAlign: "right",
+                      }}
+                    >
                       <EditIcon
                         fontSize="large"
                         style={{ width: "1.7em" }}
@@ -144,7 +142,12 @@ export const Groups = () => {
                           setRedirectTo(`/groups/edit/${group?.id}`);
                         }}
                       ></EditIcon>
-
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        textAlign: "left",
+                      }}
+                    >
                       <DeleteIcon
                         fontSize="large"
                         style={{
@@ -160,24 +163,21 @@ export const Groups = () => {
                 ))}
             </TableBody>
           </Table>
-          <Grid container spacing={2}>
-            <Grid item md={4}></Grid>
-            <Grid item md={8}>
-              {!loading && groups && groups.number !== undefined && (
-                <Stack spacing={2} style={{ marginTop: "20px" }}>
-                  <Pagination
-                    count={Math.floor(groups.totalElements / groups?.size) + 1}
-                    shape="rounded"
-                    showFirstButton
-                    showLastButton
-                    style={{ color: "#D35400" }}
-                    page={groups?.number + 1}
-                    onChange={handleChange}
-                  />
-                </Stack>
-              )}
-            </Grid>
-          </Grid>
+          <Container maxWidth="xs">
+            {!loading && groups && groups.number !== undefined && (
+              <Stack spacing={2} style={{ marginTop: "20px" }}>
+                <Pagination
+                  count={Math.floor(groups.totalElements / groups?.size) + 1}
+                  shape="rounded"
+                  showFirstButton
+                  showLastButton
+                  style={{ color: "#D35400" }}
+                  page={groups?.number + 1}
+                  onChange={handleChange}
+                />
+              </Stack>
+            )}
+          </Container>
         </Grid>
       </Grid>
     </>

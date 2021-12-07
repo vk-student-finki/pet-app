@@ -54,7 +54,7 @@ export const Privileges = () => {
                     marginTop: "150px",
                   }}
                 >
-                  <CircularProgress />
+                  <CircularProgress style={{ color: "black" }} />
                 </div>
               )}
               {!loading &&

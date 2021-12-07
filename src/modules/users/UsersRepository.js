@@ -1,4 +1,5 @@
 import axios from "axios";
+import { AuthService } from "../auth/AuthService";
 import { SETTINGS } from "../common/Settings";
 
 export const UsersRepository = {
@@ -9,6 +10,9 @@ export const UsersRepository = {
       params: {
         page: page,
         size: size,
+      },
+      headers: {
+        Authorization: "Bearer " + AuthService.getToken(),
       },
     });
   },

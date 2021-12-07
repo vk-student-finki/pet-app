@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -12,17 +12,24 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { AuthService } from "../auth/AuthService";
 
 const theme = createTheme();
 export const SignIn = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get("username"),
-      password: data.get("password"),
-    });
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
+  const handleSubmit = () => {
+    console.log(username, password);
+
+    AuthService.authenticate(username, password)
+      .then((res) => {
+        console.log(res.data);
+        AuthService.storeToken(res.data.jwt);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -47,12 +54,7 @@ export const SignIn = () => {
           >
             Sign in
           </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
+          <Box noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               fullWidth
@@ -60,7 +62,10 @@ export const SignIn = () => {
               size="small"
               color="warning"
               label="Username"
-              name="username"
+              value={username}
+              onChange={(e) => {
+                setUsername(e.target.value);
+              }}
               autoComplete="username"
               autoFocus
             />
@@ -68,7 +73,10 @@ export const SignIn = () => {
               margin="normal"
               fullWidth
               size="small"
-              name="password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
               label="Password"
               color="warning"
               type="password"
@@ -82,6 +90,7 @@ export const SignIn = () => {
               label="Remember me"
             />
             <Button
+              onClick={() => handleSubmit()}
               type="submit"
               fullWidth
               style={{ backgroundColor: "#17202A " }}

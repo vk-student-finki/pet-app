@@ -11,6 +11,7 @@ import {
   TableRow,
   Link,
   Button,
+  Container,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
@@ -83,7 +84,7 @@ export const Users = () => {
                           fontFamily: "Helvetica, sans-serif",
                           color: "#1F393C",
                           fontSize: "18px",
-                          width: "980px",
+                          width: "900px",
                         }}
                         onClick={() => {
                           setRedirectTo(`/users/details/${user.id}`);
@@ -98,7 +99,6 @@ export const Users = () => {
                           fontFamily: "Helvetica, sans-serif",
                           color: "#1F393C",
                           fontSize: "18px",
-                          width: "200px",
                           cursor: "pointer",
                         }}
                         onClick={() => {
@@ -108,10 +108,13 @@ export const Users = () => {
                         {user.firstName} {user.lastName}
                       </TableCell>
                     </Hidden>
-                    <TableCell>
+                    <TableCell
+                      style={{
+                        textAlign: "right",
+                      }}
+                    >
                       <EditIcon
                         fontSize="large"
-                        style={{ width: "1.7em" }}
                         style={{
                           cursor: "pointer",
                         }}
@@ -119,7 +122,12 @@ export const Users = () => {
                           setRedirectTo(`/users/edit/${user?.id}`);
                         }}
                       ></EditIcon>
-
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        textAlign: "left",
+                      }}
+                    >
                       <DeleteIcon
                         fontSize="large"
                         style={{
@@ -135,24 +143,21 @@ export const Users = () => {
                 ))}
             </TableBody>
           </Table>
-          <Grid container spacing={2}>
-            <Grid item md={4}></Grid>
-            <Grid item md={8}>
-              {!loading && users && users.number !== undefined && (
-                <Stack spacing={2} style={{ marginTop: "20px" }}>
-                  <Pagination
-                    count={Math.floor(users.totalElements / users.size) + 1}
-                    shape="rounded"
-                    showFirstButton
-                    showLastButton
-                    style={{ color: "#D35400" }}
-                    page={users.number + 1}
-                    onChange={handleChange}
-                  />
-                </Stack>
-              )}
-            </Grid>
-          </Grid>
+          <Container maxWidth="xs">
+            {!loading && users && users.number !== undefined && (
+              <Stack spacing={2} style={{ marginTop: "20px" }}>
+                <Pagination
+                  count={Math.floor(users.totalElements / users.size) + 1}
+                  shape="rounded"
+                  showFirstButton
+                  showLastButton
+                  style={{ color: "#D35400" }}
+                  page={users.number + 1}
+                  onChange={handleChange}
+                />
+              </Stack>
+            )}
+          </Container>
         </Grid>
       </Grid>
     </>

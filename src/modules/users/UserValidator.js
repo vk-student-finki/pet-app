@@ -30,7 +30,7 @@ export const CreateUserValidator = yup.object().shape({
   username: yup
     .string()
     .min(2, 'Полето "username" мора да содржи минимум 2 карактери')
-    .max(10, 'Полето "username" мора да содржи максимум 10 карактери')
+    .max(20, 'Полето "username" мора да содржи максимум 20 карактери')
     .required("username е задолжително поле"),
   password: yup
     .string()
@@ -76,6 +76,6 @@ export const UpdateUserValidator = yup.object().shape({
   username: yup
     .string()
     .min(2, 'Полето "username" мора да содржи минимум 2 карактери')
-    .max(10, 'Полето "username" мора да содржи максимум 10 карактери')
+    .max(20, 'Полето "username" мора да содржи максимум 20 карактери')
     .required("username е задолжително поле"),
 });

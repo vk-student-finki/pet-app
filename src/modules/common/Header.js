@@ -56,7 +56,7 @@ export default function Header({}) {
               }
               style={{
                 textDecoration: "none",
-                color: "#1F393C",
+                color: "#D35400",
                 fontFamily: "Monaco, monospace",
               }}
             >
@@ -76,7 +76,10 @@ export default function Header({}) {
           {["left"].map((anchor) => (
             <React.Fragment key={anchor}>
               <Button onClick={toggleDrawer(anchor, true)}>
-                <MenuIcon color="disabled" fontSize="large"></MenuIcon>
+                <MenuIcon
+                  style={{ color: "#D35400", marginLeft: "-30px" }}
+                  sx={{ fontSize: 50 }}
+                ></MenuIcon>
               </Button>
               <SwipeableDrawer
                 anchor={anchor}
@@ -153,6 +156,7 @@ export default function Header({}) {
               </Button>
             </Link>
           </Grid>
+
           <Grid item xs={6} md={2}>
             <Link to="/signin" style={{ textDecoration: "none" }}>
               <Button

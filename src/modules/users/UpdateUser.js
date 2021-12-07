@@ -3,6 +3,7 @@ import {
   Button,
   Checkbox,
   CircularProgress,
+  Container,
   FormControlLabel,
   FormGroup,
   Grid,
@@ -14,6 +15,10 @@ import { UserForm } from "./UserForm";
 import { UsersRepository } from "./UsersRepository";
 import { UpdateUserValidator } from "./UserValidator";
 import { GroupsRepository } from "../groups/GroupsRepository";
+import Box from "@mui/material/Box";
+import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
+import Typography from "@mui/material/Typography";
+import Avatar from "@mui/material/Avatar";
 
 export const UpdateUser = ({}) => {
   const [globalFormError, setGlobalFormError] = useState();
@@ -76,16 +81,18 @@ export const UpdateUser = ({}) => {
       });
       return;
     }
-
+    setLoading(true);
     setGlobalFormError(null);
     setSuccessMessage(null);
     UsersRepository.updateUser(user?.id, user)
       .then((res) => {
         console.log(res);
+        setLoading(false);
         setSuccessMessage("User is updated successfully");
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
         setGlobalFormError(err);
       });
   };
@@ -117,36 +124,44 @@ export const UpdateUser = ({}) => {
   return (
     <>
       {redirectTo && <Navigate to={redirectTo} push />}
-      <h1 style={{ textAlign: "center", marginTop: "20px" }}>
-        Update existing user
-      </h1>
-
-      {loading && (
-        <div
-          style={{
-            textAlign: "center",
-            padding: "50px",
-            marginTop: "150px",
-          }}
-        >
-          <CircularProgress />
-        </div>
-      )}
-      {!loading && (
-        <>
-          <Grid container spacing={2} style={{ marginTop: "40px" }}>
-            <UserForm
-              formError={globalFormError}
-              formFieldErrors={formFieldErrors}
-              handleSubmit={handleSubmit}
-              handleChangeUserData={handleChangeUserData}
-              user={user}
-              updateMode={updateMode}
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: "#D35400" }}>
+          <PersonOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5" style={{ fontWeight: "bold" }}>
+          Edit User
+        </Typography>
+      </Box>
+      <Grid container spacing={2} style={{ marginTop: "40px" }}>
+        {loading && (
+          <Grid item xs={12} style={{ textAlign: "center" }}>
+            <CircularProgress
+              style={{ color: "#D35400", textAlign: "center" }}
             />
-            <Hidden smDown>
-              <Grid item md={3.1}></Grid>
-            </Hidden>
-            <Grid xs={12} md={6.1} style={{ textAlign: "center" }}>
+          </Grid>
+        )}
+        {!loading && (
+          <>
+            <Grid item xs={12}>
+              <Grid container spacing={2}>
+                <UserForm
+                  formError={globalFormError}
+                  formFieldErrors={formFieldErrors}
+                  handleSubmit={handleSubmit}
+                  handleChangeUserData={handleChangeUserData}
+                  user={user}
+                  updateMode={updateMode}
+                />
+              </Grid>
+            </Grid>
+            <Container maxWidth="xs" style={{ marginTop: "10px" }}>
               {groups?.content?.map((group) => (
                 <FormGroup
                   style={{
@@ -170,66 +185,48 @@ export const UpdateUser = ({}) => {
                   />
                 </FormGroup>
               ))}
-            </Grid>
-            <Grid item xs={12}>
-              <Grid container spacing={2}>
-                <Hidden smDown>
-                  <Grid item xs={4}></Grid>
-                </Hidden>
-                <Grid item xs={12} md={4}>
-                  <Button
-                    onClick={() => {
-                      handleSubmit();
-                    }}
-                    fullWidth
-                    size="large"
-                    variant="outlined"
-                    color="warning"
-                    style={{
-                      backgroundColor: "#17202A",
-                      color: "#D9D9D9",
-                      borderColor: "#17202A",
-                    }}
-                  >
-                    Update user
-                  </Button>
-                </Grid>
-
-                <Hidden smDown>
-                  <Grid item xs={12} style={{ marginTop: "-30px" }}></Grid>
-                  <Grid item xs={4}></Grid>
-                </Hidden>
-                <Grid item xs={12} md={4}>
-                  <Button
-                    onClick={() => {
-                      setRedirectTo(`/users/details/${user?.id}`);
-                    }}
-                    fullWidth
-                    size="large"
-                    variant="outlined"
-                    color="warning"
-                    style={{
-                      backgroundColor: "#17202A",
-                      color: "#D9D9D9",
-                      borderColor: "#17202A",
-                    }}
-                  >
-                    Back to user
-                  </Button>
-                </Grid>
-              </Grid>
-            </Grid>
+            </Container>
+            <Grid item xs={12}></Grid>
+            <Container maxWidth="xs">
+              <Button
+                onClick={() => {
+                  handleSubmit();
+                }}
+                type="submit"
+                fullWidth
+                style={{ backgroundColor: "#17202A " }}
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Update user
+              </Button>
+            </Container>
+            <Grid item xs={12}></Grid>
+            <Container maxWidth="xs" style={{ marginTop: "-40px" }}>
+              <Button
+                onClick={() => {
+                  setRedirectTo(`/users/details/${user?.id}`);
+                }}
+                type="submit"
+                fullWidth
+                style={{ backgroundColor: "#17202A " }}
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Back to user
+              </Button>
+            </Container>
+            <Grid item xs={12}></Grid>
             {successMessage && (
               <>
-                <Grid item xs={12} md={2.9}></Grid>
-                <Grid item xs={12} md={6.2}>
+                <Container maxWidth="xs">
                   <Alert severity="success">{successMessage}</Alert>
-                </Grid>
+                </Container>
               </>
             )}
-          </Grid>
-        </>
-      )}
+          </>
+        )}
+      </Grid>
     </>
   );
 };

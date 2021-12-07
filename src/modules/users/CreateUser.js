@@ -1,6 +1,7 @@
 import {
   Checkbox,
   CircularProgress,
+  Container,
   FormControlLabel,
   FormGroup,
   Grid,
@@ -12,6 +13,10 @@ import { UsersRepository } from "./UsersRepository";
 import { UserForm } from "./UserForm";
 import { CreateUserValidator } from "./UserValidator";
 import { GroupsRepository } from "../groups/GroupsRepository";
+import Box from "@mui/material/Box";
+import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
+import Typography from "@mui/material/Typography";
+import Avatar from "@mui/material/Avatar";
 
 export const CreateUser = (props) => {
   const [globalFormError, setGlobalFormError] = useState();
@@ -98,20 +103,28 @@ export const CreateUser = (props) => {
 
   return (
     <>
-      <h1 style={{ textAlign: "center", marginTop: "20px" }}>
-        Create new user
-      </h1>
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: "#D35400" }}>
+          <PersonAddAltOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5" style={{ fontWeight: "bold" }}>
+          Sign Up
+        </Typography>
+      </Box>
       <Grid container spacing={2} style={{ marginTop: "40px" }}>
         {loading && (
-          <div
-            style={{
-              textAlign: "center",
-              padding: "50px",
-              marginTop: "150px",
-            }}
-          >
-            <CircularProgress />
-          </div>
+          <Grid item xs={12} style={{ textAlign: "center" }}>
+            <CircularProgress
+              style={{ color: "#D35400", textAlign: "center" }}
+            />
+          </Grid>
         )}
         {!loading && (
           <>
@@ -126,10 +139,7 @@ export const CreateUser = (props) => {
                 />
               </Grid>
             </Grid>
-            <Hidden smDown>
-              <Grid item md={3.1}></Grid>
-            </Hidden>
-            <Grid xs={12} md={6.1} style={{ textAlign: "center" }}>
+            <Container maxWidth="xs" style={{ marginTop: "10px" }}>
               {groups?.content?.map((group) => (
                 <FormGroup
                   style={{
@@ -149,37 +159,30 @@ export const CreateUser = (props) => {
                   />
                 </FormGroup>
               ))}
-            </Grid>
-            <Grid item xs={12}>
-              <Grid container spacing={2}>
-                <Hidden smDown={true}>
-                  <Grid item md={4}></Grid>
-                </Hidden>
-                <Grid item xs={12} md={4}>
-                  <Button
-                    onClick={() => {
-                      handleSubmit();
-                    }}
-                    fullWidth
-                    size="large"
-                    variant="outlined"
-                    style={{
-                      backgroundColor: "#17202A",
-                      color: "#D9D9D9",
-                      borderColor: "#17202A",
-                    }}
-                  >
-                    Create
-                  </Button>
-                </Grid>
-              </Grid>
-            </Grid>
+            </Container>
+
+            <Grid item xs={12}></Grid>
+            <Container maxWidth="xs" style={{ marginTop: "10px" }}>
+              <Button
+                onClick={() => {
+                  handleSubmit();
+                }}
+                type="submit"
+                style={{ backgroundColor: "#17202A " }}
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                fullWidth
+              >
+                Create
+              </Button>
+            </Container>
+            <Grid item xs={12}></Grid>
+
             {successMessage && (
               <>
-                <Grid item xs={12} md={2.9}></Grid>
-                <Grid item xs={12} md={6.2}>
+                <Container maxWidth="xs">
                   <Alert severity="success">{successMessage}</Alert>
-                </Grid>
+                </Container>
               </>
             )}
           </>

@@ -1,7 +1,7 @@
 import "./App.css";
 import { Container } from "@mui/material";
 import Header from "./modules/common/Header";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { Home } from "./modules/home/Home";
 import { Users } from "./modules/users/Users";
 import { UserDetails } from "./modules/users/UserDetails";
@@ -18,10 +18,12 @@ import { DeleteUser } from "./modules/users/DeleteUser";
 import { SignIn } from "./modules/users/SignIn";
 
 export default function App() {
+  const location = useLocation();
+
   return (
     <>
       <Container>
-        <Header />
+        {location?.pathname !== "/signin" && <Header />}
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/users" element={<Users />}></Route>

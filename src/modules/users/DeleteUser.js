@@ -1,4 +1,4 @@
-import { Button, Grid } from "@mui/material";
+import { Button, Container, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { UsersRepository } from "./UsersRepository";
@@ -44,9 +44,9 @@ export const DeleteUser = ({}) => {
     <>
       {redirectTo && <Navigate to={redirectTo} push></Navigate>}
       {!deleteError && (
-        <>
-          <h1>The user was successfully deleted!</h1>
-          <Grid xs={4}>
+        <Container maxWidth="xs" style={{ textAlign: "center" }}>
+          <h2>The user was successfully deleted!</h2>
+          <Grid xs={12}>
             <Button
               variant="outlined"
               size="large"
@@ -64,12 +64,12 @@ export const DeleteUser = ({}) => {
               Back to Users
             </Button>
           </Grid>
-        </>
+        </Container>
       )}
       {deleteError && (
-        <>
-          <h1>The user can not be deleted!</h1>
-          <Grid xs={4}>
+        <Container maxWidth="xs" style={{ textAlign: "center" }}>
+          <h2>The user can not be deleted!</h2>
+          <Grid xs={12}>
             <Button
               variant="outlined"
               size="large"
@@ -87,7 +87,7 @@ export const DeleteUser = ({}) => {
               Back to Users
             </Button>
           </Grid>
-        </>
+        </Container>
       )}
     </>
   );
