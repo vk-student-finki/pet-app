@@ -80,7 +80,7 @@ export const UpdateGroup = ({}) => {
       });
   };
 
-  const handleChange = (name, value) => {
+  const handleChangeGroupData = (name, value) => {
     let data = { ...group };
     data[name] = value;
     setGroup(data);
@@ -101,7 +101,7 @@ export const UpdateGroup = ({}) => {
     }
     console.log(currentCheckedList);
     setChecked(currentCheckedList);
-    handleChange("privileges", currentCheckedList);
+    handleChangeGroupData("privileges", currentCheckedList);
   };
   return (
     <>
@@ -128,7 +128,7 @@ export const UpdateGroup = ({}) => {
               formError={globalFormError}
               formFieldErrors={formFieldErrors}
               handleSubmit={handleSubmit}
-              handleChange={handleChange}
+              handleChangeGroupData={handleChangeGroupData}
               group={group}
             />
             <Grid xs={12} md={12} style={{ textAlign: "center" }}>
