@@ -20,7 +20,7 @@ export const SignIn = () => {
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
     console.log({
-      email: data.get("email"),
+      email: data.get("username"),
       password: data.get("password"),
     });
   };
