@@ -96,7 +96,7 @@ export const Groups = () => {
                     style={{
                       cursor: "pointer",
                       backgroundColor:
-                        index % 2 === 0 ? "#ecf0f1" : "transparent",
+                        index % 2 === 0 ? "#F4F6F6" : "transparent",
                     }}
                   >
                     <Hidden smDown>
@@ -108,7 +108,7 @@ export const Groups = () => {
                           width: "980px",
                           cursor: "pointer",
                           backgroundColor:
-                            index % 2 === 0 ? "#ecf0f1" : "transparent",
+                            index % 2 === 0 ? "#F4F6F6" : "transparent",
                         }}
                         onClick={() => {
                           setRedirectTo(`/groups/details/${group.id}`);
