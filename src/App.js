@@ -15,7 +15,7 @@ import { GroupDetails } from "./modules/groups/GroupDetails";
 import { Privileges } from "./modules/privileges/Privileges";
 import { PrivilegeDetails } from "./modules/privileges/PrivilegeDetails";
 import { DeleteUser } from "./modules/users/DeleteUser";
-import { Login } from "./modules/users/Login";
+import { SignIn } from "./modules/users/SignIn";
 
 export default function App() {
   return (
@@ -36,7 +36,7 @@ export default function App() {
           <Route path="/groups/details/:id" element={<GroupDetails />}></Route>
           <Route path="/privileges" element={<Privileges />}></Route>
           <Route path="/privileges/:id" element={<PrivilegeDetails />}></Route>
-          <Route path="/login" element={<Login />}></Route>
+          <Route path="/signIn" element={<SignIn />}></Route>
         </Routes>
       </Container>
     </>
