@@ -57,7 +57,7 @@ export default function Header({}) {
               style={{
                 textDecoration: "none",
                 color: "#1F393C",
-                fontFamily: " Monaco, monospace",
+                fontFamily: "Monaco, monospace",
               }}
             >
               <ListItem button key={text}>
@@ -113,7 +113,7 @@ export default function Header({}) {
                   color: "#D9D9D9",
                   borderColor: "#17202A",
                   fontSize: "18px",
-                  fontFamily: " Monaco, monospace",
+                  fontFamily: "Monaco, monospace",
                 }}
               >
                 USERS
