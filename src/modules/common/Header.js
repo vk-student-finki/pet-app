@@ -36,26 +36,36 @@ export default function Header({}) {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List style={{ backgroundColor: "#F5F5F5" }}>
-        {["Home", "Users", "Groups", "Privileges"].map((text, index) => (
-          <Link
-            to={
-              index === 0
-                ? "/"
-                : index === 1
-                ? "/users"
-                : index === 2
-                ? "/groups"
-                : index === 3
-                ? "/privileges"
-                : ""
-            }
-            style={{ textDecoration: "none", color: "#1F393C" }}
-          >
-            <ListItem button key={text}>
-              <ListItemText primary={text} />
-            </ListItem>
-          </Link>
-        ))}
+        {["Home", "Users", "Groups", "Privileges", "Sign In", "Sign Up"].map(
+          (text, index) => (
+            <Link
+              to={
+                index === 0
+                  ? "/"
+                  : index === 1
+                  ? "/users"
+                  : index === 2
+                  ? "/groups"
+                  : index === 3
+                  ? "/privileges"
+                  : index === 4
+                  ? "/signin"
+                  : index === 5
+                  ? "/users/create"
+                  : ""
+              }
+              style={{
+                textDecoration: "none",
+                color: "#1F393C",
+                fontFamily: " Monaco, monospace",
+              }}
+            >
+              <ListItem button key={text}>
+                <ListItemText primary={text} />
+              </ListItem>
+            </Link>
+          )
+        )}
       </List>
     </Box>
   );
@@ -103,7 +113,7 @@ export default function Header({}) {
                   color: "#D9D9D9",
                   borderColor: "#17202A",
                   fontSize: "18px",
-                  fontFamily: "Helvetica, sans-serif",
+                  fontFamily: " Monaco, monospace",
                 }}
               >
                 USERS
@@ -118,7 +128,7 @@ export default function Header({}) {
                 style={{
                   color: "#D9D9D9",
                   borderColor: "#17202A",
-                  fontFamily: "Helvetica, sans-serif",
+                  fontFamily: "Monaco, monospace",
                   fontSize: "18px",
                 }}
               >
@@ -135,7 +145,7 @@ export default function Header({}) {
                   color: "#D9D9D9",
                   borderColor: "#17202A",
                   marginLeft: "20px",
-                  fontFamily: "Helvetica, sans-serif",
+                  fontFamily: "Monaco, monospace",
                   fontSize: "18px",
                 }}
               >
@@ -143,8 +153,7 @@ export default function Header({}) {
               </Button>
             </Link>
           </Grid>
-
-          <Grid item xs={6} md={4}>
+          <Grid item xs={6} md={2}>
             <Link to="/signin" style={{ textDecoration: "none" }}>
               <Button
                 size="medium"
@@ -152,12 +161,31 @@ export default function Header({}) {
                 style={{
                   color: "#D9D9D9",
                   borderColor: "#17202A",
-                  marginLeft: "550px",
-                  fontFamily: "Helvetica, sans-serif",
+                  marginLeft: "450px",
+                  fontFamily: "Monaco, monospace",
                   fontSize: "18px",
+                  whiteSpace: "nowrap",
                 }}
               >
-                signin
+                sign in
+              </Button>
+            </Link>
+          </Grid>
+          <Grid item xs={6} md={2}>
+            <Link to="/users/create" style={{ textDecoration: "none" }}>
+              <Button
+                size="medium"
+                variant="outlined"
+                style={{
+                  color: "#D9D9D9",
+                  borderColor: "#17202A",
+                  marginLeft: "360px",
+                  fontFamily: "Monaco, monospace",
+                  fontSize: "18px",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                sign up
               </Button>
             </Link>
           </Grid>

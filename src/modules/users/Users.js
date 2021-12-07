@@ -53,30 +53,6 @@ export const Users = () => {
             Users
           </h1>
         </Grid>
-        <Grid md={4}></Grid>
-        <Grid
-          item
-          xs={12}
-          md={2}
-          style={{ textAlign: "right", marginTop: "25px" }}
-        >
-          <Button
-            size="medium"
-            variant="outlined"
-            fullWidth
-            style={{
-              color: "#D9D9D9",
-              borderColor: "#D9D9D9",
-              backgroundColor: "#17202A",
-              marginBottom: "10px",
-            }}
-            onClick={() => {
-              setRedirectTo(`/users/create`);
-            }}
-          >
-            CREATE NEW USER
-          </Button>
-        </Grid>
 
         <Grid item xs={12}>
           <Table>

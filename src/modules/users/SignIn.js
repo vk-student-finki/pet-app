@@ -56,16 +56,15 @@ export const SignIn = () => {
             <TextField
               margin="normal"
               fullWidth
-              id="email"
+              id="username"
               size="small"
               color="warning"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              label="Username"
+              name="username"
+              autoComplete="username"
               autoFocus
             />
             <TextField
-              style={{ marginTop: "-5px" }}
               margin="normal"
               fullWidth
               size="small"
@@ -94,7 +93,7 @@ export const SignIn = () => {
             <Grid container>
               <Grid item>
                 <Link
-                  href="#"
+                  href="/users/create"
                   variant="body2"
                   style={{
                     color: "#D35400",
