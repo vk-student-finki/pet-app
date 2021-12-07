@@ -36,6 +36,7 @@ export const GroupDetails = ({}) => {
 
   const rows = [
     createData("Name", group?.name),
+    createData("Code", group?.code),
     createData(
       "Privilege",
       group?.privileges?.map((privilege) => privilege.name).join(", ")

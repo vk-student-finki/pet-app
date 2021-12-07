@@ -61,7 +61,7 @@ export const DeleteGroup = ({}) => {
                 setRedirectTo(`/groups`);
               }}
             >
-              Back to Users
+              Back to Groups
             </Button>
           </Grid>
         </>
