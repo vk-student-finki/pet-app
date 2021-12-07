@@ -184,6 +184,7 @@ export const UpdateUser = ({}) => {
                     fullWidth
                     size="large"
                     variant="outlined"
+                    color="warning"
                     style={{
                       backgroundColor: "#17202A",
                       color: "#D9D9D9",
@@ -206,6 +207,7 @@ export const UpdateUser = ({}) => {
                     fullWidth
                     size="large"
                     variant="outlined"
+                    color="warning"
                     style={{
                       backgroundColor: "#17202A",
                       color: "#D9D9D9",

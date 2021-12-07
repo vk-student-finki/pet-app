@@ -134,7 +134,7 @@ export default function Header({}) {
                 style={{
                   color: "#D9D9D9",
                   borderColor: "#17202A",
-                  marginLeft: "10px",
+                  marginLeft: "20px",
                   fontFamily: "Helvetica, sans-serif",
                   fontSize: "18px",
                 }}
@@ -144,8 +144,8 @@ export default function Header({}) {
             </Link>
           </Grid>
 
-          <Grid item xs={6} md={2}>
-            <Link to="/signIn" style={{ textDecoration: "none" }}>
+          <Grid item xs={6} md={4}>
+            <Link to="/signin" style={{ textDecoration: "none" }}>
               <Button
                 size="medium"
                 variant="outlined"

@@ -36,7 +36,7 @@ export default function App() {
           <Route path="/groups/details/:id" element={<GroupDetails />}></Route>
           <Route path="/privileges" element={<Privileges />}></Route>
           <Route path="/privileges/:id" element={<PrivilegeDetails />}></Route>
-          <Route path="/signIn" element={<SignIn />}></Route>
+          <Route path="/signin" element={<SignIn />}></Route>
         </Routes>
       </Container>
     </>
