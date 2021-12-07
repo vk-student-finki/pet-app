@@ -98,7 +98,7 @@ export const Users = () => {
                     style={{
                       cursor: "pointer",
                       backgroundColor:
-                        index % 2 === 0 ? "#ecf0f1" : "transparent",
+                        index % 2 === 0 ? "#F4F6F6" : "transparent",
                     }}
                   >
                     <Hidden smDown>

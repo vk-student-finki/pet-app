@@ -34,9 +34,13 @@ export const CreateUserValidator = yup.object().shape({
     .required("username е задолжително поле"),
   password: yup
     .string()
-    .min(6, 'Полето "password" мора да содржи минимум 6 карактери')
+    .min(8, 'Полето "password" мора да содржи минимум 8 карактери')
     .max(20, 'Полето "password" мора да содржи максимум 20 карактери')
-    .required("password е задолжително поле"),
+    .required("password е задолжително поле")
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+      "Мора да содржи барем 8 карактери, една голема буква, број и специјален карактер(@$!%*#?&)"
+    ),
 });
 
 export const UpdateUserValidator = yup.object().shape({
