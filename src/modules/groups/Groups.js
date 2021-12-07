@@ -9,6 +9,7 @@ import {
   TableCell,
   Hidden,
   TableRow,
+  Stack,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
@@ -43,27 +44,38 @@ export const Groups = () => {
   return (
     <>
       {redirectTo && <Navigate to={redirectTo} push />}
-      <h1 style={{ fontFamily: "Helvetica, sans-serif", color: "#1F393C" }}>
-        Groups
-      </h1>
-      <Grid item xs={12} md={2}>
-        <Button
-          size="medium"
-          variant="outlined"
-          fullWidth
-          style={{
-            color: "#D9D9D9",
-            borderColor: "#D9D9D9",
-            backgroundColor: "#17202A",
-          }}
-          onClick={() => {
-            setRedirectTo(`/groups/create`);
-          }}
-        >
-          CREATE NEW GROUP
-        </Button>
-      </Grid>
+
       <Grid container spacing={2}>
+        <Grid item xs={12} md={6}>
+          <h1 style={{ fontFamily: "Helvetica, sans-serif", color: "#1F393C" }}>
+            Groups
+          </h1>
+        </Grid>
+        <Grid md={2}></Grid>
+        <Grid md={1}></Grid>
+        <Grid
+          item
+          xs={12}
+          md={2.5}
+          style={{ textAlign: "right", marginTop: "25px" }}
+        >
+          <Button
+            size="medium"
+            variant="outlined"
+            fullWidth
+            style={{
+              color: "#D9D9D9",
+              borderColor: "#D9D9D9",
+              backgroundColor: "#17202A",
+              marginBottom: "10px",
+            }}
+            onClick={() => {
+              setRedirectTo(`/groups/create`);
+            }}
+          >
+            CREATE NEW GROUP
+          </Button>
+        </Grid>
         <Grid item xs={12}>
           <Table>
             <TableBody>
@@ -140,16 +152,24 @@ export const Groups = () => {
                 ))}
             </TableBody>
           </Table>
-          {!loading && groups && groups.number !== undefined && (
-            <Pagination
-              count={Math.floor(groups?.totalElements / groups?.size) + 1}
-              shape="rounded"
-              showFirstButton
-              showLastButton
-              page={groups.number + 1}
-              onChange={handleChange}
-            />
-          )}
+          <Grid container spacing={2}>
+            <Grid item md={4}></Grid>
+            <Grid item md={8}>
+              {!loading && groups && groups.number !== undefined && (
+                <Stack spacing={2} style={{ marginTop: "20px" }}>
+                  <Pagination
+                    count={Math.floor(groups.totalElements / groups?.size) + 1}
+                    shape="rounded"
+                    showFirstButton
+                    showLastButton
+                    style={{ color: "#D35400" }}
+                    page={groups?.number + 1}
+                    onChange={handleChange}
+                  />
+                </Stack>
+              )}
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </>

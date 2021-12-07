@@ -154,20 +154,24 @@ export const Users = () => {
                 ))}
             </TableBody>
           </Table>
-
-          {!loading && users && users.number !== undefined && (
-            <Stack spacing={2}>
-              <Pagination
-                count={Math.floor(users.totalElements / users.size) + 1}
-                shape="rounded"
-                showFirstButton
-                showLastButton
-                style={{ color: "#D35400" }}
-                page={users.number + 1}
-                onChange={handleChange}
-              />
-            </Stack>
-          )}
+          <Grid container spacing={2}>
+            <Grid item md={4}></Grid>
+            <Grid item md={8}>
+              {!loading && users && users.number !== undefined && (
+                <Stack spacing={2} style={{ marginTop: "20px" }}>
+                  <Pagination
+                    count={Math.floor(users.totalElements / users.size) + 1}
+                    shape="rounded"
+                    showFirstButton
+                    showLastButton
+                    style={{ color: "#D35400" }}
+                    page={users.number + 1}
+                    onChange={handleChange}
+                  />
+                </Stack>
+              )}
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </>

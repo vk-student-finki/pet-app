@@ -45,6 +45,18 @@ export const GroupForm = ({
                 helperText={formFieldErrors?.name}
               />
             </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="Group Code"
+                size="small"
+                variant="outlined"
+                fullWidth
+                value={group?.code ? group?.code : ""}
+                onChange={(e) => handleChangeGroupData("code", e.target.value)}
+                error={formFieldErrors?.code}
+                helperText={formFieldErrors?.code}
+              />
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
