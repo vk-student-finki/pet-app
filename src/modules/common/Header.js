@@ -126,7 +126,7 @@ export default function Header({}) {
               </Button>
             </Link>
           </Grid>
-          <Grid item xs={6} md={7}>
+          <Grid item xs={6} md={2}>
             <Link to="/privileges" style={{ textDecoration: "none" }}>
               <Button
                 size="medium"
@@ -140,6 +140,24 @@ export default function Header({}) {
                 }}
               >
                 PRIVILEGES
+              </Button>
+            </Link>
+          </Grid>
+
+          <Grid item xs={6} md={2}>
+            <Link to="/login" style={{ textDecoration: "none" }}>
+              <Button
+                size="medium"
+                variant="outlined"
+                style={{
+                  color: "#D9D9D9",
+                  borderColor: "#17202A",
+                  marginLeft: "550px",
+                  fontFamily: "Helvetica, sans-serif",
+                  fontSize: "18px",
+                }}
+              >
+                Login
               </Button>
             </Link>
           </Grid>
