@@ -41,6 +41,7 @@ export const UserForm = ({
                 label="First name"
                 size="small"
                 variant="outlined"
+                color="warning"
                 fullWidth
                 value={user?.firstName ? user?.firstName : ""}
                 onChange={(e) =>
@@ -56,6 +57,7 @@ export const UserForm = ({
                 label="Last name"
                 size="small"
                 variant="outlined"
+                color="warning"
                 fullWidth
                 value={user?.lastName ? user?.lastName : ""}
                 onChange={(e) =>
@@ -70,6 +72,7 @@ export const UserForm = ({
                 label="Username"
                 size="small"
                 variant="outlined"
+                color="warning"
                 fullWidth
                 value={user?.username ? user?.username : ""}
                 onChange={(e) =>
@@ -86,6 +89,7 @@ export const UserForm = ({
                     label="Password"
                     size="small"
                     variant="outlined"
+                    color="warning"
                     type="password"
                     fullWidth
                     value={user?.password ? user?.password : ""}

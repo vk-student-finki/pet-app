@@ -38,6 +38,7 @@ export const GroupForm = ({
                 label="Group Name"
                 size="small"
                 variant="outlined"
+                color="warning"
                 fullWidth
                 value={group?.name ? group?.name : ""}
                 onChange={(e) => handleChangeGroupData("name", e.target.value)}
@@ -50,6 +51,7 @@ export const GroupForm = ({
                 label="Group Code"
                 size="small"
                 variant="outlined"
+                color="warning"
                 fullWidth
                 value={group?.code ? group?.code : ""}
                 onChange={(e) => handleChangeGroupData("code", e.target.value)}
