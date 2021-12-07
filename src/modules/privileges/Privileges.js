@@ -67,6 +67,8 @@ export const Privileges = () => {
                         fontSize: "18px",
                         width: "980px",
                         cursor: "pointer",
+                        backgroundColor:
+                          index % 2 === 0 ? "#F4F6F6" : "transparent",
                       }}
                       onClick={() => {
                         setRedirectTo(`/privileges/${privilege.id}`);
