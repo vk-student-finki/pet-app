@@ -17,6 +17,7 @@ import Box from "@mui/material/Box";
 import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
+import { useNavigate } from "react-router";
 
 export const CreateUser = (props) => {
   const [globalFormError, setGlobalFormError] = useState();
@@ -24,6 +25,7 @@ export const CreateUser = (props) => {
   const [successMessage, setSuccessMessage] = useState(null);
   const [groups, setGroups] = useState();
   const [checked, setChecked] = useState([]);
+  let navigate = useNavigate();
 
   useEffect(() => {
     loadData(0, 1000);
@@ -69,6 +71,7 @@ export const CreateUser = (props) => {
         console.log(res);
         setSuccessMessage("User is created successfully");
         setLoading(false);
+        navigate("/signin");
       })
       .catch((err) => {
         console.log(err);

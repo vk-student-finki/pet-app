@@ -23,7 +23,8 @@ export default function App() {
   return (
     <>
       <Container>
-        {location?.pathname !== "/signin" && <Header />}
+        {location?.pathname !== "/signin" &&
+          location?.pathname !== "/users/create" && <Header />}
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/users" element={<Users />}></Route>

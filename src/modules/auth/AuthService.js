@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useNavigate } from "react-router";
 import { SETTINGS } from "../common/Settings";
 
 export const AuthService = {
@@ -11,6 +12,11 @@ export const AuthService = {
         password: password,
       },
     });
+  },
+
+  logout: () => {
+    window.localStorage.removeItem("auth");
+    window.location.href = "/signin";
   },
 
   storeToken: (token) => {

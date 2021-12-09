@@ -13,11 +13,13 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { AuthService } from "./AuthService";
+import { useNavigate } from "react-router";
 
 const theme = createTheme();
 export const SignIn = () => {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  let navigate = useNavigate();
 
   const handleSubmit = () => {
     console.log(username, password);
@@ -26,6 +28,7 @@ export const SignIn = () => {
       .then((res) => {
         console.log(res.data);
         AuthService.storeToken(res.data.jwt);
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);

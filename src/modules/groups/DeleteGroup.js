@@ -8,21 +8,6 @@ import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 export const DeleteGroup = ({}) => {
   const { id } = useParams();
   const [deleteError, setDeleteError] = useState(false);
-  const [group, setGroup] = useState();
-
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const loadData = () => {
-    GroupsRepository.get(id)
-      .then((res) => {
-        setGroup(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   useEffect(() => {
     deleteThisGroup(id);
