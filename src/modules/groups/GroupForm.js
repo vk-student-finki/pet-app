@@ -39,6 +39,7 @@ export const GroupForm = ({
                 size="small"
                 variant="outlined"
                 color="warning"
+                autoFocus
                 fullWidth
                 value={group?.name ? group?.name : ""}
                 onChange={(e) => handleChangeGroupData("name", e.target.value)}

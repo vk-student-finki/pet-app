@@ -11,9 +11,9 @@ export const UsersRepository = {
         page: page,
         size: size,
       },
-      headers: {
-        Authorization: "Bearer " + AuthService.getToken(),
-      },
+      // headers: {
+      //   Authorization: "Bearer " + AuthService.getToken(),
+      // },
     });
   },
   get: (id) => {
@@ -24,7 +24,7 @@ export const UsersRepository = {
   },
   create: (user) => {
     return axios({
-      url: `${SETTINGS.API_BASE_URL}users`,
+      url: `${SETTINGS.API_BASE_URL}users/create`,
       method: "POST",
       data: user,
     });

@@ -13,6 +13,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
+import { AuthService } from "../auth/AuthService";
 
 export default function Header({}) {
   const [state, setState] = React.useState({
@@ -28,6 +29,10 @@ export default function Header({}) {
     setState({ ...state, [anchor]: open });
   };
 
+  const handleLogout = () => {
+    AuthService.logout();
+  };
+
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
@@ -39,6 +44,7 @@ export default function Header({}) {
         {["Home", "Users", "Groups", "Privileges", "Sign In", "Sign Up"].map(
           (text, index) => (
             <Link
+              key={index}
               to={
                 index === 0
                   ? "/"
@@ -158,28 +164,48 @@ export default function Header({}) {
           </Grid>
 
           <Grid item xs={6} md={2}>
-            <Link to="/signin" style={{ textDecoration: "none" }}>
-              <Button
-                size="medium"
-                variant="outlined"
-                style={{
-                  color: "#D9D9D9",
-                  borderColor: "#17202A",
-                  marginLeft: "450px",
-                  fontFamily: "Monaco, monospace",
-                  fontSize: "18px",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                sign in
-              </Button>
-            </Link>
+            {!window?.localStorage?.getItem("auth") && (
+              <Link to="/signin" style={{ textDecoration: "none" }}>
+                <Button
+                  size="medium"
+                  variant="outlined"
+                  style={{
+                    color: "#D9D9D9",
+                    borderColor: "#17202A",
+                    marginLeft: "450px",
+                    fontFamily: "Monaco, monospace",
+                    fontSize: "18px",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  sign in
+                </Button>
+              </Link>
+            )}
           </Grid>
           <Grid item xs={6} md={2}>
-            <Link to="/users/create" style={{ textDecoration: "none" }}>
+            {!window?.localStorage?.getItem("auth") ? (
+              <Link to="/users/create" style={{ textDecoration: "none" }}>
+                <Button
+                  size="medium"
+                  variant="outlined"
+                  style={{
+                    color: "#D9D9D9",
+                    borderColor: "#17202A",
+                    marginLeft: "360px",
+                    fontFamily: "Monaco, monospace",
+                    fontSize: "18px",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  sign up
+                </Button>
+              </Link>
+            ) : (
               <Button
                 size="medium"
                 variant="outlined"
+                onClick={() => handleLogout()}
                 style={{
                   color: "#D9D9D9",
                   borderColor: "#17202A",
@@ -189,9 +215,9 @@ export default function Header({}) {
                   whiteSpace: "nowrap",
                 }}
               >
-                sign up
+                Logout
               </Button>
-            </Link>
+            )}
           </Grid>
         </Grid>
       </Hidden>

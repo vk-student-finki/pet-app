@@ -8,21 +8,6 @@ import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 export const DeleteUser = ({}) => {
   const { id } = useParams();
   const [deleteError, setDeleteError] = useState(false);
-  const [user, setUser] = useState();
-
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const loadData = () => {
-    UsersRepository.get(id)
-      .then((res) => {
-        setUser(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   useEffect(() => {
     deleteThisUser(id);
