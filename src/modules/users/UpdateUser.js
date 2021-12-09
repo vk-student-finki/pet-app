@@ -123,6 +123,16 @@ export const UpdateUser = ({}) => {
 
   return (
     <>
+      {successMessage && (
+        <>
+          <Container
+            maxWidth="xs"
+            style={{ marginTop: "20px", marginBottom: "-30px" }}
+          >
+            <Alert severity="success">{successMessage}</Alert>
+          </Container>
+        </>
+      )}
       {redirectTo && <Navigate to={redirectTo} push />}
       <Box
         sx={{
@@ -217,13 +227,6 @@ export const UpdateUser = ({}) => {
               </Button>
             </Container>
             <Grid item xs={12}></Grid>
-            {successMessage && (
-              <>
-                <Container maxWidth="xs">
-                  <Alert severity="success">{successMessage}</Alert>
-                </Container>
-              </>
-            )}
           </>
         )}
       </Grid>

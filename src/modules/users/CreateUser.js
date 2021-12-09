@@ -103,6 +103,16 @@ export const CreateUser = (props) => {
 
   return (
     <>
+      {successMessage && (
+        <>
+          <Container
+            maxWidth="xs"
+            style={{ marginTop: "20px", marginBottom: "-30px" }}
+          >
+            <Alert severity="success">{successMessage}</Alert>
+          </Container>
+        </>
+      )}
       <Box
         sx={{
           marginTop: 8,
@@ -177,14 +187,6 @@ export const CreateUser = (props) => {
               </Button>
             </Container>
             <Grid item xs={12}></Grid>
-
-            {successMessage && (
-              <>
-                <Container maxWidth="xs">
-                  <Alert severity="success">{successMessage}</Alert>
-                </Container>
-              </>
-            )}
           </>
         )}
       </Grid>

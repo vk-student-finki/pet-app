@@ -94,6 +94,13 @@ export const CreateGroup = (props) => {
 
   return (
     <>
+      {successMessage && (
+        <>
+          <Grid style={{ marginTop: "20px", marginBottom: "-10px" }}>
+            <Alert severity="success">{successMessage}</Alert>
+          </Grid>
+        </>
+      )}
       <h1 style={{ textAlign: "center", marginTop: "20px" }}>
         Create new group
       </h1>
@@ -177,14 +184,6 @@ export const CreateGroup = (props) => {
                 </Grid>
               </Grid>
             </Grid>
-            {successMessage && (
-              <>
-                <Grid item xs={12} md={2.9}></Grid>
-                <Grid item xs={12} md={6.2}>
-                  <Alert severity="success">{successMessage}</Alert>
-                </Grid>
-              </>
-            )}
           </>
         )}
       </Grid>
