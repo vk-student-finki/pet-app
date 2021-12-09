@@ -15,7 +15,7 @@ import { GroupDetails } from "./modules/groups/GroupDetails";
 import { Privileges } from "./modules/privileges/Privileges";
 import { PrivilegeDetails } from "./modules/privileges/PrivilegeDetails";
 import { DeleteUser } from "./modules/users/DeleteUser";
-import { SignIn } from "./modules/users/SignIn";
+import { SignIn } from "./modules/auth/SignIn";
 
 export default function App() {
   const location = useLocation();
