@@ -105,6 +105,13 @@ export const UpdateGroup = ({}) => {
   };
   return (
     <>
+      {successMessage && (
+        <>
+          <Grid style={{ marginTop: "20px", marginBottom: "-10px" }}>
+            <Alert severity="success">{successMessage}</Alert>
+          </Grid>
+        </>
+      )}
       {redirectTo && <Navigate to={redirectTo} push />}
       <h1 style={{ textAlign: "center", marginTop: "20px" }}>
         Update existing group
@@ -202,14 +209,6 @@ export const UpdateGroup = ({}) => {
                 </Grid>
               </Grid>
             </Grid>
-            {successMessage && (
-              <>
-                <Grid item xs={12} md={2.9}></Grid>
-                <Grid item xs={12} md={6.2}>
-                  <Alert severity="success">{successMessage}</Alert>
-                </Grid>
-              </>
-            )}
           </Grid>
         </>
       )}
