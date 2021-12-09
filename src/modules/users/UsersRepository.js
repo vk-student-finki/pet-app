@@ -11,9 +11,6 @@ export const UsersRepository = {
         page: page,
         size: size,
       },
-      headers: {
-        Authorization: "Bearer " + AuthService.getToken(),
-      },
     });
   },
   get: (id) => {
