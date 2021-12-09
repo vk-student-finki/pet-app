@@ -28,15 +28,15 @@ export default {
         return response;
       },
       function (err) {
-        console.log(err.response);
         if (err?.response?.data?.message) {
           if (err.response.data.message.includes("JWT expired at")) {
             AuthService.logout();
           }
+          // if (err.response.data.message.includes("Access Denied")) {
+          //   AuthService.logout("/");
+          // }
         }
-        if (err?.response?.status == 403) {
-          AuthService.logout("/");
-        }
+
         return Promise.reject(err);
       }
     );
