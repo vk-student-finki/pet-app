@@ -24,6 +24,7 @@ import StarIcon from "@mui/icons-material/Star";
 import LoginIcon from "@mui/icons-material/Login";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 export default function Header({}) {
   const [redirectTo, setRedirectTo] = useState();
@@ -103,7 +104,7 @@ export default function Header({}) {
           <Divider />
           <ListItem>
             <ListItemIcon>
-              <AccountCircleOutlinedIcon style={{ color: "#D35400" }} />
+              <AccountCircleIcon style={{ color: "#D35400" }} />
             </ListItemIcon>
             <ListItemText
               style={{
@@ -221,39 +222,42 @@ export default function Header({}) {
             )}
           </Grid>
           <Grid item xs={6} md={1}>
-            <Link to="/groups" style={{ textDecoration: "none" }}>
-              <Button
-                size="medium"
-                variant="outlined"
-                style={{
-                  color: "#D9D9D9",
-                  borderColor: "#17202A",
-                  fontFamily: "Monaco, monospace",
-                  fontSize: "18px",
-                }}
-              >
-                GROUPS
-              </Button>
-            </Link>
+            {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+              <Link to="/groups" style={{ textDecoration: "none" }}>
+                <Button
+                  size="medium"
+                  variant="outlined"
+                  style={{
+                    color: "#D9D9D9",
+                    borderColor: "#17202A",
+                    fontFamily: "Monaco, monospace",
+                    fontSize: "18px",
+                  }}
+                >
+                  GROUPS
+                </Button>
+              </Link>
+            )}
           </Grid>
           <Grid item xs={6} md={2}>
-            <Link to="/privileges" style={{ textDecoration: "none" }}>
-              <Button
-                size="medium"
-                variant="outlined"
-                style={{
-                  color: "#D9D9D9",
-                  borderColor: "#17202A",
-                  marginLeft: "20px",
-                  fontFamily: "Monaco, monospace",
-                  fontSize: "18px",
-                }}
-              >
-                PRIVILEGES
-              </Button>
-            </Link>
+            {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+              <Link to="/privileges" style={{ textDecoration: "none" }}>
+                <Button
+                  size="medium"
+                  variant="outlined"
+                  style={{
+                    color: "#D9D9D9",
+                    borderColor: "#17202A",
+                    marginLeft: "20px",
+                    fontFamily: "Monaco, monospace",
+                    fontSize: "18px",
+                  }}
+                >
+                  PRIVILEGES
+                </Button>
+              </Link>
+            )}
           </Grid>
-
           <Grid item xs={6} md={2}>
             {!window?.localStorage?.getItem("auth") && (
               <Link to="/signin" style={{ textDecoration: "none" }}>
