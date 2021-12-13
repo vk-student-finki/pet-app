@@ -29,10 +29,10 @@ export const Privileges = () => {
       .then((res) => {
         setLoading(false);
         setPrivileges(res.data);
-        // dispatch({
-        //   type: COMMON_ACTIONS.SHOW_SUCCESS_MESSAGE,
-        //   payload: { showSuccessMessage: "Fetch privileges done successfully" },
-        // });
+        dispatch({
+          type: COMMON_ACTIONS.SHOW_SUCCESS_MESSAGE,
+          payload: { showSuccessMessage: "Fetch privileges done successfully" },
+        });
       })
       .catch((err) => {
         console.log(err);

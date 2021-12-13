@@ -57,8 +57,14 @@ export default function Header({}) {
     >
       {window?.localStorage?.getItem("auth") && (
         <List style={{ backgroundColor: "#F5F5F5" }}>
-          {["Home", "Users", "Groups", "Privileges", "Sign out"].map(
-            (text, index) => (
+          {["Home", "Users", "Groups", "Privileges", "Sign out"]
+            .filter(
+              (key) =>
+                (AuthService.hasRole("ROLE_ADMINISTRATOR") &&
+                  ["Users", "Groups", "Privileges"].includes(key)) ||
+                ["Home", "Sign out"].includes(key)
+            )
+            .map((text, index) => (
               <Link
                 key={index}
                 to={
@@ -99,8 +105,7 @@ export default function Header({}) {
                   <ListItemText primary={text} />
                 </ListItem>
               </Link>
-            )
-          )}
+            ))}
           <Divider />
           <ListItem>
             <ListItemIcon>
