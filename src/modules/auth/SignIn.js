@@ -127,20 +127,6 @@ export const SignIn = () => {
               >
                 Sign In
               </Button>
-              <Grid container>
-                <Grid item>
-                  <Link
-                    href="/users/create"
-                    variant="body2"
-                    style={{
-                      color: "#D35400",
-                      textDecoration: "none",
-                    }}
-                  >
-                    {"Нов корисник? Регистрирај се!"}
-                  </Link>
-                </Grid>
-              </Grid>
             </Box>
           </Box>
         </Container>

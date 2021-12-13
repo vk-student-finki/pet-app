@@ -43,6 +43,8 @@ export const UserDetails = ({}) => {
         ?.map((group) => group?.privileges?.map((privilege) => privilege.name))
         .join(", ")
     ),
+    createData("Phone Number", user?.phoneNumber),
+    createData("Email", user?.email),
   ];
 
   return (

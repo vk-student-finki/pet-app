@@ -18,6 +18,7 @@ import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import { useNavigate } from "react-router";
+import { AuthService } from "../auth/AuthService";
 
 export const CreateUser = (props) => {
   const [globalFormError, setGlobalFormError] = useState();
@@ -84,7 +85,6 @@ export const CreateUser = (props) => {
         console.log(res);
         setSuccessMessage("User is created successfully");
         setLoading(false);
-        navigate("/signin");
       })
       .catch((err) => {
         console.log(err);
@@ -131,6 +131,7 @@ export const CreateUser = (props) => {
           </Container>
         </>
       )}
+
       <Box
         sx={{
           marginTop: 8,
@@ -143,9 +144,10 @@ export const CreateUser = (props) => {
           <PersonAddAltOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5" style={{ fontWeight: "bold" }}>
-          Sign Up
+          Create New User
         </Typography>
       </Box>
+
       <Grid container spacing={2} style={{ marginTop: "40px" }}>
         {loading && (
           <Grid item xs={12} style={{ textAlign: "center" }}>

@@ -18,6 +18,7 @@ import { Navigate, useParams } from "react-router-dom";
 import { UsersRepository } from "./UsersRepository";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { AuthService } from "../auth/AuthService";
 
 export const Users = () => {
   const [users, setUsers] = useState();
@@ -50,11 +51,32 @@ export const Users = () => {
     <>
       {redirectTo && <Navigate to={redirectTo} push />}
       <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={9}>
           <h1 style={{ fontFamily: "Helvetica, sans-serif", color: "#1F393C" }}>
             Users
           </h1>
         </Grid>
+        {window?.localStorage?.getItem("auth") &&
+          AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+            <Grid item xs={12} md={3}>
+              <Button
+                size="medium"
+                variant="outlined"
+                fullWidth
+                style={{
+                  color: "#D9D9D9",
+                  borderColor: "#D9D9D9",
+                  backgroundColor: "#17202A",
+                  marginTop: "20px",
+                }}
+                onClick={() => {
+                  setRedirectTo(`/users/create`);
+                }}
+              >
+                CREATE NEW USER
+              </Button>
+            </Grid>
+          )}
 
         <Grid item xs={12}>
           <Table>

@@ -61,6 +61,37 @@ export const UserForm = ({
         </Grid>
         <Grid item xs={12}>
           <TextField
+            label="Email"
+            size="small"
+            variant="outlined"
+            color="warning"
+            fullWidth
+            type="email"
+            style={{ marginTop: "10px" }}
+            value={user?.email ? user?.email : ""}
+            onChange={(e) => handleChangeUserData("email", e.target.value)}
+            error={formFieldErrors?.email}
+            helperText={formFieldErrors?.email}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            label="Phone Number"
+            size="small"
+            variant="outlined"
+            color="warning"
+            fullWidth
+            style={{ marginTop: "10px" }}
+            value={user?.phoneNumber ? user?.phoneNumber : ""}
+            onChange={(e) =>
+              handleChangeUserData("phoneNumber", e.target.value)
+            }
+            error={formFieldErrors?.phoneNumber}
+            helperText={formFieldErrors?.phoneNumber}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
             label="Username"
             size="small"
             variant="outlined"

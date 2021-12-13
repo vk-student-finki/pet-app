@@ -1,7 +1,13 @@
 import "./App.css";
 import { Alert, Container, LinearProgress, Snackbar } from "@mui/material";
 import Header from "./modules/common/Header";
-import { Routes, Route, useLocation } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useLocation,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 import { Home } from "./modules/home/Home";
 import { Users } from "./modules/users/Users";
 import { UserDetails } from "./modules/users/UserDetails";
@@ -18,12 +24,24 @@ import { DeleteUser } from "./modules/users/DeleteUser";
 import { SignIn } from "./modules/auth/SignIn";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import { COMMON_ACTIONS } from "./modules/common/CommonActions";
+import { MyProfile } from "./modules/users/MyProfile";
+import { useEffect } from "react";
+import { AuthService } from "./modules/auth/AuthService";
 
 export default function App() {
   const location = useLocation();
   const loading = useSelector((state) => state.loading);
   const showSuccessMessage = useSelector((state) => state.showSuccessMessage);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (location.pathname === "/users/create") {
+      if (!AuthService.hasRole("ROLE_ADMINISTRATOR")) {
+        navigate("/forbiden");
+      }
+    }
+  }, [location]);
 
   return (
     <>
@@ -49,8 +67,7 @@ export default function App() {
         </Snackbar>
       )}
       <Container>
-        {location?.pathname !== "/signin" &&
-          location?.pathname !== "/users/create" && <Header />}
+        {location?.pathname !== "/signin" && <Header />}
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/users" element={<Users />}></Route>
@@ -66,6 +83,7 @@ export default function App() {
           <Route path="/privileges" element={<Privileges />}></Route>
           <Route path="/privileges/:id" element={<PrivilegeDetails />}></Route>
           <Route path="/signin" element={<SignIn />}></Route>
+          <Route path="/myprofile/:username" element={<MyProfile />}></Route>
         </Routes>
       </Container>
     </>

@@ -62,7 +62,7 @@ export default function Header({}) {
               (key) =>
                 (AuthService.hasRole("ROLE_ADMINISTRATOR") &&
                   ["Users", "Groups", "Privileges"].includes(key)) ||
-                ["Home", "Sign out"].includes(key)
+                ["Home"].includes(key)
             )
             .map((text, index) => (
               <Link
@@ -107,40 +107,37 @@ export default function Header({}) {
               </Link>
             ))}
           <Divider />
-          <ListItem>
-            <ListItemIcon>
-              <AccountCircleIcon style={{ color: "#D35400" }} />
-            </ListItemIcon>
-            <ListItemText
-              style={{
-                textDecoration: "none",
-                color: "#D35400",
-                fontFamily: "Monaco, monospace",
-              }}
-              primary={
-                AuthService.getCurrentUser()?.firstName +
-                " " +
-                AuthService.getCurrentUser()?.lastName
-              }
-            />
-          </ListItem>
+          <Link
+            to={`/myprofile/${AuthService.getCurrentUser()?.username}`}
+            style={{ textDecoration: "none" }}
+          >
+            <ListItem>
+              <ListItemIcon>
+                <AccountCircleIcon style={{ color: "#D35400" }} />
+              </ListItemIcon>
+              <ListItemText
+                style={{
+                  textDecoration: "none",
+                  color: "#D35400",
+                  fontFamily: "Monaco, monospace",
+                }}
+                primary={
+                  AuthService.getCurrentUser()?.firstName +
+                  " " +
+                  AuthService.getCurrentUser()?.lastName
+                }
+              />
+            </ListItem>
+          </Link>
         </List>
       )}
 
       {!window?.localStorage?.getItem("auth") && (
         <List style={{ backgroundColor: "#F5F5F5" }}>
-          {["Home", "Sign In", "Sign Up"].map((text, index) => (
+          {["Home", "Sign In"].map((text, index) => (
             <Link
               key={index}
-              to={
-                index === 0
-                  ? "/"
-                  : index === 1
-                  ? "/signin"
-                  : index === 2
-                  ? "/users/create"
-                  : ""
-              }
+              to={index === 0 ? "/" : index === 1 ? "/signin" : ""}
               style={{
                 textDecoration: "none",
                 color: "#D35400",
@@ -172,6 +169,7 @@ export default function Header({}) {
   return (
     <>
       {redirectTo && <Navigate to={redirectTo} push />}
+
       <Hidden mdUp={true}>
         <Grid>
           {["left"].map((anchor) => (
@@ -263,6 +261,7 @@ export default function Header({}) {
               </Link>
             )}
           </Grid>
+
           <Grid item xs={6} md={2}>
             {!window?.localStorage?.getItem("auth") && (
               <Link to="/signin" style={{ textDecoration: "none" }}>
@@ -283,26 +282,7 @@ export default function Header({}) {
               </Link>
             )}
           </Grid>
-          {!window?.localStorage?.getItem("auth") ? (
-            <Grid item xs={6} md={2}>
-              <Link to="/users/create" style={{ textDecoration: "none" }}>
-                <Button
-                  size="medium"
-                  variant="outlined"
-                  style={{
-                    color: "#D9D9D9",
-                    borderColor: "#17202A",
-                    marginLeft: "360px",
-                    fontFamily: "Monaco, monospace",
-                    fontSize: "18px",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  sign up
-                </Button>
-              </Link>
-            </Grid>
-          ) : (
+          {window?.localStorage?.getItem("auth") && (
             <>
               <Grid xs={1} md={1}></Grid>
               <Grid
@@ -313,17 +293,22 @@ export default function Header({}) {
                   color: "#D9D9D9",
                 }}
               >
-                <AccountCircleOutlinedIcon
-                  style={{
-                    color: "#D35400",
-                    verticalAlign: "middle",
-                    marginBottom: "3px",
-                  }}
-                />{" "}
-                <span style={{ lineHeight: "2.5" }}>
-                  {AuthService.getCurrentUser()?.firstName}{" "}
-                  {AuthService.getCurrentUser()?.lastName}
-                </span>
+                <Link
+                  to={`/myprofile/${AuthService.getCurrentUser()?.username}`}
+                  style={{ textDecoration: "none", color: "#D9D9D9" }}
+                >
+                  <AccountCircleOutlinedIcon
+                    style={{
+                      color: "#D35400",
+                      verticalAlign: "middle",
+                      marginBottom: "3px",
+                    }}
+                  />{" "}
+                  <span style={{ lineHeight: "2.5" }}>
+                    {AuthService.getCurrentUser()?.firstName}{" "}
+                    {AuthService.getCurrentUser()?.lastName}
+                  </span>
+                </Link>
               </Grid>
               <Grid
                 item
