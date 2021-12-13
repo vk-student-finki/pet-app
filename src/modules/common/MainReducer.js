@@ -5,7 +5,7 @@ export default function reducer(
     success: false,
     error: false,
     loading: false,
-    currentUser: null,
+    showSuccessMessage: undefined,
   },
   action
 ) {
@@ -20,22 +20,25 @@ export default function reducer(
         ...state,
         loading: false,
       };
-    case COMMON_ACTIONS.SHOW_MESSAGE:
-      return {
-        ...state,
-        message: action.payload.message,
-        open: action.payload.open,
-        variant: action.payload.variant,
-      };
-    case COMMON_ACTIONS.CLEAR_NOTIFICATIONS:
-      return {
-        ...state,
-        open: false,
-      };
     case COMMON_ACTIONS.RERENDER:
       return {
         ...state,
         triggerRerender: !state.triggerRerender,
+      };
+    case COMMON_ACTIONS.SET_LOADING:
+      return {
+        ...state,
+        loading: action.payload.value,
+      };
+    case COMMON_ACTIONS.SHOW_SUCCESS_MESSAGE:
+      return {
+        ...state,
+        showSuccessMessage: action.payload.showSuccessMessage,
+      };
+    case COMMON_ACTIONS.CLEAR_NOTIFICATIONS:
+      return {
+        ...state,
+        showSuccessMessage: undefined,
       };
     default:
       return state;

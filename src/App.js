@@ -1,5 +1,5 @@
 import "./App.css";
-import { Container } from "@mui/material";
+import { Alert, Container, LinearProgress, Snackbar } from "@mui/material";
 import Header from "./modules/common/Header";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { Home } from "./modules/home/Home";
@@ -16,12 +16,38 @@ import { Privileges } from "./modules/privileges/Privileges";
 import { PrivilegeDetails } from "./modules/privileges/PrivilegeDetails";
 import { DeleteUser } from "./modules/users/DeleteUser";
 import { SignIn } from "./modules/auth/SignIn";
+import { useDispatch, useSelector, useStore } from "react-redux";
+import { COMMON_ACTIONS } from "./modules/common/CommonActions";
 
 export default function App() {
   const location = useLocation();
+  const loading = useSelector((state) => state.loading);
+  const showSuccessMessage = useSelector((state) => state.showSuccessMessage);
+  const dispatch = useDispatch();
 
   return (
     <>
+      {loading && <LinearProgress />}
+      {!loading && <div style={{ height: "4px" }}></div>}
+      {showSuccessMessage && (
+        <Snackbar
+          open={showSuccessMessage}
+          autoHideDuration={5000}
+          onClose={() => {
+            dispatch({ type: COMMON_ACTIONS.CLEAR_NOTIFICATIONS });
+          }}
+        >
+          <Alert
+            onClose={() => {
+              dispatch({ type: COMMON_ACTIONS.CLEAR_NOTIFICATIONS });
+            }}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            {showSuccessMessage}
+          </Alert>
+        </Snackbar>
+      )}
       <Container>
         {location?.pathname !== "/signin" &&
           location?.pathname !== "/users/create" && <Header />}

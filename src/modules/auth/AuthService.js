@@ -21,9 +21,42 @@ export const AuthService = {
 
   storeToken: (token) => {
     window.localStorage.setItem("auth", token);
+    window.localStorage.setItem("me", JSON.stringify(parseJwt(token)));
+  },
+
+  hasRole: (role) => {
+    //Return true if current user has role (arg)
+    if (!window.localStorage.getItem("me")) return false;
+    let meObj = JSON.parse(window.localStorage.getItem("me"));
+    if (meObj) {
+      if (meObj.roles.filter((r) => r.authority === role).length > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  },
+
+  getCurrentUser: () => {
+    let meObj = window.localStorage.getItem("me");
+    if (meObj) {
+      return JSON.parse(meObj);
+    } else {
+      return null;
+    }
   },
 
   getToken: () => {
     return window.localStorage.getItem("auth");
   },
+};
+
+const parseJwt = (token) => {
+  try {
+    return JSON.parse(atob(token.split(".")[1]));
+  } catch (e) {
+    return null;
+  }
 };

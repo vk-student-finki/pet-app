@@ -8,13 +8,16 @@ import {
   TableRow,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { COMMON_ACTIONS } from "../common/CommonActions";
 import { PrivilegesRepository } from "./PrivilegesRepository";
 
 export const Privileges = () => {
   const [privileges, setPrivileges] = useState();
   const [loading, setLoading] = useState();
   const [redirectTo, setRedirectTo] = useState();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     loadData(0, 10);
@@ -26,6 +29,10 @@ export const Privileges = () => {
       .then((res) => {
         setLoading(false);
         setPrivileges(res.data);
+        // dispatch({
+        //   type: COMMON_ACTIONS.SHOW_SUCCESS_MESSAGE,
+        //   payload: { showSuccessMessage: "Fetch privileges done successfully" },
+        // });
       })
       .catch((err) => {
         console.log(err);

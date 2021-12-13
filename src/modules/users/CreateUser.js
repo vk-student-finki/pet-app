@@ -31,6 +31,19 @@ export const CreateUser = (props) => {
     loadData(0, 1000);
   }, []);
 
+  useEffect(() => {
+    const listener = (event) => {
+      if (event.code === "Enter" || event.code === "NumpadEnter") {
+        event.preventDefault();
+        handleSubmit();
+      }
+    };
+    document.addEventListener("keydown", listener);
+    return () => {
+      document.removeEventListener("keydown", listener);
+    };
+  }, []);
+
   const loadData = (page, size) => {
     GroupsRepository.getAll(page, size)
       .then((res) => setGroups(res.data))
@@ -112,7 +125,9 @@ export const CreateUser = (props) => {
             maxWidth="xs"
             style={{ marginTop: "20px", marginBottom: "-30px" }}
           >
-            <Alert severity="success">{successMessage}</Alert>
+            <Alert variant="filled" severity="success">
+              {successMessage}
+            </Alert>
           </Container>
         </>
       )}

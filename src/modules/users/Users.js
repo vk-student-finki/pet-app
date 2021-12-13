@@ -14,7 +14,7 @@ import {
   Container,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { UsersRepository } from "./UsersRepository";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -23,6 +23,7 @@ export const Users = () => {
   const [users, setUsers] = useState();
   const [redirectTo, setRedirectTo] = useState();
   const [loading, setLoading] = useState();
+  const { id } = useParams();
 
   useEffect(() => {
     loadData(0, 10);

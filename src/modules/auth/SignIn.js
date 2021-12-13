@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -25,7 +25,6 @@ export const SignIn = () => {
 
   const handleSubmit = () => {
     console.log(username, password);
-
     setErrorMessage();
     AuthService.authenticate(username, password)
       .then((res) => {
@@ -45,7 +44,9 @@ export const SignIn = () => {
       <Container maxWidth="xs">
         {errorMessage && (
           <Grid item xs={12} style={{ marginTop: "20px" }}>
-            <Alert severity="error">{errorMessage}</Alert>
+            <Alert variant="filled" severity="error">
+              {errorMessage}
+            </Alert>
           </Grid>
         )}
       </Container>
@@ -75,6 +76,11 @@ export const SignIn = () => {
               <TextField
                 margin="normal"
                 fullWidth
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    handleSubmit();
+                  }
+                }}
                 id="username"
                 size="small"
                 color="warning"
@@ -88,6 +94,11 @@ export const SignIn = () => {
               />
               <TextField
                 margin="normal"
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    handleSubmit();
+                  }
+                }}
                 fullWidth
                 size="small"
                 value={password}

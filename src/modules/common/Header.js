@@ -7,15 +7,29 @@ import {
   List,
   SwipeableDrawer,
   Hidden,
+  ListItemButton,
+  Divider,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
 import { AuthService } from "../auth/AuthService";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import PersonIcon from "@mui/icons-material/Person";
+import GroupsIcon from "@mui/icons-material/Groups";
+import LogoutIcon from "@mui/icons-material/Logout";
+import StarIcon from "@mui/icons-material/Star";
+import LoginIcon from "@mui/icons-material/Login";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 
 export default function Header({}) {
+  const [redirectTo, setRedirectTo] = useState();
+  const [user, setUser] = useState();
+  const { id } = useParams();
+
   const [state, setState] = React.useState({
     left: false,
   });
@@ -40,23 +54,84 @@ export default function Header({}) {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <List style={{ backgroundColor: "#F5F5F5" }}>
-        {["Home", "Users", "Groups", "Privileges", "Sign In", "Sign Up"].map(
-          (text, index) => (
+      {window?.localStorage?.getItem("auth") && (
+        <List style={{ backgroundColor: "#F5F5F5" }}>
+          {["Home", "Users", "Groups", "Privileges", "Sign out"].map(
+            (text, index) => (
+              <Link
+                key={index}
+                to={
+                  index === 0
+                    ? "/"
+                    : index === 1
+                    ? "/users"
+                    : index === 2
+                    ? "/groups"
+                    : index === 3
+                    ? "/privileges"
+                    : index === 4
+                    ? "/signin"
+                    : ""
+                }
+                style={{
+                  textDecoration: "none",
+                  color: "#D35400",
+                  fontFamily: "Monaco, monospace",
+                }}
+              >
+                <ListItem button key={text}>
+                  <ListItemIcon style={{ color: "#D35400" }}>
+                    {index === 0 ? (
+                      <HomeIcon />
+                    ) : index === 1 ? (
+                      <PersonIcon />
+                    ) : index === 2 ? (
+                      <GroupsIcon />
+                    ) : index === 3 ? (
+                      <StarIcon />
+                    ) : index === 4 ? (
+                      <LogoutIcon />
+                    ) : (
+                      ""
+                    )}
+                  </ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItem>
+              </Link>
+            )
+          )}
+          <Divider />
+          <ListItem>
+            <ListItemIcon>
+              <AccountCircleOutlinedIcon style={{ color: "#D35400" }} />
+            </ListItemIcon>
+            <ListItemText
+              style={{
+                textDecoration: "none",
+                color: "#D35400",
+                fontFamily: "Monaco, monospace",
+              }}
+              primary={
+                AuthService.getCurrentUser()?.firstName +
+                " " +
+                AuthService.getCurrentUser()?.lastName
+              }
+            />
+          </ListItem>
+        </List>
+      )}
+
+      {!window?.localStorage?.getItem("auth") && (
+        <List style={{ backgroundColor: "#F5F5F5" }}>
+          {["Home", "Sign In", "Sign Up"].map((text, index) => (
             <Link
               key={index}
               to={
                 index === 0
                   ? "/"
                   : index === 1
-                  ? "/users"
-                  : index === 2
-                  ? "/groups"
-                  : index === 3
-                  ? "/privileges"
-                  : index === 4
                   ? "/signin"
-                  : index === 5
+                  : index === 2
                   ? "/users/create"
                   : ""
               }
@@ -67,16 +142,30 @@ export default function Header({}) {
               }}
             >
               <ListItem button key={text}>
+                <ListItemIcon style={{ color: "#D35400" }}>
+                  {index === 0 ? (
+                    <HomeIcon />
+                  ) : index === 1 ? (
+                    <LoginIcon />
+                  ) : index === 2 ? (
+                    <PersonAddAltOutlinedIcon />
+                  ) : index === 4 ? (
+                    <LogoutIcon />
+                  ) : (
+                    ""
+                  )}
+                </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItem>
             </Link>
-          )
-        )}
-      </List>
+          ))}
+        </List>
+      )}
     </Box>
   );
   return (
     <>
+      {redirectTo && <Navigate to={redirectTo} push />}
       <Hidden mdUp={true}>
         <Grid>
           {["left"].map((anchor) => (
@@ -114,20 +203,22 @@ export default function Header({}) {
             </Link>
           </Grid>
           <Grid item xs={6} md={1}>
-            <Link to="/users" style={{ textDecoration: "none" }}>
-              <Button
-                size="medium"
-                variant="outlined"
-                style={{
-                  color: "#D9D9D9",
-                  borderColor: "#17202A",
-                  fontSize: "18px",
-                  fontFamily: "Monaco, monospace",
-                }}
-              >
-                USERS
-              </Button>
-            </Link>
+            {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+              <Link to="/users" style={{ textDecoration: "none" }}>
+                <Button
+                  size="medium"
+                  variant="outlined"
+                  style={{
+                    color: "#D9D9D9",
+                    borderColor: "#17202A",
+                    fontSize: "18px",
+                    fontFamily: "Monaco, monospace",
+                  }}
+                >
+                  USERS
+                </Button>
+              </Link>
+            )}
           </Grid>
           <Grid item xs={6} md={1}>
             <Link to="/groups" style={{ textDecoration: "none" }}>
@@ -183,8 +274,8 @@ export default function Header({}) {
               </Link>
             )}
           </Grid>
-          <Grid item xs={6} md={2}>
-            {!window?.localStorage?.getItem("auth") ? (
+          {!window?.localStorage?.getItem("auth") ? (
+            <Grid item xs={6} md={2}>
               <Link to="/users/create" style={{ textDecoration: "none" }}>
                 <Button
                   size="medium"
@@ -201,24 +292,55 @@ export default function Header({}) {
                   sign up
                 </Button>
               </Link>
-            ) : (
-              <Button
-                size="medium"
-                variant="outlined"
-                onClick={() => handleLogout()}
+            </Grid>
+          ) : (
+            <>
+              <Grid xs={1} md={1}></Grid>
+              <Grid
+                item
+                xs={6}
+                md={2}
                 style={{
                   color: "#D9D9D9",
-                  borderColor: "#17202A",
-                  marginLeft: "360px",
-                  fontFamily: "Monaco, monospace",
-                  fontSize: "18px",
-                  whiteSpace: "nowrap",
                 }}
               >
-                Logout
-              </Button>
-            )}
-          </Grid>
+                <AccountCircleOutlinedIcon
+                  style={{
+                    color: "#D35400",
+                    verticalAlign: "middle",
+                    marginBottom: "3px",
+                  }}
+                />{" "}
+                <span style={{ lineHeight: "2.5" }}>
+                  {AuthService.getCurrentUser()?.firstName}{" "}
+                  {AuthService.getCurrentUser()?.lastName}
+                </span>
+              </Grid>
+              <Grid
+                item
+                xs={6}
+                md={2}
+                style={{ color: "#D9D9D9 ", whiteSpace: "break-spaces" }}
+              >
+                <Button
+                  size="medium"
+                  variant="outlined"
+                  fullWidth
+                  onClick={() => handleLogout()}
+                  style={{
+                    color: "#D9D9D9",
+                    borderColor: "#17202A",
+                    textAlign: "left",
+                    fontFamily: "Monaco, monospace",
+                    fontSize: "18px",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  Sign out
+                </Button>
+              </Grid>
+            </>
+          )}
         </Grid>
       </Hidden>
     </>

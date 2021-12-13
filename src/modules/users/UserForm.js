@@ -84,12 +84,12 @@ export const UserForm = ({
                 type="password"
                 style={{ marginTop: "10px" }}
                 fullWidth
-                value={user?.password ? user?.password : ""}
+                value={user?.newPassword ? user?.newPassword : ""}
                 onChange={(e) =>
-                  handleChangeUserData("password", e.target.value)
+                  handleChangeUserData("newPassword", e.target.value)
                 }
-                error={formFieldErrors?.password}
-                helperText={formFieldErrors?.password}
+                error={formFieldErrors?.newPassword}
+                helperText={formFieldErrors?.newPassword}
               />
             </Grid>
           </>
