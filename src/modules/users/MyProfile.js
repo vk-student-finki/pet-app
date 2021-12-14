@@ -16,9 +16,12 @@ import {
 } from "@mui/material";
 import { UsersRepository } from "./UsersRepository";
 import { UpdateUserValidator } from "./UserValidator";
+import EditIcon from "@mui/icons-material/Edit";
+import { Navigate } from "react-router-dom";
 
 export const MyProfile = () => {
   const [open, setOpen] = React.useState(false);
+  const [redirectTo, setRedirectTo] = useState();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -92,6 +95,8 @@ export const MyProfile = () => {
   };
   return (
     <>
+      {redirectTo && <Navigate to={redirectTo} push />}
+
       <Container maxWidth="xs">
         <Grid item xs={12} style={{ textAlign: "center", marginTop: "10px" }}>
           <PersonOutlineIcon sx={{ fontSize: 100, color: "#17202A" }} />{" "}
@@ -103,7 +108,13 @@ export const MyProfile = () => {
             }}
           >
             {AuthService.getCurrentUser()?.firstName}{" "}
-            {AuthService.getCurrentUser()?.lastName}
+            {AuthService.getCurrentUser()?.lastName}{" "}
+            <EditIcon
+              style={{ color: "#D35400" }}
+              onClick={() => {
+                setRedirectTo(`/users/edit/${user?.id}`);
+              }}
+            />
           </h2>
         </Grid>
       </Container>
