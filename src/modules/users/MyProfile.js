@@ -110,12 +110,14 @@ export const MyProfile = () => {
           >
             {AuthService.getCurrentUser()?.firstName}{" "}
             {AuthService.getCurrentUser()?.lastName}{" "}
-            <EditIcon
-              style={{ color: "#D35400", cursor: "pointer" }}
-              onClick={() => {
-                setRedirectTo(`/users/edit/${user?.id}`);
-              }}
-            />
+            {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+              <EditIcon
+                style={{ color: "#D35400", cursor: "pointer" }}
+                onClick={() => {
+                  setRedirectTo(`/users/edit/${user?.id}`);
+                }}
+              />
+            )}
           </h2>
         </Grid>
       </Container>
