@@ -110,7 +110,7 @@ export const MyProfile = () => {
             {AuthService.getCurrentUser()?.firstName}{" "}
             {AuthService.getCurrentUser()?.lastName}{" "}
             <EditIcon
-              style={{ color: "#D35400" }}
+              style={{ color: "#D35400", cursor: "pointer" }}
               onClick={() => {
                 setRedirectTo(`/users/edit/${user?.id}`);
               }}
