@@ -201,15 +201,18 @@ export const MyProfile = () => {
                 helperText={formFieldErrors?.phoneNumber}
               />
             </Grid>
-            <Button
-              color="success"
-              variant="contained"
-              onClick={() => {
-                handleSubmit();
-              }}
-            >
-              Update Profile
-            </Button>
+            <Grid item xs={12} md={4}>
+              <Button
+                fullWidth
+                style={{ marginTop: "10px", backgroundColor: "#2DA44E" }}
+                variant="contained"
+                onClick={() => {
+                  handleSubmit();
+                }}
+              >
+                Update Profile
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
 

@@ -27,6 +27,7 @@ import { COMMON_ACTIONS } from "./modules/common/CommonActions";
 import { MyProfile } from "./modules/users/MyProfile";
 import { useEffect } from "react";
 import { AuthService } from "./modules/auth/AuthService";
+import { ForbiddenAccess } from "./modules/users/ForbiddenAccess";
 
 export default function App() {
   const location = useLocation();
@@ -67,7 +68,8 @@ export default function App() {
         </Snackbar>
       )}
       <Container>
-        {location?.pathname !== "/signin" && <Header />}
+        {location?.pathname !== "/signin" && <Header /> &&
+          location?.pathname !== "/forbidden" && <Header />}
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/users" element={<Users />}></Route>
@@ -84,6 +86,7 @@ export default function App() {
           <Route path="/privileges/:id" element={<PrivilegeDetails />}></Route>
           <Route path="/signin" element={<SignIn />}></Route>
           <Route path="/myprofile/:username" element={<MyProfile />}></Route>
+          <Route path="/forbidden" element={<ForbiddenAccess />}></Route>
         </Routes>
       </Container>
     </>
