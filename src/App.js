@@ -67,11 +67,6 @@ export default function App() {
         navigate("/forbidden");
       }
     }
-    if (location.pathname === "/privileges/details") {
-      if (!AuthService.hasRole("ROLE_ADMINISTRATOR")) {
-        navigate("/forbidden");
-      }
-    }
   }, [location]);
 
   return (
