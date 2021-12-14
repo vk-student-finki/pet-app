@@ -242,7 +242,7 @@ export default function Header({}) {
               </Link>
             )}
           </Grid>
-          <Grid item xs={6} md={1}>
+          <Grid item xs={6} md={3}>
             {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
               <Link to="/privileges" style={{ textDecoration: "none" }}>
                 <Button
@@ -262,7 +262,7 @@ export default function Header({}) {
             )}
           </Grid>
 
-          <Grid item xs={6} md={2}>
+          <Grid item xs={6} md={1}>
             {!window?.localStorage?.getItem("auth") && (
               <Link to="/signin" style={{ textDecoration: "none" }}>
                 <Button
@@ -288,7 +288,7 @@ export default function Header({}) {
               <Grid
                 item
                 xs={6}
-                md={3}
+                md={2}
                 style={{
                   color: "#D9D9D9",
                 }}
