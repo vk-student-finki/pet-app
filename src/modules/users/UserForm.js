@@ -27,7 +27,7 @@ export const UserForm = ({
       <Container component="main" maxWidth="xs">
         {formError && (
           <Grid item xs={12} style={{ marginBottom: "10px" }}>
-            <Alert severity="error">{formError?.response?.data?.error}</Alert>
+            <Alert severity="error">{formError?.response?.data?.message}</Alert>
           </Grid>
         )}
         <Grid item xs={12}>
@@ -59,21 +59,7 @@ export const UserForm = ({
             helperText={formFieldErrors?.lastName}
           />
         </Grid>
-        <Grid item xs={12}>
-          <TextField
-            label="Email"
-            size="small"
-            variant="outlined"
-            color="warning"
-            fullWidth
-            type="email"
-            style={{ marginTop: "10px" }}
-            value={user?.email ? user?.email : ""}
-            onChange={(e) => handleChangeUserData("email", e.target.value)}
-            error={formFieldErrors?.email}
-            helperText={formFieldErrors?.email}
-          />
-        </Grid>
+
         <Grid item xs={12}>
           <TextField
             label="Phone Number"
@@ -90,22 +76,41 @@ export const UserForm = ({
             helperText={formFieldErrors?.phoneNumber}
           />
         </Grid>
-        <Grid item xs={12}>
-          <TextField
-            label="Username"
-            size="small"
-            variant="outlined"
-            color="warning"
-            fullWidth
-            style={{ marginTop: "10px" }}
-            value={user?.username ? user?.username : ""}
-            onChange={(e) => handleChangeUserData("username", e.target.value)}
-            error={formFieldErrors?.username}
-            helperText={formFieldErrors?.username}
-          />
-        </Grid>
+
         {!updateMode && (
           <>
+            <Grid item xs={12}>
+              <TextField
+                label="Email"
+                size="small"
+                variant="outlined"
+                color="warning"
+                fullWidth
+                type="email"
+                style={{ marginTop: "10px" }}
+                value={user?.email ? user?.email : ""}
+                onChange={(e) => handleChangeUserData("email", e.target.value)}
+                error={formFieldErrors?.email}
+                helperText={formFieldErrors?.email}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="Username"
+                size="small"
+                variant="outlined"
+                color="warning"
+                fullWidth
+                style={{ marginTop: "10px" }}
+                value={user?.username ? user?.username : ""}
+                onChange={(e) =>
+                  handleChangeUserData("username", e.target.value)
+                }
+                error={formFieldErrors?.username}
+                helperText={formFieldErrors?.username}
+              />
+            </Grid>
+
             <Grid item xs={12}>
               <TextField
                 label="Password"

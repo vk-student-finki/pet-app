@@ -12,6 +12,7 @@ import {
   Grid,
   TextField,
   DialogActions,
+  Alert,
 } from "@mui/material";
 import { UsersRepository } from "./UsersRepository";
 import { UpdateUserValidator } from "./UserValidator";
@@ -213,6 +214,13 @@ export const MyProfile = () => {
                 Update Profile
               </Button>
             </Grid>
+            {globalFormError && (
+              <Grid item xs={12} style={{ marginTop: "10px" }}>
+                <Alert severity="error" variant="filled">
+                  {globalFormError?.response?.data?.message}
+                </Alert>
+              </Grid>
+            )}
           </Grid>
         </Grid>
 

@@ -14,7 +14,7 @@ import {
   Container,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { UsersRepository } from "./UsersRepository";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -25,6 +25,7 @@ export const Users = () => {
   const [redirectTo, setRedirectTo] = useState();
   const [loading, setLoading] = useState();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadData(0, 10);
@@ -38,7 +39,12 @@ export const Users = () => {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response.data.status, err.response.data.message);
+        if (err?.response?.data?.status === 403) {
+          navigate("/forbidden");
+        } else {
+          console.log(err);
+        }
         setLoading(false);
       });
   };
