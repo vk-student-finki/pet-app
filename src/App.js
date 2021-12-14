@@ -27,7 +27,7 @@ import { COMMON_ACTIONS } from "./modules/common/CommonActions";
 import { MyProfile } from "./modules/users/MyProfile";
 import { useEffect } from "react";
 import { AuthService } from "./modules/auth/AuthService";
-import { ForbiddenAccess } from "./modules/users/ForbiddenAccess";
+import { ForbiddenAccess } from "./modules/common/ForbiddenAccess";
 
 export default function App() {
   const location = useLocation();
@@ -37,38 +37,25 @@ export default function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (location.pathname === "/users") {
+    if (location.pathname.startsWith("/users")) {
       if (!AuthService.hasRole("ROLE_ADMINISTRATOR")) {
         navigate("/forbidden");
       }
     }
-    if (location.pathname === "/groups") {
+
+    if (location.pathname.startsWith("/groups")) {
       if (!AuthService.hasRole("ROLE_ADMINISTRATOR")) {
         navigate("/forbidden");
       }
     }
-    if (location.pathname === "/privileges") {
+    if (location.pathname.startsWith("/privileges")) {
       if (!AuthService.hasRole("ROLE_ADMINISTRATOR")) {
         navigate("/forbidden");
       }
     }
-    if (location.pathname === "/users/create") {
-      if (!AuthService.hasRole("ROLE_ADMINISTRATOR")) {
-        navigate("/forbidden");
-      }
-    }
-    if (location.pathname === "/users/create") {
-      if (!AuthService.hasRole("ROLE_ADMINISTRATOR")) {
-        navigate("/forbidden");
-      }
-    }
-    if (location.pathname === "/groups/create") {
-      if (!AuthService.hasRole("ROLE_ADMINISTRATOR")) {
-        navigate("/forbidden");
-      }
-    }
-    if (location.pathname === "/privileges/details") {
-      if (!AuthService.hasRole("ROLE_ADMINISTRATOR")) {
+
+    if (location.pathname.startsWith("/myprofile")) {
+      if (!window?.localStorage?.getItem("auth")) {
         navigate("/forbidden");
       }
     }
