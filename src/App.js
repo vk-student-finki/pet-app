@@ -37,9 +37,39 @@ export default function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (location.pathname === "/users") {
+      if (!AuthService.hasRole("ROLE_ADMINISTRATOR")) {
+        navigate("/forbidden");
+      }
+    }
+    if (location.pathname === "/groups") {
+      if (!AuthService.hasRole("ROLE_ADMINISTRATOR")) {
+        navigate("/forbidden");
+      }
+    }
+    if (location.pathname === "/privileges") {
+      if (!AuthService.hasRole("ROLE_ADMINISTRATOR")) {
+        navigate("/forbidden");
+      }
+    }
     if (location.pathname === "/users/create") {
       if (!AuthService.hasRole("ROLE_ADMINISTRATOR")) {
-        navigate("/forbiden");
+        navigate("/forbidden");
+      }
+    }
+    if (location.pathname === "/users/create") {
+      if (!AuthService.hasRole("ROLE_ADMINISTRATOR")) {
+        navigate("/forbidden");
+      }
+    }
+    if (location.pathname === "/groups/create") {
+      if (!AuthService.hasRole("ROLE_ADMINISTRATOR")) {
+        navigate("/forbidden");
+      }
+    }
+    if (location.pathname === "/privileges/details") {
+      if (!AuthService.hasRole("ROLE_ADMINISTRATOR")) {
+        navigate("/forbidden");
       }
     }
   }, [location]);
