@@ -19,6 +19,8 @@ import { UsersRepository } from "./UsersRepository";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { AuthService } from "../auth/AuthService";
+import { useDispatch } from "react-redux";
+import { COMMON_ACTIONS } from "../common/CommonActions";
 
 export const Users = () => {
   const [users, setUsers] = useState();
@@ -26,6 +28,7 @@ export const Users = () => {
   const [loading, setLoading] = useState();
   const { id } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     loadData(0, 10);
@@ -37,6 +40,10 @@ export const Users = () => {
       .then((res) => {
         setUsers(res.data);
         setLoading(false);
+        dispatch({
+          type: COMMON_ACTIONS.SHOW_SUCCESS_MESSAGE,
+          payload: { showSuccessMessage: "Fetch users done successfully" },
+        });
       })
       .catch((err) => {
         console.log(err.response.data.status, err.response.data.message);

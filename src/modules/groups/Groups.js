@@ -17,11 +17,14 @@ import { Navigate } from "react-router-dom";
 import { GroupsRepository } from "./GroupsRepository";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { COMMON_ACTIONS } from "../common/CommonActions";
+import { useDispatch } from "react-redux";
 
 export const Groups = () => {
   const [groups, setGroups] = useState();
   const [loading, setLoading] = useState(false);
   const [redirectTo, setRedirectTo] = useState();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     loadData(0, 10);
@@ -33,6 +36,10 @@ export const Groups = () => {
       .then((res) => {
         setLoading(false);
         setGroups(res.data);
+        dispatch({
+          type: COMMON_ACTIONS.SHOW_SUCCESS_MESSAGE,
+          payload: { showSuccessMessage: "Fetch groups done successfully" },
+        });
       })
       .catch((err) => {
         setLoading(false);
