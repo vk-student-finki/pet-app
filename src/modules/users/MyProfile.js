@@ -13,6 +13,7 @@ import {
   TextField,
   DialogActions,
   Alert,
+  Chip,
 } from "@mui/material";
 import { UsersRepository } from "./UsersRepository";
 import { UpdateUserValidator } from "./UserValidator";
@@ -134,13 +135,14 @@ export const MyProfile = () => {
             }}
           >
             <Grid item xs={12} md={12}>
+              <span style={{ fontSize: "14px" }}>First Name</span>
               <TextField
                 margin="dense"
                 id="name"
                 color="warning"
                 fullWidth
-                label="First Name"
-                variant="standard"
+                variant="outlined"
+                size="small"
                 value={user?.firstName ? user?.firstName : ""}
                 onChange={(e) =>
                   handleChangeUserData("firstName", e.target.value)
@@ -150,13 +152,15 @@ export const MyProfile = () => {
               />
             </Grid>
             <Grid item xs={12} md={12}>
+              <span style={{ fontSize: "14px" }}>Last Name</span>
+
               <TextField
                 fullWidth
                 margin="dense"
                 id="name"
                 color="warning"
-                label="Last Name"
-                variant="standard"
+                size="small"
+                variant="outlined"
                 value={user?.lastName ? user?.lastName : ""}
                 onChange={(e) =>
                   handleChangeUserData("lastName", e.target.value)
@@ -166,14 +170,16 @@ export const MyProfile = () => {
               />
             </Grid>
             <Grid item xs={12} md={12}>
+              <span style={{ fontSize: "14px" }}>Username</span>
+
               <TextField
                 margin="dense"
                 id="name"
                 fullWidth
                 color="warning"
-                label="Username"
                 disabled
-                variant="standard"
+                variant="outlined"
+                size="small"
                 value={user?.username ? user?.username : ""}
                 onChange={(e) =>
                   handleChangeUserData("username", e.target.value)
@@ -183,27 +189,30 @@ export const MyProfile = () => {
               />
             </Grid>
             <Grid item xs={12} md={12}>
+              <span style={{ fontSize: "14px" }}>Email</span>
+
               <TextField
                 margin="dense"
                 id="name"
-                label="Email"
                 disabled
                 color="warning"
                 fullWidth
-                variant="standard"
+                variant="outlined"
+                size="small"
                 value={user?.email ? user?.email : ""}
                 onChange={(e) => handleChangeUserData("email", e.target.value)}
                 error={formFieldErrors?.email}
                 helperText={formFieldErrors?.email}
               />
             </Grid>
+            <span style={{ fontSize: "14px" }}>Phone number</span>
             <Grid item xs={12} md={12}>
               <TextField
                 margin="dense"
                 id="name"
-                label="Phone Number"
                 color="warning"
-                variant="standard"
+                variant="outlined"
+                size="small"
                 fullWidth
                 value={user?.phoneNumber ? user?.phoneNumber : ""}
                 onChange={(e) =>
@@ -216,7 +225,11 @@ export const MyProfile = () => {
             <Grid item xs={12} md={4}>
               <Button
                 fullWidth
-                style={{ marginTop: "10px", backgroundColor: "#2DA44E" }}
+                style={{
+                  marginTop: "10px",
+                  backgroundColor: "#2DA44E",
+                  float: "right",
+                }}
                 variant="contained"
                 onClick={() => {
                   handleSubmit();
@@ -236,13 +249,21 @@ export const MyProfile = () => {
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <h3 style={{ fontFamily: "Helvetica, sans-serif", color: "#1F393C" }}>
+          <h3
+            style={{
+              fontFamily: "Helvetica, sans-serif",
+              color: "#1F393C",
+            }}
+          >
             Change password
           </h3>
           <Divider></Divider>
-          <Button onClick={handleClickOpen} variant="filled" size="small">
-            Change Password
-          </Button>
+          <Chip
+            variant="outlined"
+            label="Change password"
+            onClick={handleClickOpen}
+            style={{ marginTop: "10px", float: "right " }}
+          ></Chip>
           <Dialog open={open} onClose={handleClose}>
             <DialogTitle>Change Password</DialogTitle>
             <DialogContent>
