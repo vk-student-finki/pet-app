@@ -14,11 +14,14 @@ import {
   DialogActions,
   Alert,
   Chip,
+  Snackbar,
+  IconButton,
 } from "@mui/material";
 import { UsersRepository } from "./UsersRepository";
 import { UpdateUserValidator } from "./UserValidator";
 import EditIcon from "@mui/icons-material/Edit";
 import { Navigate } from "react-router-dom";
+import CloseIcon from "@mui/icons-material/Close";
 
 export const MyProfile = () => {
   const [open, setOpen] = React.useState(false);
@@ -79,13 +82,14 @@ export const MyProfile = () => {
     UsersRepository.updateUser(user?.id, user)
       .then((res) => {
         console.log(res);
-        console.log("success");
+        setSuccessMessage("Password is changed");
         setLoading(false);
       })
       .catch((err) => {
         console.log(err);
         setLoading(false);
         setGlobalFormError(err);
+        console.log("not changed");
       });
   };
   const handleChangeUserData = (name, value) => {
@@ -94,6 +98,31 @@ export const MyProfile = () => {
     setUser(data);
     console.log(data);
   };
+  const [openMessage, setOpenMessage] = React.useState(false);
+
+  const handleClick = () => {
+    setOpenMessage(true);
+  };
+
+  const handleCloseMessage = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenMessage(false);
+  };
+  const action = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleCloseMessage}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
   return (
     <>
       {redirectTo && <Navigate to={redirectTo} push />}
@@ -267,6 +296,20 @@ export const MyProfile = () => {
             style={{ marginTop: "10px", float: "right " }}
           ></Chip>
           <Dialog open={open} onClose={handleClose}>
+            {globalFormError && (
+              <Grid item xs={12} style={{ marginBottom: "10px" }}>
+                <Alert severity="error">
+                  {globalFormError?.response?.data?.message}
+                </Alert>
+              </Grid>
+            )}
+            {/* {successMessage && (
+              <>
+                <Alert variant="filled" severity="success">
+                  {successMessage}
+                </Alert>
+              </>
+            )} */}
             <DialogTitle>Change Password</DialogTitle>
             <DialogContent>
               <DialogContentText>
@@ -291,28 +334,41 @@ export const MyProfile = () => {
               <TextField
                 margin="dense"
                 id="name"
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    handleSubmit();
+                  }
+                }}
                 label="Confirm Password"
                 type="password"
                 color="warning"
                 fullWidth
                 variant="standard"
                 onChange={(e) =>
-                  handleChangeUserData("newPassword", e.target.value)
+                  handleChangeUserData("confirmPassword", e.target.value)
                 }
-                error={formFieldErrors?.newPassword}
-                helperText={formFieldErrors?.newPassword}
+                error={formFieldErrors?.confirmPassword}
+                helperText={formFieldErrors?.confirmPassword}
               />
             </DialogContent>
+
             <DialogActions>
-              <Button onClick={handleClose}>Cancel</Button>
+              <Button onClick={handleClose}>Close</Button>
               <Button
                 onClick={() => {
-                  handleClose();
                   handleSubmit();
+                  handleClick();
                 }}
               >
                 Submit
               </Button>
+              <Snackbar
+                open={openMessage}
+                autoHideDuration={6000}
+                onClose={handleCloseMessage}
+                message="Password changed"
+                action={action}
+              />
             </DialogActions>
           </Dialog>
         </Grid>
