@@ -7,11 +7,16 @@ import {
   Table,
   TableBody,
   Hidden,
+  Dialog,
+  DialogTitle,
+  DialogActions,
   TableCell,
   TableRow,
   Link,
   Button,
   Container,
+  DialogContent,
+  Slide,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
@@ -21,7 +26,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { AuthService } from "../auth/AuthService";
 import { useDispatch } from "react-redux";
 import { COMMON_ACTIONS } from "../common/CommonActions";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 export const Users = () => {
   const [users, setUsers] = useState();
   const [redirectTo, setRedirectTo] = useState();
@@ -30,6 +39,15 @@ export const Users = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   useEffect(() => {
     loadData(0, 10);
   }, []);
@@ -170,10 +188,66 @@ export const Users = () => {
                           cursor: "pointer",
                           color: "#989292",
                         }}
-                        onClick={() => {
-                          setRedirectTo(`/users/delete/${user?.id}`);
-                        }}
+                        // onClick={() => {
+                        //   setRedirectTo(`/users/delete/${user?.id}`);
+                        // }}
+                        onClick={handleClickOpen}
                       ></DeleteIcon>
+                      <Dialog
+                        open={open}
+                        TransitionComponent={Transition}
+                        keepMounted
+                        onClose={handleClose}
+                        aria-describedby="alert-dialog-slide-description"
+                      >
+                        <HighlightOffIcon
+                          style={{
+                            color: "#F15E5E",
+                            marginLeft: "auto",
+                            marginRight: "auto",
+                            fontSize: "70px",
+                            marginTop: "10px",
+                          }}
+                        />
+                        <DialogTitle
+                          style={{
+                            fontWeight: "bold",
+                            fontFamily: "Monaco, monospace",
+                          }}
+                        >
+                          {"Confirm delete"}
+                        </DialogTitle>
+                        <DialogContent style={{ textAlign: "center" }}>
+                          Are you sure you want to delete this user? This action
+                          <br /> cannot be undone.
+                        </DialogContent>
+                        <DialogActions>
+                          <Button
+                            onClick={handleClose}
+                            variant="outlined"
+                            size="large"
+                            style={{
+                              backgroundColor: "#C1C1C1",
+                              color: "white",
+                              border: "#C1C1C1",
+                            }}
+                          >
+                            Cancel
+                          </Button>
+                          <Button
+                            size="large"
+                            style={{
+                              backgroundColor: "#F15E5E",
+                              color: "white",
+                            }}
+                            onClick={() => {
+                              setRedirectTo(`/users/delete/${user?.id}`);
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        </DialogActions>
+                      </Dialog>
                     </TableCell>
                   </TableRow>
                 ))}
