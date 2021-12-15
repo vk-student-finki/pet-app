@@ -201,6 +201,7 @@ export default function Header({}) {
             padding: "10px",
             position: "sticky",
             top: 0,
+            zIndex: 1,
           }}
         >
           <Grid item xs={6} md={1}>
@@ -293,7 +294,7 @@ export default function Header({}) {
               <Grid
                 item
                 xs={6}
-                md={2}
+                md={3}
                 style={{
                   color: "#D9D9D9",
                 }}
@@ -318,8 +319,11 @@ export default function Header({}) {
               <Grid
                 item
                 xs={6}
-                md={2}
-                style={{ color: "#D9D9D9 ", whiteSpace: "break-spaces" }}
+                md={1}
+                style={{
+                  color: "#D9D9D9 ",
+                  whiteSpace: "break-spaces",
+                }}
               >
                 <Button
                   size="medium"
