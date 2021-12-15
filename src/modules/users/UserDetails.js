@@ -6,10 +6,22 @@ import {
   TableRow,
   Button,
   Hidden,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogActions,
+  Slide,
+  DialogContentText,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router";
 import { UsersRepository } from "./UsersRepository";
+import React from "react";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 export const UserDetails = ({}) => {
   const { id } = useParams();
@@ -46,6 +58,16 @@ export const UserDetails = ({}) => {
     createData("Phone Number", user?.phoneNumber),
     createData("Email", user?.email),
   ];
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <>
@@ -115,6 +137,7 @@ export const UserDetails = ({}) => {
               <Grid item xs={12} md={2}>
                 <Button
                   variant="outlined"
+                  onClick={handleClickOpen}
                   style={{
                     color: "#17202A",
                     borderColor: "#17202A",
@@ -122,12 +145,64 @@ export const UserDetails = ({}) => {
                   }}
                   size="medium"
                   fullWidth
-                  onClick={() => {
-                    setRedirectTo(`/users/delete/${id}`);
-                  }}
                 >
-                  <strong>Delete</strong>
+                  Delete user
                 </Button>
+                <Dialog
+                  open={open}
+                  TransitionComponent={Transition}
+                  keepMounted
+                  onClose={handleClose}
+                  aria-describedby="alert-dialog-slide-description"
+                >
+                  <HighlightOffIcon
+                    style={{
+                      color: "#F15E5E",
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                      fontSize: "70px",
+                      marginTop: "10px",
+                    }}
+                  />
+                  <DialogTitle
+                    style={{
+                      fontWeight: "bold",
+                      fontFamily: "Monaco, monospace",
+                    }}
+                  >
+                    {"Confirm delete"}
+                  </DialogTitle>
+                  <DialogContent style={{ textAlign: "center" }}>
+                    Are you sure you want to delete this user? This action
+                    <br /> cannot be undone.
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      onClick={handleClose}
+                      variant="outlined"
+                      size="large"
+                      style={{
+                        backgroundColor: "#C1C1C1",
+                        color: "white",
+                        border: "#C1C1C1",
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      size="large"
+                      style={{
+                        backgroundColor: "#F15E5E",
+                        color: "white",
+                      }}
+                      onClick={() => {
+                        setRedirectTo(`/users/delete/${id}`);
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </DialogActions>
+                </Dialog>
               </Grid>
 
               <Grid item xs={12} md={2}>
