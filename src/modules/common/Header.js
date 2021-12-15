@@ -196,7 +196,12 @@ export default function Header({}) {
         <Grid
           container
           spacing={2}
-          style={{ backgroundColor: "#17202A", padding: "10px" }}
+          style={{
+            backgroundColor: "#17202A",
+            padding: "10px",
+            position: "sticky",
+            top: 0,
+          }}
         >
           <Grid item xs={6} md={1}>
             <Link to="/" style={{ textDecoration: "none" }}>
