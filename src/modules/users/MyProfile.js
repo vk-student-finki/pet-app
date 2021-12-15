@@ -297,19 +297,11 @@ export const MyProfile = () => {
           ></Chip>
           <Dialog open={open} onClose={handleClose}>
             {globalFormError && (
-              <Grid item xs={12} style={{ marginBottom: "10px" }}>
-                <Alert severity="error">
-                  {globalFormError?.response?.data?.message}
-                </Alert>
-              </Grid>
+              <Alert severity="error">
+                {globalFormError?.response?.data?.message}
+              </Alert>
             )}
-            {/* {successMessage && (
-              <>
-                <Alert variant="filled" severity="success">
-                  {successMessage}
-                </Alert>
-              </>
-            )} */}
+
             <DialogTitle>Change Password</DialogTitle>
             <DialogContent>
               <DialogContentText>
