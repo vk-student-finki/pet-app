@@ -358,7 +358,7 @@ export default function Header({}) {
                   style={{
                     color: "#D9D9D9",
                     borderColor: "#17202A",
-                    marginLeft: "450px",
+                    marginLeft: "500px",
                     fontFamily: "Monaco, monospace",
                     fontSize: "18px",
                     whiteSpace: "nowrap",
