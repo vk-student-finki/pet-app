@@ -23,6 +23,7 @@ import { alpha } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Navigate } from "react-router-dom";
+import { AuthService } from "../auth/AuthService";
 
 export const Grenades = () => {
   const [grenades, setGrenades] = useState();
@@ -134,19 +135,21 @@ export const Grenades = () => {
         </Grid>
         <Hidden mdDown>
           <Grid item xs={12} md={12}>
-            <Button
-              variant="contained"
-              style={{
-                float: "right",
-                backgroundColor: "#FFA500",
-                marginRight: "10px",
-              }}
-              onClick={() => {
-                setRedirectTo(`/grenades/create`);
-              }}
-            >
-              Add new product
-            </Button>
+            {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+              <Button
+                variant="contained"
+                style={{
+                  float: "right",
+                  backgroundColor: "#D35400",
+                  marginRight: "10px",
+                }}
+                onClick={() => {
+                  setRedirectTo(`/grenades/create`);
+                }}
+              >
+                Add new grenade
+              </Button>
+            )}
           </Grid>
         </Hidden>
       </Grid>
@@ -172,7 +175,7 @@ export const Grenades = () => {
                   textTransform: "uppercase",
                 }}
               >
-                Products
+                Grenades
               </span>
             </Grid>
           </Grid>

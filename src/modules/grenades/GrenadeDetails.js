@@ -54,7 +54,7 @@ export const GrenadeDetails = () => {
               to="/grenades"
               style={{ textDecoration: "none", color: "#878786" }}
             >
-              Products
+              Grenades
             </Link>
             <Link
               underline="hover"

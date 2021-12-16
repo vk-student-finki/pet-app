@@ -11,6 +11,7 @@ import {
   Divider,
   MenuItem,
   Menu,
+  IconButton,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
@@ -30,6 +31,8 @@ import Fade from "@mui/material/Fade";
 import CircleIcon from "@mui/icons-material/Circle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import CategoryIcon from "@mui/icons-material/Category";
+import Tooltip from "@mui/material/Tooltip";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 export default function Header({}) {
   const [redirectTo, setRedirectTo] = useState();
@@ -202,6 +205,7 @@ export default function Header({}) {
       )}
     </Box>
   );
+
   return (
     <>
       {redirectTo && <Navigate to={redirectTo} push />}
@@ -388,22 +392,24 @@ export default function Header({}) {
                   color: "#D9D9D9",
                 }}
               >
-                <Link
-                  to={`/myprofile/${AuthService.getCurrentUser()?.username}`}
-                  style={{ textDecoration: "none", color: "#D9D9D9" }}
-                >
-                  <AccountCircleOutlinedIcon
-                    style={{
-                      color: "#D35400",
-                      verticalAlign: "middle",
-                      marginBottom: "3px",
-                    }}
-                  />{" "}
-                  <span style={{ lineHeight: "2.5" }}>
-                    {AuthService.getCurrentUser()?.firstName}{" "}
-                    {AuthService.getCurrentUser()?.lastName}
-                  </span>
-                </Link>
+                <Tooltip title="Account settings">
+                  <Link
+                    to={`/myprofile/${AuthService.getCurrentUser()?.username}`}
+                    style={{ textDecoration: "none", color: "#D9D9D9" }}
+                  >
+                    <AccountCircleOutlinedIcon
+                      style={{
+                        color: "#D35400",
+                        verticalAlign: "middle",
+                        marginBottom: "3px",
+                      }}
+                    />{" "}
+                    <span style={{ lineHeight: "2.5" }}>
+                      {AuthService.getCurrentUser()?.firstName}{" "}
+                      {AuthService.getCurrentUser()?.lastName}
+                    </span>
+                  </Link>
+                </Tooltip>
               </Grid>
               <Grid
                 item
