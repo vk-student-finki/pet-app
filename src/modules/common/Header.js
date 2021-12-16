@@ -9,6 +9,8 @@ import {
   Hidden,
   ListItemButton,
   Divider,
+  MenuItem,
+  Menu,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
@@ -19,17 +21,26 @@ import { AuthService } from "../auth/AuthService";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import PersonIcon from "@mui/icons-material/Person";
 import GroupsIcon from "@mui/icons-material/Groups";
-import LogoutIcon from "@mui/icons-material/Logout";
 import StarIcon from "@mui/icons-material/Star";
 import LoginIcon from "@mui/icons-material/Login";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import Fade from "@mui/material/Fade";
+import CircleIcon from "@mui/icons-material/Circle";
+import LogoutIcon from "@mui/icons-material/Logout";
+import CategoryIcon from "@mui/icons-material/Category";
 
 export default function Header({}) {
   const [redirectTo, setRedirectTo] = useState();
-  const [user, setUser] = useState();
-  const { id } = useParams();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const [state, setState] = React.useState({
     left: false,
@@ -57,12 +68,18 @@ export default function Header({}) {
     >
       {window?.localStorage?.getItem("auth") && (
         <List style={{ backgroundColor: "#F5F5F5" }}>
-          {["Home", "Users", "Groups", "Privileges", "Sign out"]
+          {["Home", "Grenades", "Producers", "Users", "Groups", "Privileges"]
             .filter(
               (key) =>
                 (AuthService.hasRole("ROLE_ADMINISTRATOR") &&
-                  ["Users", "Groups", "Privileges"].includes(key)) ||
-                ["Home"].includes(key)
+                  [
+                    "Grenades",
+                    "Producers",
+                    "Users",
+                    "Groups",
+                    "Privileges",
+                  ].includes(key)) ||
+                ["Home", "Grenades", "Producers"].includes(key)
             )
             .map((text, index) => (
               <Link
@@ -71,13 +88,15 @@ export default function Header({}) {
                   index === 0
                     ? "/"
                     : index === 1
-                    ? "/users"
+                    ? "/grenades"
                     : index === 2
-                    ? "/groups"
+                    ? "/producers"
                     : index === 3
-                    ? "/privileges"
+                    ? "/users"
                     : index === 4
-                    ? "/signin"
+                    ? "/groups"
+                    : index === 5
+                    ? "/privileges"
                     : ""
                 }
                 style={{
@@ -91,13 +110,15 @@ export default function Header({}) {
                     {index === 0 ? (
                       <HomeIcon />
                     ) : index === 1 ? (
-                      <PersonIcon />
+                      <CircleIcon />
                     ) : index === 2 ? (
-                      <GroupsIcon />
+                      <CategoryIcon />
                     ) : index === 3 ? (
-                      <StarIcon />
+                      <GroupsIcon />
                     ) : index === 4 ? (
-                      <LogoutIcon />
+                      <StarIcon />
+                    ) : index === 5 ? (
+                      <PersonIcon />
                     ) : (
                       ""
                     )}
@@ -126,6 +147,21 @@ export default function Header({}) {
                   " " +
                   AuthService.getCurrentUser()?.lastName
                 }
+              />
+            </ListItem>
+          </Link>
+          <Link to={`/signin`} style={{ textDecoration: "none" }}>
+            <ListItem>
+              <ListItemIcon>
+                <LogoutIcon style={{ color: "#D35400" }} />
+              </ListItemIcon>
+              <ListItemText
+                style={{
+                  textDecoration: "none",
+                  color: "#D35400",
+                  fontFamily: "Monaco, monospace",
+                }}
+                primary={"Sign Out"}
               />
             </ListItem>
           </Link>
@@ -195,16 +231,15 @@ export default function Header({}) {
       <Hidden mdDown={true}>
         <Grid
           container
-          spacing={2}
           style={{
-            backgroundColor: "#17202A",
+            backgroundColor: "#1E1F1C",
             padding: "10px",
             position: "sticky",
             top: 0,
             zIndex: 1,
           }}
         >
-          <Grid item xs={6} md={1}>
+          <Grid item xs={6} md={0.7}>
             <Link to="/" style={{ textDecoration: "none" }}>
               <HomeIcon
                 sx={{ fontSize: 40 }}
@@ -212,11 +247,65 @@ export default function Header({}) {
               ></HomeIcon>
             </Link>
           </Grid>
+          <Grid item xs={6} md={1.3}>
+            <Button
+              size="small"
+              variant="outlined"
+              style={{
+                color: "#D9D9D9",
+                borderColor: "#17202A",
+                fontSize: "18px",
+                fontFamily: "Monaco, monospace",
+              }}
+              ariaControls="fade-menu"
+              ariaHaspopup="true"
+              ariaExpanded={open ? "true" : undefined}
+              onClick={handleClick}
+            >
+              CATEGORY
+            </Button>
+            <Menu
+              id="fade-menu"
+              MenuListProps={{
+                "aria-labelledby": "fade-button",
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              TransitionComponent={Fade}
+            >
+              <Link
+                to="/grenades"
+                style={{ textDecoration: "none", color: "#D35400" }}
+              >
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                  }}
+                >
+                  Grenades
+                </MenuItem>
+              </Link>
+              <Link
+                to="/producers"
+                style={{ textDecoration: "none", color: "#D35400" }}
+              >
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                  }}
+                >
+                  Producers
+                </MenuItem>
+              </Link>
+              <MenuItem onClick={handleClose}>Countries</MenuItem>
+            </Menu>
+          </Grid>
           <Grid item xs={6} md={1}>
             {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
               <Link to="/users" style={{ textDecoration: "none" }}>
                 <Button
-                  size="medium"
+                  size="small"
                   variant="outlined"
                   style={{
                     color: "#D9D9D9",
@@ -234,7 +323,7 @@ export default function Header({}) {
             {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
               <Link to="/groups" style={{ textDecoration: "none" }}>
                 <Button
-                  size="medium"
+                  size="small"
                   variant="outlined"
                   style={{
                     color: "#D9D9D9",
@@ -248,11 +337,11 @@ export default function Header({}) {
               </Link>
             )}
           </Grid>
-          <Grid item xs={6} md={3}>
+          <Grid item xs={6} md={1}>
             {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
               <Link to="/privileges" style={{ textDecoration: "none" }}>
                 <Button
-                  size="medium"
+                  size="small"
                   variant="outlined"
                   style={{
                     color: "#D9D9D9",
@@ -272,7 +361,7 @@ export default function Header({}) {
             {!window?.localStorage?.getItem("auth") && (
               <Link to="/signin" style={{ textDecoration: "none" }}>
                 <Button
-                  size="medium"
+                  size="small"
                   variant="outlined"
                   style={{
                     color: "#D9D9D9",
@@ -326,7 +415,7 @@ export default function Header({}) {
                 }}
               >
                 <Button
-                  size="medium"
+                  size="small"
                   variant="outlined"
                   fullWidth
                   onClick={() => handleLogout()}

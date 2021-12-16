@@ -28,6 +28,11 @@ import { MyProfile } from "./modules/users/MyProfile";
 import { useEffect } from "react";
 import { AuthService } from "./modules/auth/AuthService";
 import { ForbiddenAccess } from "./modules/common/ForbiddenAccess";
+import { Grenades } from "./modules/grenades/Grenades";
+import { CreateGrenade } from "./modules/grenades/CreateGrenade";
+import { GrenadeDetails } from "./modules/grenades/GrenadeDetails";
+import { Producers } from "./modules/producers/Producers";
+import { CreateProducer } from "./modules/producers/CreateProducer";
 
 export default function App() {
   const location = useLocation();
@@ -56,6 +61,26 @@ export default function App() {
 
     if (location.pathname.startsWith("/myprofile")) {
       if (!window?.localStorage?.getItem("auth")) {
+        navigate("/forbidden");
+      }
+    }
+    if (location.pathname.startsWith("/grenades")) {
+      if (!window?.localStorage?.getItem("auth")) {
+        navigate("/forbidden");
+      }
+    }
+    if (location.pathname == "/grenades/create") {
+      if (!AuthService.hasRole("ROLE_ADMINISTRATOR")) {
+        navigate("/forbidden");
+      }
+    }
+    if (location.pathname.startsWith("/producers")) {
+      if (!window?.localStorage?.getItem("auth")) {
+        navigate("/forbidden");
+      }
+    }
+    if (location.pathname == "/producers/create") {
+      if (!AuthService.hasRole("ROLE_ADMINISTRATOR")) {
         navigate("/forbidden");
       }
     }
@@ -104,6 +129,15 @@ export default function App() {
           <Route path="/signin" element={<SignIn />}></Route>
           <Route path="/myprofile/:username" element={<MyProfile />}></Route>
           <Route path="/forbidden" element={<ForbiddenAccess />}></Route>
+          <Route path="/grenades" element={<Grenades />}></Route>
+          <Route path="/grenades/create" element={<CreateGrenade />}></Route>
+          <Route
+            path="grenades/details/:id"
+            element={<GrenadeDetails />}
+          ></Route>
+          <Route path="/producers" element={<Producers />}></Route>
+
+          <Route path="/producers/create" element={<CreateProducer />}></Route>
         </Routes>
       </Container>
     </>
