@@ -261,7 +261,7 @@ export default function Header({}) {
               ></HomeIcon>
             </Link>
           </Grid>
-          <Grid item xs={6} md={1.3}>
+          <Grid item xs={6} md={1.1}>
             <Link to="/grenades" style={{ textDecoration: "none" }}>
               <Button
                 size="small"
@@ -277,7 +277,7 @@ export default function Header({}) {
               </Button>
             </Link>
           </Grid>
-          <Grid item xs={6} md={1.3}>
+          <Grid item xs={6} md={1.2}>
             <Link to="/producers" style={{ textDecoration: "none" }}>
               <Button
                 size="small"
@@ -293,7 +293,7 @@ export default function Header({}) {
               </Button>
             </Link>
           </Grid>
-          <Grid item xs={6} md={1}>
+          <Grid item xs={6} md={0.8}>
             {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
               <Link to="/users" style={{ textDecoration: "none" }}>
                 <Button
@@ -311,7 +311,7 @@ export default function Header({}) {
               </Link>
             )}
           </Grid>
-          <Grid item xs={6} md={1}>
+          <Grid item xs={6} md={0.7}>
             {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
               <Link to="/groups" style={{ textDecoration: "none" }}>
                 <Button
@@ -371,22 +371,15 @@ export default function Header({}) {
           </Grid>
           {window?.localStorage?.getItem("auth") && (
             <>
-              <Grid xs={1} md={1}></Grid>
+              <Grid md={1}></Grid>
               <Grid
                 item
-                xs={6}
-                md={3}
+                md={4.5}
                 style={{
                   color: "#D9D9D9",
                 }}
               >
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    textAlign: "center",
-                  }}
-                >
+                <Box sx={{ float: "right" }}>
                   <Tooltip title="Account settings">
                     <Link
                       to={`/myprofile/${
