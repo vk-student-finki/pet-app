@@ -105,7 +105,7 @@ export const Grenades = () => {
             Review the newest additions.
           </span>
           <Hidden mdUp>
-            <Grid item xs={12}>
+            <Grid item xs={12} md={6}>
               <Tooltip title="Add new product">
                 <Button
                   style={{

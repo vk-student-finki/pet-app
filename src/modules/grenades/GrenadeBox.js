@@ -21,7 +21,7 @@ export const GrenadeBox = ({ grenade }) => {
     <>
       {redirectTo && <Navigate to={redirectTo} push />}
       <Grid item xs={12} md={3}>
-        <Card style={{ border: "5px solid white", height: "390px" }}>
+        <Card style={{ border: "5px solid white", height: "400px" }}>
           <Link
             to={`/grenades/details/${grenade.id}`}
             style={{ textDecoration: "none", color: "#1E1F1C" }}
@@ -34,7 +34,7 @@ export const GrenadeBox = ({ grenade }) => {
               image={img1}
             />
           </Link>
-          <CardContent>
+          <CardContent style={{ height: "50px" }}>
             <Typography
               gutterBottom
               variant="h5"
@@ -47,10 +47,6 @@ export const GrenadeBox = ({ grenade }) => {
               }}
             >
               {grenade.name}
-            </Typography>
-
-            <Typography variant="body2" color="text.secondary">
-              {grenade.description}
             </Typography>
           </CardContent>
           <CardActions style={{ float: "right" }}>
@@ -65,7 +61,6 @@ export const GrenadeBox = ({ grenade }) => {
                 style={{
                   color: "#FF6000",
                   marginRight: "-35px",
-                  marginTop: "-5px",
                 }}
               />
             </Button>

@@ -33,6 +33,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import CategoryIcon from "@mui/icons-material/Category";
 import Tooltip from "@mui/material/Tooltip";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import Logout from "@mui/icons-material/Logout";
 
 export default function Header({}) {
   const [redirectTo, setRedirectTo] = useState();
@@ -60,6 +61,15 @@ export default function Header({}) {
 
   const handleLogout = () => {
     AuthService.logout();
+  };
+
+  const [anchorEl1, setAnchorEl1] = React.useState(null);
+  const open1 = Boolean(anchorEl1);
+  const handleClick1 = (event) => {
+    setAnchorEl1(event.currentTarget);
+  };
+  const handleClose1 = () => {
+    setAnchorEl1(null);
   };
 
   const list = (anchor) => (
@@ -252,58 +262,36 @@ export default function Header({}) {
             </Link>
           </Grid>
           <Grid item xs={6} md={1.3}>
-            <Button
-              size="small"
-              variant="outlined"
-              style={{
-                color: "#D9D9D9",
-                borderColor: "#17202A",
-                fontSize: "18px",
-                fontFamily: "Monaco, monospace",
-              }}
-              ariaControls="fade-menu"
-              ariaHaspopup="true"
-              ariaExpanded={open ? "true" : undefined}
-              onClick={handleClick}
-            >
-              CATEGORY
-            </Button>
-            <Menu
-              id="fade-menu"
-              MenuListProps={{
-                "aria-labelledby": "fade-button",
-              }}
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              TransitionComponent={Fade}
-            >
-              <Link
-                to="/grenades"
-                style={{ textDecoration: "none", color: "#D35400" }}
+            <Link to="/grenades" style={{ textDecoration: "none" }}>
+              <Button
+                size="small"
+                variant="outlined"
+                style={{
+                  color: "#D9D9D9",
+                  borderColor: "#17202A",
+                  fontSize: "18px",
+                  fontFamily: "Monaco, monospace",
+                }}
               >
-                <MenuItem
-                  onClick={() => {
-                    handleClose();
-                  }}
-                >
-                  Grenades
-                </MenuItem>
-              </Link>
-              <Link
-                to="/producers"
-                style={{ textDecoration: "none", color: "#D35400" }}
+                Grenades
+              </Button>
+            </Link>
+          </Grid>
+          <Grid item xs={6} md={1.3}>
+            <Link to="/producers" style={{ textDecoration: "none" }}>
+              <Button
+                size="small"
+                variant="outlined"
+                style={{
+                  color: "#D9D9D9",
+                  borderColor: "#17202A",
+                  fontSize: "18px",
+                  fontFamily: "Monaco, monospace",
+                }}
               >
-                <MenuItem
-                  onClick={() => {
-                    handleClose();
-                  }}
-                >
-                  Producers
-                </MenuItem>
-              </Link>
-              <MenuItem onClick={handleClose}>Countries</MenuItem>
-            </Menu>
+                Producers
+              </Button>
+            </Link>
           </Grid>
           <Grid item xs={6} md={1}>
             {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
@@ -392,50 +380,83 @@ export default function Header({}) {
                   color: "#D9D9D9",
                 }}
               >
-                <Tooltip title="Account settings">
-                  <Link
-                    to={`/myprofile/${AuthService.getCurrentUser()?.username}`}
-                    style={{ textDecoration: "none", color: "#D9D9D9" }}
-                  >
-                    <AccountCircleOutlinedIcon
-                      style={{
-                        color: "#D35400",
-                        verticalAlign: "middle",
-                        marginBottom: "3px",
-                      }}
-                    />{" "}
-                    <span style={{ lineHeight: "2.5" }}>
-                      {AuthService.getCurrentUser()?.firstName}{" "}
-                      {AuthService.getCurrentUser()?.lastName}
-                    </span>
-                  </Link>
-                </Tooltip>
-              </Grid>
-              <Grid
-                item
-                xs={6}
-                md={1}
-                style={{
-                  color: "#D9D9D9 ",
-                  whiteSpace: "break-spaces",
-                }}
-              >
-                <Button
-                  size="small"
-                  variant="outlined"
-                  fullWidth
-                  onClick={() => handleLogout()}
-                  style={{
-                    color: "#D9D9D9",
-                    borderColor: "#17202A",
-                    textAlign: "left",
-                    fontFamily: "Monaco, monospace",
-                    fontSize: "18px",
-                    whiteSpace: "nowrap",
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    textAlign: "center",
                   }}
                 >
-                  Sign out
-                </Button>
+                  <Tooltip title="Account settings">
+                    <Link
+                      to={`/myprofile/${
+                        AuthService.getCurrentUser()?.username
+                      }`}
+                      style={{ textDecoration: "none", color: "#D9D9D9" }}
+                    >
+                      <AccountCircleOutlinedIcon
+                        style={{
+                          color: "#D35400",
+                          verticalAlign: "middle",
+                          marginBottom: "3px",
+                        }}
+                      />{" "}
+                      <span style={{ lineHeight: "2.5" }}>
+                        {AuthService.getCurrentUser()?.firstName}{" "}
+                        {AuthService.getCurrentUser()?.lastName}
+                      </span>
+                    </Link>
+                  </Tooltip>
+
+                  <IconButton
+                    onClick={handleClick1}
+                    size="small"
+                    sx={{ ml: 2 }}
+                  >
+                    <KeyboardArrowDownIcon style={{ color: "white" }} />
+                  </IconButton>
+                </Box>
+                <Menu
+                  anchorEl={anchorEl1}
+                  open={open1}
+                  onClose={handleClose1}
+                  onClick={handleClose1}
+                  PaperProps={{
+                    elevation: 0,
+                    sx: {
+                      overflow: "visible",
+                      filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                      mt: 1.5,
+                      "& .MuiAvatar-root": {
+                        width: 32,
+                        height: 32,
+                        ml: -0.5,
+                        mr: 1,
+                      },
+                      "&:before": {
+                        content: '""',
+                        display: "block",
+                        position: "absolute",
+                        top: 0,
+                        right: 14,
+                        width: 10,
+                        height: 10,
+                        bgcolor: "background.paper",
+                        transform: "translateY(-50%) rotate(45deg)",
+                        zIndex: 0,
+                      },
+                    },
+                  }}
+                  transformOrigin={{ horizontal: "right", vertical: "top" }}
+                  anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+                >
+                  <MenuItem onClick={() => handleLogout()}>
+                    <ListItemIcon>
+                      <Logout fontSize="small" />
+                    </ListItemIcon>
+                    Sign out
+                  </MenuItem>
+                </Menu>
               </Grid>
             </>
           )}
