@@ -140,7 +140,7 @@ export const GrenadeDetails = () => {
               <br />
               {grenade?.attributes?.map((attribute) => (
                 <span>
-                  {attribute.attributeType.name}: {attribute.value}
+                  {attribute.attributeType.name}: <b>{attribute.value}</b>
                   <br />
                 </span>
               ))}
@@ -217,6 +217,12 @@ export const GrenadeDetails = () => {
               Country of origin: <b>{grenade?.country?.name}</b>
               <br />
               Producer: <b>{grenade?.producer?.name}</b>
+              {grenade?.attributes?.map((attribute) => (
+                <span>
+                  {attribute.attributeType.name}: <b>{attribute.value}</b>
+                  <br />
+                </span>
+              ))}
             </div>
           </Grid>
         </Hidden>
