@@ -138,6 +138,7 @@ export const GrenadeDetails = () => {
               <br />
               Producer: <b>{grenade?.producer?.name}</b>
               <br />
+              <Divider style={{ marginTop: "10px", width: "300px" }}></Divider>
               {grenade?.attributes?.map((attribute) => (
                 <span>
                   {attribute.attributeType.name}: <b>{attribute.value}</b>
