@@ -19,6 +19,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { COMMON_ACTIONS } from "../common/CommonActions";
 import { useDispatch } from "react-redux";
+import { AuthService } from "../auth/AuthService";
 
 export const Groups = () => {
   const [groups, setGroups] = useState();
@@ -53,30 +54,62 @@ export const Groups = () => {
     <>
       {redirectTo && <Navigate to={redirectTo} push />}
 
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={9}>
-          <h1 style={{ fontFamily: "Helvetica, sans-serif", color: "#1F393C" }}>
-            Groups
-          </h1>
+      <Grid
+        conatiner
+        spacing={2}
+        style={{
+          backgroundColor: "#f1f2f6",
+          height: "132px",
+        }}
+      >
+        <Grid item xs={12} style={{ textAlign: "center" }}>
+          <Grid container>
+            <Grid item xs={12}>
+              <span
+                style={{
+                  fontFamily: "Copperplate, fantasy",
+                  fontSize: "30px",
+                  color: "#1E1F1C",
+                  display: "block",
+                  paddingTop: "50px",
+                  textTransform: "uppercase",
+                }}
+              >
+                Groups
+              </span>
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid item xs={12} md={3}>
-          <Button
-            size="medium"
-            variant="outlined"
-            fullWidth
-            style={{
-              color: "#D9D9D9",
-              borderColor: "#D9D9D9",
-              backgroundColor: "#17202A",
-              marginTop: "20px",
-            }}
-            onClick={() => {
-              setRedirectTo(`/groups/create`);
-            }}
-          >
-            CREATE NEW GROUP
-          </Button>
-        </Grid>
+        {window?.localStorage?.getItem("auth") &&
+          AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+            <Grid
+              item
+              xs={12}
+              md={2.5}
+              style={{
+                marginLeft: "auto",
+                marginRight: "auto",
+                marginTop: "-20px",
+              }}
+            >
+              <Button
+                size="medium"
+                variant="outlined"
+                fullWidth
+                style={{
+                  color: "white",
+                  borderColor: "white",
+                  backgroundColor: "#D35400",
+                  marginTop: "20px",
+                }}
+                onClick={() => {
+                  setRedirectTo(`/groups/create`);
+                }}
+              >
+                CREATE NEW GROUP
+              </Button>
+            </Grid>
+          )}
         <Grid item xs={12}>
           <Table>
             <TableBody>
@@ -170,21 +203,25 @@ export const Groups = () => {
                 ))}
             </TableBody>
           </Table>
-          <Container maxWidth="xs">
-            {!loading && groups && groups.number !== undefined && (
-              <Stack spacing={2} style={{ marginTop: "20px" }}>
-                <Pagination
-                  count={Math.floor(groups.totalElements / groups?.size) + 1}
-                  shape="rounded"
-                  showFirstButton
-                  showLastButton
-                  style={{ color: "#D35400" }}
-                  page={groups?.number + 1}
-                  onChange={handleChange}
-                />
-              </Stack>
-            )}
-          </Container>
+          <Grid container spacing={2}>
+            <Grid item={12} style={{ marginLeft: "auto", marginRight: "auto" }}>
+              {groups && groups.number !== undefined && (
+                <Stack spacing={2} style={{ marginTop: "20px" }}>
+                  <Pagination
+                    count={Math.floor(groups?.totalElements / groups?.size) + 1}
+                    shape="rounded"
+                    showFirstButton
+                    showLastButton
+                    style={{
+                      color: "#D35400",
+                    }}
+                    page={groups.number + 1}
+                    onChange={handleChange}
+                  />
+                </Stack>
+              )}
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </>
