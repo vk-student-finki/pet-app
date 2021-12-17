@@ -1,10 +1,10 @@
 import axios from "axios";
 import { SETTINGS } from "../common/Settings";
 
-export const ProducersRepository = {
+export const CountriesRepository = {
   all: (page, size) => {
     return axios({
-      url: `${SETTINGS.API_BASE_URL}producers`,
+      url: `${SETTINGS.API_BASE_URL}countries`,
       method: "GET",
       params: {
         page: page,
@@ -14,30 +14,30 @@ export const ProducersRepository = {
   },
   get: (id) => {
     return axios({
-      url: `${SETTINGS.API_BASE_URL}producers/${id}`,
+      url: `${SETTINGS.API_BASE_URL}countries/${id}`,
       method: "GET",
     });
   },
-  create: (producer) => {
+  create: (country) => {
     return axios({
-      url: `${SETTINGS.API_BASE_URL}producers`,
+      url: `${SETTINGS.API_BASE_URL}countries`,
       method: "POST",
-      data: producer,
+      data: country,
     });
   },
 
-  deleteProducer: (id) => {
+  deleteCountry: (id) => {
     return axios({
-      url: `${SETTINGS.API_BASE_URL}producers/${id}`,
+      url: `${SETTINGS.API_BASE_URL}countries/${id}`,
       method: "DELETE",
     });
   },
 
-  updateProducer: (producer) => {
+  updateCountry: (country) => {
     return axios({
-      url: `${SETTINGS.API_BASE_URL}producers`,
+      url: `${SETTINGS.API_BASE_URL}countries`,
       method: "PUT",
-      data: producer,
+      data: country,
     });
   },
 };

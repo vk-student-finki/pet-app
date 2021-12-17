@@ -34,6 +34,8 @@ import CategoryIcon from "@mui/icons-material/Category";
 import Tooltip from "@mui/material/Tooltip";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Logout from "@mui/icons-material/Logout";
+import PublicIcon from "@mui/icons-material/Public";
+import BusinessIcon from "@mui/icons-material/Business";
 
 export default function Header({}) {
   const [redirectTo, setRedirectTo] = useState();
@@ -277,23 +279,7 @@ export default function Header({}) {
               </Button>
             </Link>
           </Grid>
-          <Grid item xs={6} md={1.2}>
-            <Link to="/producers" style={{ textDecoration: "none" }}>
-              <Button
-                size="small"
-                variant="outlined"
-                style={{
-                  color: "#D9D9D9",
-                  borderColor: "#17202A",
-                  fontSize: "18px",
-                  fontFamily: "Monaco, monospace",
-                }}
-              >
-                Producers
-              </Button>
-            </Link>
-          </Grid>
-          <Grid item xs={6} md={0.8}>
+          <Grid item xs={6} md={1}>
             {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
               <Link to="/users" style={{ textDecoration: "none" }}>
                 <Button
@@ -311,7 +297,7 @@ export default function Header({}) {
               </Link>
             )}
           </Grid>
-          <Grid item xs={6} md={0.7}>
+          <Grid item xs={6} md={1}>
             {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
               <Link to="/groups" style={{ textDecoration: "none" }}>
                 <Button
@@ -449,6 +435,31 @@ export default function Header({}) {
                     </ListItemIcon>
                     Sign out
                   </MenuItem>
+
+                  {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+                    <MenuItem
+                      onClick={() => {
+                        setRedirectTo(`/producers`);
+                      }}
+                    >
+                      <ListItemIcon>
+                        <BusinessIcon fontSize="small" />
+                      </ListItemIcon>
+                      Producers
+                    </MenuItem>
+                  )}
+                  {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+                    <MenuItem
+                      onClick={() => {
+                        setRedirectTo(`/countries`);
+                      }}
+                    >
+                      <ListItemIcon>
+                        <PublicIcon fontSize="small" />
+                      </ListItemIcon>
+                      Countries
+                    </MenuItem>
+                  )}
                 </Menu>
               </Grid>
             </>

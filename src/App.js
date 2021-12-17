@@ -33,6 +33,10 @@ import { CreateGrenade } from "./modules/grenades/CreateGrenade";
 import { GrenadeDetails } from "./modules/grenades/GrenadeDetails";
 import { Producers } from "./modules/producers/Producers";
 import { CreateProducer } from "./modules/producers/CreateProducer";
+import { Countries } from "./modules/countries/Countries";
+import { ProducerDelete } from "./modules/producers/ProducerDelete";
+import { CountryDelete } from "./modules/countries/CountryDelete";
+import { CreateCountry } from "./modules/countries/CreateCountry";
 
 export default function App() {
   const location = useLocation();
@@ -75,11 +79,11 @@ export default function App() {
       }
     }
     if (location.pathname.startsWith("/producers")) {
-      if (!window?.localStorage?.getItem("auth")) {
+      if (!AuthService.hasRole("ROLE_ADMINISTRATOR")) {
         navigate("/forbidden");
       }
     }
-    if (location.pathname == "/producers/create") {
+    if (location.pathname.startsWith("/countries")) {
       if (!AuthService.hasRole("ROLE_ADMINISTRATOR")) {
         navigate("/forbidden");
       }
@@ -136,8 +140,17 @@ export default function App() {
             element={<GrenadeDetails />}
           ></Route>
           <Route path="/producers" element={<Producers />}></Route>
-
           <Route path="/producers/create" element={<CreateProducer />}></Route>
+          <Route
+            path="/producers/delete/:id"
+            element={<ProducerDelete />}
+          ></Route>
+          <Route path="/countries" element={<Countries />}></Route>
+          <Route
+            path="/countries/delete/:id"
+            element={<CountryDelete />}
+          ></Route>
+          <Route path="/countries/create" element={<CreateCountry />}></Route>
         </Routes>
       </Container>
     </>

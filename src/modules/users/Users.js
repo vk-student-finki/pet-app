@@ -83,23 +83,52 @@ export const Users = () => {
   return (
     <>
       {redirectTo && <Navigate to={redirectTo} push />}
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={9}>
-          <h1 style={{ fontFamily: "Helvetica, sans-serif", color: "#1F393C" }}>
-            Users
-          </h1>
+      <Grid
+        conatiner
+        spacing={2}
+        style={{
+          backgroundColor: "#f1f2f6",
+          height: "132px",
+        }}
+      >
+        <Grid item xs={12} style={{ textAlign: "center" }}>
+          <Grid container>
+            <Grid item xs={12}>
+              <span
+                style={{
+                  fontFamily: "Copperplate, fantasy",
+                  fontSize: "30px",
+                  color: "#1E1F1C",
+                  display: "block",
+                  paddingTop: "50px",
+                  textTransform: "uppercase",
+                }}
+              >
+                Users
+              </span>
+            </Grid>
+          </Grid>
         </Grid>
         {window?.localStorage?.getItem("auth") &&
           AuthService.hasRole("ROLE_ADMINISTRATOR") && (
-            <Grid item xs={12} md={3}>
+            <Grid
+              item
+              xs={12}
+              md={2.5}
+              style={{
+                marginLeft: "auto",
+                marginRight: "auto",
+                marginTop: "-20px",
+              }}
+            >
               <Button
                 size="medium"
                 variant="outlined"
                 fullWidth
                 style={{
-                  color: "#D9D9D9",
-                  borderColor: "#D9D9D9",
-                  backgroundColor: "#17202A",
+                  color: "white",
+                  borderColor: "white",
+                  backgroundColor: "#D35400",
                   marginTop: "20px",
                 }}
                 onClick={() => {

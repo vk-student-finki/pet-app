@@ -195,6 +195,7 @@ export const Grenades = () => {
                   count={
                     Math.floor(grenades?.totalElements / grenades?.size) + 1
                   }
+                  color="primary"
                   shape="rounded"
                   showFirstButton
                   showLastButton

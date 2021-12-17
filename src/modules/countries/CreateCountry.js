@@ -4,7 +4,7 @@ import { Box } from "@mui/system";
 import AddIcon from "@mui/icons-material/Add";
 import Typography from "@mui/material/Typography";
 
-export const CreateProducer = () => {
+export const CreateCountry = () => {
   return (
     <>
       <Box
@@ -23,7 +23,7 @@ export const CreateProducer = () => {
           variant="h5"
           style={{ textAlign: "center", fontFamily: "Copperplate, fantasy" }}
         >
-          Add new producer
+          Add new country
         </Typography>
       </Box>
       <Container maxWidth="xs">

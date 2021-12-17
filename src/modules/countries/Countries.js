@@ -23,7 +23,7 @@ import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { AuthService } from "../auth/AuthService";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { ProducersRepository } from "./ProducersRepository";
+import { CountriesRepository } from "./CountriesRepository";
 import AddIcon from "@mui/icons-material/Add";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
@@ -31,15 +31,15 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export const Producers = () => {
-  const [producers, setProducers] = useState();
+export const Countries = () => {
+  const [countries, setCountries] = useState();
   const [redirectTo, setRedirectTo] = useState();
-  const [selectedProducer, setSelectedProducer] = useState();
+  const [selectedCountry, setSelectedCountry] = useState();
 
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = (producer) => {
-    setSelectedProducer(producer);
+  const handleClickOpen = (country) => {
+    setSelectedCountry(country);
     setOpen(true);
   };
 
@@ -52,9 +52,9 @@ export const Producers = () => {
   }, []);
 
   const loadData = (page, size) => {
-    ProducersRepository.all(page, size)
+    CountriesRepository.all(page, size)
       .then((res) => {
-        setProducers(res.data);
+        setCountries(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -90,7 +90,7 @@ export const Producers = () => {
                   textTransform: "uppercase",
                 }}
               >
-                Producers
+                Countries
               </span>
             </Grid>
           </Grid>
@@ -107,22 +107,24 @@ export const Producers = () => {
                   marginTop: "-20px",
                 }}
               >
-                <Button
-                  size="medium"
-                  variant="outlined"
-                  fullWidth
-                  style={{
-                    color: "white",
-                    borderColor: "white",
-                    backgroundColor: "#D35400",
-                    marginTop: "20px",
-                  }}
-                  onClick={() => {
-                    setRedirectTo(`/users/create`);
-                  }}
-                >
-                  CREATE NEW PRODUCER
-                </Button>
+                {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+                  <Button
+                    size="medium"
+                    variant="outlined"
+                    fullWidth
+                    style={{
+                      color: "white",
+                      borderColor: "white",
+                      backgroundColor: "#D35400",
+                      marginTop: "20px",
+                    }}
+                    onClick={() => {
+                      setRedirectTo(`/producers/create`);
+                    }}
+                  >
+                    Add new country
+                  </Button>
+                )}
               </Grid>
             </Hidden>
 
@@ -157,7 +159,7 @@ export const Producers = () => {
           </Grid>
 
           <Grid item xs={12} md={12}>
-            {producers?.content?.map((producer, index) => (
+            {countries?.content?.map((country, index) => (
               <TableRow
                 style={{
                   cursor: "pointer",
@@ -173,7 +175,7 @@ export const Producers = () => {
                       width: "900px",
                     }}
                   >
-                    {producer.name}
+                    {country.name}
                   </TableCell>
                 </Hidden>
                 <Hidden smUp>
@@ -185,7 +187,7 @@ export const Producers = () => {
                       cursor: "pointer",
                     }}
                   >
-                    {producer.name}
+                    {country.name}
                   </TableCell>
                 </Hidden>
                 <TableCell></TableCell>
@@ -204,7 +206,7 @@ export const Producers = () => {
                       cursor: "pointer",
                       color: "#D35400",
                     }}
-                    onClick={() => handleClickOpen(producer)}
+                    onClick={() => handleClickOpen(country)}
                   ></DeleteIcon>
                 </TableCell>
               </TableRow>
@@ -214,11 +216,11 @@ export const Producers = () => {
 
         <Grid container spacing={2}>
           <Grid item={12} style={{ marginLeft: "auto", marginRight: "auto" }}>
-            {producers && producers.number !== undefined && (
+            {countries && countries.number !== undefined && (
               <Stack spacing={2} style={{ marginTop: "20px" }}>
                 <Pagination
                   count={
-                    Math.floor(producers?.totalElements / producers?.size) + 1
+                    Math.floor(countries?.totalElements / countries?.size) + 1
                   }
                   shape="rounded"
                   showFirstButton
@@ -226,7 +228,7 @@ export const Producers = () => {
                   style={{
                     color: "#D35400",
                   }}
-                  page={producers.number + 1}
+                  page={countries.number + 1}
                   onChange={handleChange}
                 />
               </Stack>
@@ -259,7 +261,7 @@ export const Producers = () => {
           {"Confirm delete"}
         </DialogTitle>
         <DialogContent style={{ textAlign: "center" }}>
-          Are you sure you want to delete this producer? This action
+          Are you sure you want to delete this country? This action
           <br /> cannot be undone.
         </DialogContent>
         <DialogActions>
@@ -282,7 +284,7 @@ export const Producers = () => {
               color: "white",
             }}
             onClick={() => {
-              setRedirectTo(`/countries/delete/${selectedProducer?.id}`);
+              setRedirectTo(`/countries/delete/${selectedCountry?.id}`);
             }}
           >
             Delete
