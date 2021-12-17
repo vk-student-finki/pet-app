@@ -239,7 +239,7 @@ export const Producers = () => {
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description"
+        // aria-describedby="alert-dialog-slide-description"
       >
         <HighlightOffIcon
           style={{

@@ -1,12 +1,71 @@
-import { Avatar, Button, Container, Grid, TextField } from "@mui/material";
-import React from "react";
+import {
+  Alert,
+  Avatar,
+  Button,
+  Container,
+  Grid,
+  TextField,
+} from "@mui/material";
+import React, { useState } from "react";
 import { Box } from "@mui/system";
 import AddIcon from "@mui/icons-material/Add";
 import Typography from "@mui/material/Typography";
+import { CreateCountryValidator } from "./CountryValidator";
+import { CountriesRepository } from "./CountriesRepository";
 
 export const CreateCountry = () => {
+  const [country, setCountry] = useState({});
+  const [globalFormError, setGlobalFormError] = useState();
+  const [formFieldErrors, setFormFieldErrors] = useState();
+  const [successMessage, setSuccessMessage] = useState(null);
+
+  const handleSubmit = () => {
+    let valid = CreateCountryValidator.isValidSync(country);
+    setFormFieldErrors();
+    if (!valid) {
+      let validationErrors = {};
+      CreateCountryValidator.validate(country, { abortEarly: false }).catch(
+        (err) => {
+          console.log(err.inner);
+          err.inner.forEach((validationError) => {
+            validationErrors[validationError.path] = {};
+            validationErrors[validationError.path] = validationError.message;
+          });
+          console.log(validationErrors);
+          setFormFieldErrors(validationErrors);
+          return;
+        }
+      );
+      return;
+    }
+
+    setGlobalFormError(null);
+    setSuccessMessage(null);
+    CountriesRepository.create(country)
+      .then((res) => {
+        console.log(res);
+        setSuccessMessage("Country is added successfully");
+      })
+      .catch((err) => {
+        console.log(err);
+        setGlobalFormError(err);
+      });
+  };
+  const handleChangeCountryData = (name, value) => {
+    let data = { ...country };
+    data[name] = value;
+    setCountry(data);
+    console.log(data);
+  };
   return (
     <>
+      {successMessage && (
+        <>
+          <Grid style={{ marginTop: "20px", marginBottom: "-10px" }}>
+            <Alert severity="success">{successMessage}</Alert>
+          </Grid>
+        </>
+      )}
       <Box
         sx={{
           marginTop: 8,
@@ -27,6 +86,13 @@ export const CreateCountry = () => {
         </Typography>
       </Box>
       <Container maxWidth="xs">
+        {globalFormError && (
+          <Grid item xs={12}>
+            <Alert severity="error">
+              {globalFormError?.response?.data?.error}
+            </Alert>
+          </Grid>
+        )}
         <Grid item xs={12} style={{ marginTop: "40px" }}>
           <TextField
             label="Name"
@@ -34,15 +100,19 @@ export const CreateCountry = () => {
             variant="outlined"
             color="warning"
             autoFocus
+            value={country?.name ? country?.name : ""}
+            onChange={(e) => handleChangeCountryData("name", e.target.value)}
+            error={formFieldErrors?.name}
+            helperText={formFieldErrors?.name}
             fullWidth
           />
         </Grid>
 
         <Grid item xs={12} style={{ marginTop: "20px" }}>
           <Button
-            // onClick={() => {
-            //   handleSubmit();
-            // }}
+            onClick={() => {
+              handleSubmit();
+            }}
             type="submit"
             style={{ backgroundColor: "#17202A " }}
             variant="contained"

@@ -22,7 +22,8 @@ export const ProducerDelete = ({}) => {
       })
       .catch((err) => {
         setDeleteError(true);
-        console.log(err.data);
+        console.log(err.message);
+        console.log(id);
       });
   };
 

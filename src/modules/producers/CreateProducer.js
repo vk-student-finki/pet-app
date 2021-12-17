@@ -1,12 +1,71 @@
-import { Avatar, Button, Container, Grid, TextField } from "@mui/material";
-import React from "react";
+import {
+  Alert,
+  Avatar,
+  Button,
+  Container,
+  Grid,
+  TextField,
+} from "@mui/material";
+import React, { useState } from "react";
 import { Box } from "@mui/system";
 import AddIcon from "@mui/icons-material/Add";
 import Typography from "@mui/material/Typography";
+import { CreateProducerValidator } from "./ProducerValidator";
+import { ProducersRepository } from "./ProducersRepository";
 
 export const CreateProducer = () => {
+  const [producer, setProducer] = useState({});
+  const [globalFormError, setGlobalFormError] = useState();
+  const [formFieldErrors, setFormFieldErrors] = useState();
+  const [successMessage, setSuccessMessage] = useState(null);
+
+  const handleSubmit = () => {
+    let valid = CreateProducerValidator.isValidSync(producer);
+    setFormFieldErrors();
+    if (!valid) {
+      let validationErrors = {};
+      CreateProducerValidator.validate(producer, { abortEarly: false }).catch(
+        (err) => {
+          console.log(err.inner);
+          err.inner.forEach((validationError) => {
+            validationErrors[validationError.path] = {};
+            validationErrors[validationError.path] = validationError.message;
+          });
+          console.log(validationErrors);
+          setFormFieldErrors(validationErrors);
+          return;
+        }
+      );
+      return;
+    }
+
+    setGlobalFormError(null);
+    setSuccessMessage(null);
+    ProducersRepository.create(producer)
+      .then((res) => {
+        console.log(res);
+        setSuccessMessage("Producer is added successfully");
+      })
+      .catch((err) => {
+        console.log(err);
+        setGlobalFormError(err);
+      });
+  };
+  const handleChangeProducerData = (name, value) => {
+    let data = { ...producer };
+    data[name] = value;
+    setProducer(data);
+    console.log(data);
+  };
   return (
     <>
+      {successMessage && (
+        <>
+          <Grid style={{ marginTop: "20px", marginBottom: "-10px" }}>
+            <Alert severity="success">{successMessage}</Alert>
+          </Grid>
+        </>
+      )}
       <Box
         sx={{
           marginTop: 8,
@@ -27,6 +86,13 @@ export const CreateProducer = () => {
         </Typography>
       </Box>
       <Container maxWidth="xs">
+        {globalFormError && (
+          <Grid item xs={12}>
+            <Alert severity="error">
+              {globalFormError?.response?.data?.error}
+            </Alert>
+          </Grid>
+        )}
         <Grid item xs={12} style={{ marginTop: "40px" }}>
           <TextField
             label="Name"
@@ -34,15 +100,19 @@ export const CreateProducer = () => {
             variant="outlined"
             color="warning"
             autoFocus
+            value={producer?.name ? producer?.name : ""}
+            onChange={(e) => handleChangeProducerData("name", e.target.value)}
+            error={formFieldErrors?.name}
+            helperText={formFieldErrors?.name}
             fullWidth
           />
         </Grid>
 
         <Grid item xs={12} style={{ marginTop: "20px" }}>
           <Button
-            // onClick={() => {
-            //   handleSubmit();
-            // }}
+            onClick={() => {
+              handleSubmit();
+            }}
             type="submit"
             style={{ backgroundColor: "#17202A " }}
             variant="contained"
