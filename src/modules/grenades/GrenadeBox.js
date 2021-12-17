@@ -34,21 +34,26 @@ export const GrenadeBox = ({ grenade }) => {
               image={img1}
             />
           </Link>
-          <CardContent style={{ height: "50px" }}>
-            <Typography
-              gutterBottom
-              variant="h5"
-              component="div"
-              style={{
-                fontFamily: "Monaco, monospace",
-                fontSize: "18px",
-                textTransform: "uppercase",
-                fontWeight: "bold",
-              }}
-            >
-              {grenade.name}
-            </Typography>
-          </CardContent>
+          <Link
+            to={`/grenades/details/${grenade.id}`}
+            style={{ textDecoration: "none", color: "#1E1F1C" }}
+          >
+            <CardContent style={{ height: "50px" }}>
+              <Typography
+                gutterBottom
+                variant="h5"
+                component="div"
+                style={{
+                  fontFamily: "Monaco, monospace",
+                  fontSize: "18px",
+                  textTransform: "uppercase",
+                  fontWeight: "bold",
+                }}
+              >
+                {grenade.name}
+              </Typography>
+            </CardContent>
+          </Link>
           <CardActions style={{ float: "right" }}>
             <Button
               size="small"
