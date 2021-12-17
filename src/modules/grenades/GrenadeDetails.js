@@ -127,7 +127,7 @@ export const GrenadeDetails = () => {
               fontFamily: "Monaco, monospace",
               fontSize: "16px",
               marginLeft: "-108px",
-              marginTop: "50px",
+              marginTop: "40px",
               color: "#878786",
             }}
           >
@@ -217,6 +217,7 @@ export const GrenadeDetails = () => {
               Country of origin: <b>{grenade?.country?.name}</b>
               <br />
               Producer: <b>{grenade?.producer?.name}</b>
+              <br />
               {grenade?.attributes?.map((attribute) => (
                 <span>
                   {attribute.attributeType.name}: <b>{attribute.value}</b>

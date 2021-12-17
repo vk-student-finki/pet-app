@@ -188,7 +188,7 @@ export const Grenades = () => {
         </Grid>
 
         <Grid container spacing={2}>
-          <Grid item={12}>
+          <Grid item={12} style={{ marginLeft: "auto", marginRight: "auto" }}>
             {grenades && grenades.number !== undefined && (
               <Stack spacing={2} style={{ marginTop: "20px" }}>
                 <Pagination
@@ -198,7 +198,9 @@ export const Grenades = () => {
                   shape="rounded"
                   showFirstButton
                   showLastButton
-                  style={{ color: "#D35400" }}
+                  style={{
+                    color: "#D35400",
+                  }}
                   page={grenades.number + 1}
                   onChange={handleChange}
                 />
