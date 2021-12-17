@@ -138,6 +138,13 @@ export const GrenadeDetails = () => {
               <br />
               Producer: <b>{grenade?.producer?.name}</b>
               <br />
+              {grenade?.attributes?.map((attribute) => (
+                <span>
+                  {attribute.attributeType.name}: {attribute.value}
+                  <br />
+                </span>
+              ))}
+              <br />
             </div>
           </Grid>
         </Hidden>
