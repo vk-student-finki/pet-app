@@ -360,7 +360,7 @@ export default function Header({}) {
               <Grid md={1}></Grid>
               <Grid
                 item
-                md={4.5}
+                md={5.1}
                 style={{
                   color: "#D9D9D9",
                 }}
@@ -437,28 +437,30 @@ export default function Header({}) {
                   </MenuItem>
 
                   {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
-                    <MenuItem
-                      onClick={() => {
-                        setRedirectTo(`/producers`);
-                      }}
+                    <Link
+                      to="/producers"
+                      style={{ textDecoration: "none", color: "#1E1F1C" }}
                     >
-                      <ListItemIcon>
-                        <BusinessIcon fontSize="small" />
-                      </ListItemIcon>
-                      Producers
-                    </MenuItem>
+                      <MenuItem>
+                        <ListItemIcon>
+                          <BusinessIcon fontSize="small" />
+                        </ListItemIcon>
+                        Producers
+                      </MenuItem>
+                    </Link>
                   )}
                   {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
-                    <MenuItem
-                      onClick={() => {
-                        setRedirectTo(`/countries`);
-                      }}
+                    <Link
+                      to="/countries"
+                      style={{ textDecoration: "none", color: "#1E1F1C" }}
                     >
-                      <ListItemIcon>
-                        <PublicIcon fontSize="small" />
-                      </ListItemIcon>
-                      Countries
-                    </MenuItem>
+                      <MenuItem>
+                        <ListItemIcon>
+                          <PublicIcon fontSize="small" />
+                        </ListItemIcon>
+                        Countries
+                      </MenuItem>
+                    </Link>
                   )}
                 </Menu>
               </Grid>
