@@ -119,7 +119,7 @@ export const Countries = () => {
                       marginTop: "20px",
                     }}
                     onClick={() => {
-                      setRedirectTo(`/producers/create`);
+                      setRedirectTo(`/countries/create`);
                     }}
                   >
                     Add new country

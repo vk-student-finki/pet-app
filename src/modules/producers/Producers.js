@@ -118,10 +118,10 @@ export const Producers = () => {
                     marginTop: "20px",
                   }}
                   onClick={() => {
-                    setRedirectTo(`/users/create`);
+                    setRedirectTo(`/producers/create`);
                   }}
                 >
-                  CREATE NEW PRODUCER
+                  ADD NEW PRODUCER
                 </Button>
               </Grid>
             </Hidden>
@@ -137,7 +137,7 @@ export const Producers = () => {
                       marginTop: "-10px",
                     }}
                     onClick={() => {
-                      setRedirectTo(`/countries/create`);
+                      setRedirectTo(`/producers/create`);
                     }}
                   >
                     <AddIcon
@@ -282,7 +282,7 @@ export const Producers = () => {
               color: "white",
             }}
             onClick={() => {
-              setRedirectTo(`/countries/delete/${selectedProducer?.id}`);
+              setRedirectTo(`/producers/delete/${selectedProducer?.id}`);
             }}
           >
             Delete
