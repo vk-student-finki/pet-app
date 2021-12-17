@@ -20,6 +20,7 @@ import { CreateGrenadeValidator } from "./GrenadeValidator";
 import { GrenadesRepository } from "./GrenadesRepository";
 import { ProducersRepository } from "../producers/ProducersRepository";
 import { AttributeTypeRepository } from "../attributeTypes/AttributeTypeRepository";
+import { CountriesRepository } from "../countries/CountriesRepository";
 
 export const CreateGrenade = () => {
   const [globalFormError, setGlobalFormError] = useState();
@@ -27,17 +28,25 @@ export const CreateGrenade = () => {
   const [successMessage, setSuccessMessage] = useState(null);
   const [producers, setProducers] = useState();
   const [attributeValues, setAttributeValues] = useState();
+  const [countries, setCountries] = useState();
   const [grenade, setGrenade] = useState({
     name: "",
     description: "",
-    countries: [],
     attributes: [],
   });
 
   useEffect(() => {
+    loadDataCountries(0, 1000);
+  }, []);
+  useEffect(() => {
     loadDataProducers(0, 1000);
   }, []);
 
+  const loadDataCountries = (page, size) => {
+    CountriesRepository.all(page, size)
+      .then((res) => setCountries(res.data))
+      .catch((err) => console.log(err));
+  };
   const loadDataProducers = (page, size) => {
     ProducersRepository.all(page, size)
       .then((res) => setProducers(res.data))
@@ -125,6 +134,10 @@ export const CreateGrenade = () => {
     console.log(e.target.value);
     handleChangeGrenadeData("producer", e.target.value);
   };
+  const handleChangeCountry = (e) => {
+    console.log(e.target.value);
+    handleChangeGrenadeData("country", e.target.value);
+  };
 
   return (
     <>
@@ -195,16 +208,18 @@ export const CreateGrenade = () => {
 
         <Grid item xs={12}>
           <FormControl color="warning" fullWidth style={{ marginTop: "8px" }}>
-            <InputLabel id="demo-simple-select-label">Country</InputLabel>
+            <InputLabel id="demo-country-select-label">Country</InputLabel>
             <Select
               label="Country"
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId="demo-country-select-label"
+              id="demo-country-select"
+              value={grenade?.country}
+              onChange={handleChangeCountry}
             >
               <MenuItem> / </MenuItem>
-              <MenuItem>Item1</MenuItem>
-              <MenuItem>Item2</MenuItem>
-              <MenuItem>Item3</MenuItem>
+              {countries?.content.map((country) => (
+                <MenuItem value={country}>{country.name}</MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>
@@ -215,12 +230,12 @@ export const CreateGrenade = () => {
             fullWidth
             style={{ marginTop: "8px", marginBottom: "8px" }}
           >
-            <InputLabel id="demo-simple-select-label">Producer</InputLabel>
+            <InputLabel id="demo-producer-select-label">Producer</InputLabel>
 
             <Select
               label="Producer"
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId="demo-producer-select-label"
+              id="demo-producer-select"
               value={grenade?.producer}
               onChange={handleChangeProducer}
             >
@@ -284,6 +299,17 @@ export const CreateGrenade = () => {
               <TextField
                 label={attributeType.name}
                 size="small"
+                value={
+                  attributeValues[attributeType?.id + "_"]
+                    ? attributeValues[attributeType?.id + "_"]
+                    : ""
+                }
+                onChange={(e) =>
+                  handleChangeAttributeValue(
+                    attributeType?.id + "_",
+                    e.target.value
+                  )
+                }
                 variant="outlined"
                 color="warning"
                 fullWidth
