@@ -106,7 +106,7 @@ export const Grenades = () => {
           </span>
           <Hidden mdUp>
             <Grid item xs={12} md={6}>
-              <Tooltip title="Add new product">
+              {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
                 <Button
                   style={{
                     color: "#1E1F1C",
@@ -129,7 +129,7 @@ export const Grenades = () => {
                     }}
                   ></AddIcon>
                 </Button>
-              </Tooltip>
+              )}
             </Grid>
           </Hidden>
         </Grid>
