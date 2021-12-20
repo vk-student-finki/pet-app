@@ -146,7 +146,7 @@ export const Producers = () => {
                       style={{
                         float: "right",
                         backgroundColor: "#D35400",
-                        marginRight: "10px",
+                        marginRight: "25px",
                         marginTop: "20px",
                       }}
                     ></AddIcon>
@@ -193,16 +193,15 @@ export const Producers = () => {
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
-                <TableCell
-                  style={{
-                    textAlign: "left",
-                  }}
-                >
+                <TableCell></TableCell>
+
+                <TableCell style={{}}>
                   <DeleteIcon
                     fontSize="large"
                     style={{
                       cursor: "pointer",
                       color: "#D35400",
+                      float: "right",
                     }}
                     onClick={() => handleClickOpen(producer)}
                   ></DeleteIcon>

@@ -148,7 +148,7 @@ export const Countries = () => {
                       style={{
                         float: "right",
                         backgroundColor: "#D35400",
-                        marginRight: "10px",
+                        marginRight: "25px",
                         marginTop: "20px",
                       }}
                     ></AddIcon>
@@ -190,6 +190,7 @@ export const Countries = () => {
                     {country.name}
                   </TableCell>
                 </Hidden>
+                <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
