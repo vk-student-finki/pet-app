@@ -1,4 +1,4 @@
-import { Button, Container, Grid } from "@mui/material";
+import { Alert, AlertTitle, Button, Container, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
@@ -8,6 +8,7 @@ import { CountriesRepository } from "./CountriesRepository";
 export const CountryDelete = ({}) => {
   const { id } = useParams();
   const [deleteError, setDeleteError] = useState(false);
+  const [countryError, setCountryError] = useState();
 
   useEffect(() => {
     deleteThisCountry(id);
@@ -15,6 +16,7 @@ export const CountryDelete = ({}) => {
 
   const deleteThisCountry = (id) => {
     setDeleteError(false);
+    setCountryError(null);
     CountriesRepository.deleteCountry(id)
       .then((res) => {
         console.log(res.data);
@@ -22,7 +24,8 @@ export const CountryDelete = ({}) => {
       })
       .catch((err) => {
         setDeleteError(true);
-        console.log(err.data);
+        setCountryError(err);
+        console.log(countryError?.response?.data?.message);
       });
   };
 
@@ -64,6 +67,13 @@ export const CountryDelete = ({}) => {
             sx={{ fontSize: 40 }}
             style={{ color: "#D35400", marginBottom: "20px" }}
           />
+          {countryError && (
+            <Grid item xs={12} style={{ marginBottom: "10px" }}>
+              <Alert severity="error">
+                {countryError?.response?.data?.message}
+              </Alert>
+            </Grid>
+          )}
           <Grid xs={12}>
             <Button
               variant="outlined"

@@ -88,12 +88,12 @@ export const CreateCountry = () => {
       <Container maxWidth="xs">
         {globalFormError && (
           <Grid item xs={12}>
-            <Alert severity="error">
-              {globalFormError?.response?.data?.error}
+            <Alert severity="error" style={{ marginTop: "5px" }}>
+              {globalFormError?.response?.data?.message}
             </Alert>
           </Grid>
         )}
-        <Grid item xs={12} style={{ marginTop: "40px" }}>
+        <Grid item xs={12} style={{ marginTop: "20px" }}>
           <TextField
             label="Name"
             size="small"

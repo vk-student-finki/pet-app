@@ -106,7 +106,7 @@ export const Grenades = () => {
           </span>
           <Hidden mdUp>
             <Grid item xs={12} md={6}>
-              <Tooltip title="Add new product">
+              {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
                 <Button
                   style={{
                     color: "#1E1F1C",
@@ -129,19 +129,22 @@ export const Grenades = () => {
                     }}
                   ></AddIcon>
                 </Button>
-              </Tooltip>
+              )}
             </Grid>
           </Hidden>
         </Grid>
         <Hidden mdDown>
-          <Grid item xs={12} md={12}>
+          <Grid
+            item
+            xs={12}
+            md={12}
+            style={{ textAlign: "center", marginTop: "5px" }}
+          >
             {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
               <Button
                 variant="contained"
                 style={{
-                  float: "right",
                   backgroundColor: "#D35400",
-                  marginRight: "10px",
                 }}
                 onClick={() => {
                   setRedirectTo(`/grenades/create`);

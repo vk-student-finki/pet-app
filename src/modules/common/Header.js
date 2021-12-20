@@ -27,7 +27,6 @@ import LoginIcon from "@mui/icons-material/Login";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import Fade from "@mui/material/Fade";
 import CircleIcon from "@mui/icons-material/Circle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import CategoryIcon from "@mui/icons-material/Category";
@@ -36,6 +35,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Logout from "@mui/icons-material/Logout";
 import PublicIcon from "@mui/icons-material/Public";
 import BusinessIcon from "@mui/icons-material/Business";
+import FlagIcon from "@mui/icons-material/Flag";
 
 export default function Header({}) {
   const [redirectTo, setRedirectTo] = useState();
@@ -83,18 +83,27 @@ export default function Header({}) {
     >
       {window?.localStorage?.getItem("auth") && (
         <List style={{ backgroundColor: "#F5F5F5" }}>
-          {["Home", "Grenades", "Producers", "Users", "Groups", "Privileges"]
+          {[
+            "Home",
+            "Grenades",
+            "Producers",
+            "Countries",
+            "Users",
+            "Groups",
+            "Privileges",
+          ]
             .filter(
               (key) =>
                 (AuthService.hasRole("ROLE_ADMINISTRATOR") &&
                   [
                     "Grenades",
                     "Producers",
+                    "Countries",
                     "Users",
                     "Groups",
                     "Privileges",
                   ].includes(key)) ||
-                ["Home", "Grenades", "Producers"].includes(key)
+                ["Home", "Grenades"].includes(key)
             )
             .map((text, index) => (
               <Link
@@ -107,10 +116,12 @@ export default function Header({}) {
                     : index === 2
                     ? "/producers"
                     : index === 3
-                    ? "/users"
+                    ? "/countries"
                     : index === 4
-                    ? "/groups"
+                    ? "/users"
                     : index === 5
+                    ? "/groups"
+                    : index === 6
                     ? "/privileges"
                     : ""
                 }
@@ -129,10 +140,12 @@ export default function Header({}) {
                     ) : index === 2 ? (
                       <CategoryIcon />
                     ) : index === 3 ? (
-                      <GroupsIcon />
+                      <FlagIcon />
                     ) : index === 4 ? (
-                      <StarIcon />
+                      <GroupsIcon />
                     ) : index === 5 ? (
+                      <StarIcon />
+                    ) : index === 6 ? (
                       <PersonIcon />
                     ) : (
                       ""
@@ -263,7 +276,7 @@ export default function Header({}) {
               ></HomeIcon>
             </Link>
           </Grid>
-          <Grid item xs={6} md={1.1}>
+          <Grid item xs={6} md={1.2}>
             <Link to="/grenades" style={{ textDecoration: "none" }}>
               <Button
                 size="small"

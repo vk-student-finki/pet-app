@@ -1,13 +1,15 @@
-import { Button, Container, Grid } from "@mui/material";
+import { Alert, Button, Container, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { ProducersRepository } from "./ProducersRepository";
+import { useDispatch } from "react-redux";
 
 export const ProducerDelete = ({}) => {
   const { id } = useParams();
   const [deleteError, setDeleteError] = useState(false);
+  const [producerError, setProducerError] = useState();
 
   useEffect(() => {
     deleteThisProducer(id);
@@ -15,6 +17,7 @@ export const ProducerDelete = ({}) => {
 
   const deleteThisProducer = (id) => {
     setDeleteError(false);
+    setProducerError(null);
     ProducersRepository.deleteProducer(id)
       .then((res) => {
         console.log(res.data);
@@ -22,8 +25,9 @@ export const ProducerDelete = ({}) => {
       })
       .catch((err) => {
         setDeleteError(true);
-        console.log(err.message);
-        console.log(id);
+        // console.log(err.message);
+        setProducerError(err);
+        console.log(producerError?.response?.data?.message);
       });
   };
 
@@ -65,6 +69,13 @@ export const ProducerDelete = ({}) => {
             sx={{ fontSize: 40 }}
             style={{ color: "#D35400", marginBottom: "20px" }}
           />
+          {producerError && (
+            <Grid item xs={12} style={{ marginBottom: "10px" }}>
+              <Alert severity="error">
+                {producerError?.response?.data?.message}
+              </Alert>
+            </Grid>
+          )}
           <Grid xs={12}>
             <Button
               variant="outlined"
