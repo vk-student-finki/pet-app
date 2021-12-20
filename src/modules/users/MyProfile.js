@@ -18,7 +18,10 @@ import {
   IconButton,
 } from "@mui/material";
 import { UsersRepository } from "./UsersRepository";
-import { UpdateUserValidator } from "./UserValidator";
+import {
+  ChangePasswordUserValidator,
+  UpdateUserValidator,
+} from "./UserValidator";
 import EditIcon from "@mui/icons-material/Edit";
 import { Navigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
@@ -59,6 +62,41 @@ export const MyProfile = () => {
         setLoading(false);
       });
   };
+  const handleSubmitPassword = () => {
+    let valid = ChangePasswordUserValidator.isValidSync(user);
+    setFormFieldErrors();
+    if (!valid) {
+      let validationErrors = {};
+      ChangePasswordUserValidator.validate(user, { abortEarly: false }).catch(
+        (err) => {
+          console.log(err.inner);
+          err.inner.forEach((validationError) => {
+            validationErrors[validationError.path] = {};
+            validationErrors[validationError.path] = validationError.message;
+          });
+          console.log(validationErrors);
+          setFormFieldErrors(validationErrors);
+          return;
+        }
+      );
+      return;
+    }
+    setLoading(true);
+    setGlobalFormError(null);
+    setSuccessMessage(null);
+    UsersRepository.updateUser(user?.id, user)
+      .then((res) => {
+        console.log(res);
+        setSuccessMessage("Password is changed");
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+        setGlobalFormError(err);
+        console.log("not changed");
+      });
+  };
   const handleSubmit = () => {
     let valid = UpdateUserValidator.isValidSync(user);
     setFormFieldErrors();
@@ -78,11 +116,11 @@ export const MyProfile = () => {
     }
     setLoading(true);
     setGlobalFormError(null);
-    setSuccessMessage(null);
+
     UsersRepository.updateUser(user?.id, user)
       .then((res) => {
         console.log(res);
-        setSuccessMessage("Password is changed");
+        setSuccessMessage("User info is changed");
         setLoading(false);
       })
       .catch((err) => {
@@ -258,6 +296,7 @@ export const MyProfile = () => {
                 fullWidth
                 style={{
                   marginTop: "10px",
+                  marginBottom: "10px",
                   backgroundColor: "#2DA44E",
                   float: "right",
                 }}
@@ -274,6 +313,11 @@ export const MyProfile = () => {
                 <Alert severity="error" variant="filled">
                   {globalFormError?.response?.data?.message}
                 </Alert>
+              </Grid>
+            )}
+            {successMessage && (
+              <Grid item xs={12} style={{ marginTop: "10px" }}>
+                <Alert severity="success">{successMessage}</Alert>
               </Grid>
             )}
           </Grid>
@@ -328,7 +372,7 @@ export const MyProfile = () => {
                 id="name"
                 onKeyPress={(e) => {
                   if (e.key === "Enter") {
-                    handleSubmit();
+                    handleSubmitPassword();
                   }
                 }}
                 label="Confirm Password"
@@ -348,7 +392,7 @@ export const MyProfile = () => {
               <Button onClick={handleClose}>Close</Button>
               <Button
                 onClick={() => {
-                  handleSubmit();
+                  handleSubmitPassword();
                   handleClick();
                 }}
               >
