@@ -26,14 +26,14 @@ export const GrenadesRepository = {
     });
   },
 
-  delete: (id) => {
+  deleteGrenade: (id) => {
     return axios({
       url: `${SETTINGS.API_BASE_URL}grenades/${id}`,
       method: "DELETE",
     });
   },
 
-  update: (grenade) => {
+  updateGrenade: (grenade) => {
     return axios({
       url: `${SETTINGS.API_BASE_URL}grenades`,
       method: "PUT",

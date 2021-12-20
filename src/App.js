@@ -37,6 +37,8 @@ import { Countries } from "./modules/countries/Countries";
 import { ProducerDelete } from "./modules/producers/ProducerDelete";
 import { CountryDelete } from "./modules/countries/CountryDelete";
 import { CreateCountry } from "./modules/countries/CreateCountry";
+import { DeleteGrenade } from "./modules/grenades/DeleteGrenade";
+import { UpdateGrenade } from "./modules/grenades/UpdateGrenade";
 
 export default function App() {
   const location = useLocation();
@@ -139,6 +141,11 @@ export default function App() {
             path="grenades/details/:id"
             element={<GrenadeDetails />}
           ></Route>
+          <Route
+            path="/grenades/delete/:id"
+            element={<DeleteGrenade />}
+          ></Route>
+          <Route path="/grenades/edit/:id" element={<UpdateGrenade />}></Route>
           <Route path="/producers" element={<Producers />}></Route>
           <Route path="/producers/create" element={<CreateProducer />}></Route>
           <Route

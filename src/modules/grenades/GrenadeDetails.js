@@ -1,4 +1,15 @@
-import { Container, Divider, Grid, Hidden } from "@mui/material";
+import {
+  Container,
+  Divider,
+  Grid,
+  Hidden,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Slide,
+} from "@mui/material";
 import img1 from "../images/411uURaRukL.jpg";
 import React, { useEffect, useState } from "react";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
@@ -6,6 +17,14 @@ import { GrenadesRepository } from "./GrenadesRepository";
 import { Navigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { AuthService } from "../auth/AuthService";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import EditIcon from "@mui/icons-material/Edit";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 function handleClick(event) {
   event.preventDefault();
@@ -16,6 +35,18 @@ export const GrenadeDetails = () => {
   const [grenade, setGrenade] = useState();
   const { id } = useParams();
   const [redirectTo, setRedirectTo] = useState();
+  const [selectedGrenade, setSelectedGrenade] = useState();
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = (grenade) => {
+    setSelectedGrenade(grenade);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     loadData();
@@ -99,6 +130,39 @@ export const GrenadeDetails = () => {
             <div style={{ textAlign: "left", marginLeft: "320px" }}>
               {grenade?.name}
             </div>
+            <Grid item xs={12} md={12}>
+              <Button style={{ color: "#1E1F1C", float: "right" }}>
+                {window?.localStorage?.getItem("auth") &&
+                  AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+                    <DeleteIcon
+                      size="large"
+                      style={{
+                        color: "#FF6000",
+                        marginRight: "-420px",
+                        marginTop: "-35px",
+                      }}
+                      onClick={() => handleClickOpen(grenade)}
+                    />
+                  )}
+              </Button>
+
+              <Button style={{ color: "#1E1F1C", float: "right" }}>
+                {window?.localStorage?.getItem("auth") &&
+                  AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+                    <EditIcon
+                      size="large"
+                      style={{
+                        color: "#FF6000",
+                        marginRight: "-490px",
+                        marginTop: "-35px",
+                      }}
+                      onClick={() => {
+                        setRedirectTo(`/grenades/edit/${grenade?.id}`);
+                      }}
+                    />
+                  )}
+              </Button>
+            </Grid>
             <Divider
               style={{ marginTop: "10px", marginLeft: "320px" }}
             ></Divider>
@@ -229,6 +293,61 @@ export const GrenadeDetails = () => {
           </Grid>
         </Hidden>
       </Container>
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <HighlightOffIcon
+          style={{
+            color: "#F15E5E",
+            marginLeft: "auto",
+            marginRight: "auto",
+            fontSize: "70px",
+            marginTop: "10px",
+          }}
+        />
+        <DialogTitle
+          style={{
+            fontWeight: "bold",
+            fontFamily: "Monaco, monospace",
+          }}
+        >
+          {"Confirm delete"}
+        </DialogTitle>
+        <DialogContent style={{ textAlign: "center" }}>
+          Are you sure you want to delete this grenade? This action
+          <br /> cannot be undone.
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={handleClose}
+            variant="outlined"
+            size="large"
+            style={{
+              backgroundColor: "#C1C1C1",
+              color: "white",
+              border: "#C1C1C1",
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            size="large"
+            style={{
+              backgroundColor: "#F15E5E",
+              color: "white",
+            }}
+            onClick={() => {
+              setRedirectTo(`/grenades/delete/${selectedGrenade?.id}`);
+            }}
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
