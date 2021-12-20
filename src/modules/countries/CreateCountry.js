@@ -89,7 +89,7 @@ export const CreateCountry = () => {
         {globalFormError && (
           <Grid item xs={12}>
             <Alert severity="error">
-              {globalFormError?.response?.data?.error}
+              {globalFormError?.response?.data?.message}
             </Alert>
           </Grid>
         )}

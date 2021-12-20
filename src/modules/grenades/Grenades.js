@@ -134,14 +134,17 @@ export const Grenades = () => {
           </Hidden>
         </Grid>
         <Hidden mdDown>
-          <Grid item xs={12} md={12}>
+          <Grid
+            item
+            xs={12}
+            md={12}
+            style={{ textAlign: "center", marginTop: "5px" }}
+          >
             {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
               <Button
                 variant="contained"
                 style={{
-                  float: "right",
                   backgroundColor: "#D35400",
-                  marginRight: "10px",
                 }}
                 onClick={() => {
                   setRedirectTo(`/grenades/create`);
