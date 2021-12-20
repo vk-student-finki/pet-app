@@ -53,6 +53,16 @@ export default function App() {
         navigate("/forbidden");
       }
     }
+    if (location.pathname.startsWith("/groups")) {
+      if (!window?.localStorage?.getItem("auth")) {
+        navigate("/forbidden");
+      }
+    }
+    if (location.pathname.startsWith("/privileges")) {
+      if (!window?.localStorage?.getItem("auth")) {
+        navigate("/forbidden");
+      }
+    }
 
     if (location.pathname.startsWith("/groups")) {
       if (!AuthService.hasRole("ROLE_ADMINISTRATOR")) {
