@@ -40,4 +40,16 @@ export const GrenadesRepository = {
       data: grenade,
     });
   },
+  filterGrenades: (producerID, countryID, page, size) => {
+    return axios({
+      url: `${SETTINGS.API_BASE_URL}grenades/filter`,
+      method: "GET",
+      params: {
+        producerID: producerID,
+        countryID: countryID,
+        page: page,
+        size: size,
+      },
+    });
+  },
 };
