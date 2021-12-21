@@ -3,13 +3,14 @@ import { AuthService } from "../auth/AuthService";
 import { SETTINGS } from "../common/Settings";
 
 export const UsersRepository = {
-  getAll: (page, size) => {
+  getAll: (page, size, searchParams) => {
     return axios({
       url: `${SETTINGS.API_BASE_URL}users`,
       method: "GET",
       params: {
         page: page,
         size: size,
+        searchParams: searchParams,
       },
       // headers: {
       //   Authorization: "Bearer " + AuthService.getToken(),
