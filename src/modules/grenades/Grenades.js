@@ -41,7 +41,7 @@ export const Grenades = () => {
   }, []);
 
   useEffect(() => {
-    loadData(0, 10);
+    loadData(0, 8);
   }, [searchParams]);
 
   const handleChangeSearchParams = (key, value) => {
@@ -237,6 +237,7 @@ export const Grenades = () => {
                       id="grouped-native-select"
                       label="Country"
                     >
+                      <MenuItem>{""}</MenuItem>
                       {countries?.content?.map((country) => (
                         <MenuItem value={country}> {country.name}</MenuItem>
                       ))}
@@ -255,6 +256,7 @@ export const Grenades = () => {
                       id="grouped-native-select2"
                       label="Producer"
                     >
+                      <MenuItem>{""}</MenuItem>
                       {producers?.content?.map((producer) => (
                         <MenuItem value={producer}> {producer.name}</MenuItem>
                       ))}
