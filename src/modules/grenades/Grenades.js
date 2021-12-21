@@ -51,12 +51,12 @@ export const Grenades = () => {
   };
 
   const loadDataCountries = (page, size) => {
-    CountriesRepository.all(page, size)
+    CountriesRepository.all(page, size, searchParams)
       .then((res) => setCountries(res.data))
       .catch((err) => console.log(err));
   };
   const loadDataProducers = (page, size) => {
-    ProducersRepository.all(page, size)
+    ProducersRepository.all(page, size, searchParams)
       .then((res) => setProducers(res.data))
       .catch((err) => console.log(err));
   };
@@ -66,7 +66,6 @@ export const Grenades = () => {
 
   const loadData = (page, size) => {
     let filterParams = { ...searchParams };
-
     if (filterParams.country) {
       filterParams["country.id"] = filterParams.country.id;
       delete filterParams.country;
@@ -88,21 +87,6 @@ export const Grenades = () => {
     loadData(value - 1, 8);
   };
 
-  const Search = styled("div")(({ theme }) => ({
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(1),
-      width: "auto",
-    },
-  }));
-
   return (
     <>
       {redirectTo && <Navigate to={redirectTo} push />}
@@ -114,13 +98,6 @@ export const Grenades = () => {
           height: "200px",
         }}
       >
-        <Container maxWidth="xs">
-          <Grid item xs={12} md={12} style={{ paddingTop: "10px" }}>
-            <Search>
-              <SearchIcon />
-            </Search>
-          </Grid>
-        </Container>
         <Grid item xs={12} style={{ textAlign: "center" }}>
           <span
             style={{
@@ -227,7 +204,6 @@ export const Grenades = () => {
                 <Grid item md={3} xs={12}>
                   <TextField
                     fullWidth
-                    color="warning"
                     label="Name"
                     size="small"
                     value={searchParams?.name ? searchParams?.name : ""}
@@ -239,7 +215,6 @@ export const Grenades = () => {
                 <Grid item md={3} xs={12}>
                   <TextField
                     fullWidth
-                    color="warning"
                     label="Description"
                     size="small"
                     value={
@@ -250,7 +225,7 @@ export const Grenades = () => {
                     }}
                   />
                 </Grid>
-                <Grid item md={3} xs={12} style={{ textAlign: "left" }}>
+                <Grid item md={3} xs={12}>
                   <FormControl fullWidth size="small" color="warning">
                     <InputLabel htmlFor="grouped-native-select">
                       Country
