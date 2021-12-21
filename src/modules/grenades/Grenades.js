@@ -1,10 +1,13 @@
 import {
   Button,
   Container,
+  Divider,
   Grid,
   Hidden,
   Pagination,
   Stack,
+  MenuItem,
+  TextField,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
@@ -27,13 +30,25 @@ export const Grenades = () => {
   const [redirectTo, setRedirectTo] = useState();
   const [countries, setCountries] = useState();
   const [producers, setProducers] = useState();
+  const [searchParams, setSearchParams] = useState({});
 
   useEffect(() => {
     loadDataCountries(0, 1000);
   }, []);
+
   useEffect(() => {
     loadDataProducers(0, 1000);
   }, []);
+
+  useEffect(() => {
+    loadData(0, 10);
+  }, [searchParams]);
+
+  const handleChangeSearchParams = (key, value) => {
+    let data = { ...searchParams };
+    data[key] = value;
+    setSearchParams(data);
+  };
 
   const loadDataCountries = (page, size) => {
     CountriesRepository.all(page, size)
@@ -50,7 +65,12 @@ export const Grenades = () => {
   }, []);
 
   const loadData = (page, size) => {
-    GrenadesRepository.all(page, size)
+    let filterParams = { ...searchParams };
+    if (filterParams.country) {
+      filterParams["country.id"] = filterParams.country.id;
+      delete filterParams.country;
+    }
+    GrenadesRepository.all(page, size, filterParams)
       .then((res) => {
         setGrenades(res.data);
       })
@@ -182,7 +202,7 @@ export const Grenades = () => {
         }}
       >
         <Grid item xs={12} style={{ textAlign: "center" }}>
-          <Grid container>
+          <Grid container spacing={2}>
             <Grid item xs={12}>
               <span
                 style={{
@@ -198,29 +218,50 @@ export const Grenades = () => {
               </span>
             </Grid>
             <Grid item xs={12} style={{ textAlign: "center" }}>
-              <FormControl color="warning" sx={{ m: 1, minWidth: 120 }}>
-                <InputLabel htmlFor="grouped-native-select">
-                  Filter By
-                </InputLabel>
-                <Select
-                  native
-                  defaultValue=""
-                  id="grouped-native-select"
-                  label="FilterBy"
-                >
-                  <option aria-label="None" value="" />
-                  <optgroup label="Producer">
-                    {producers?.content?.map((producer) => (
-                      <option value={producer}> {producer.name}</option>
-                    ))}
-                  </optgroup>
-                  <optgroup label="Country">
-                    {countries?.content?.map((country) => (
-                      <option value={country}> {country.name}</option>
-                    ))}
-                  </optgroup>
-                </Select>
-              </FormControl>
+              <Grid container spacing={2}>
+                <Grid item md={3} xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Name"
+                    size="small"
+                    value={searchParams?.name ? searchParams?.name : ""}
+                    onChange={(e) => {
+                      handleChangeSearchParams("name", e.target.value);
+                    }}
+                  />
+                </Grid>
+                <Grid item md={3} xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Description"
+                    size="small"
+                    value={
+                      searchParams?.description ? searchParams?.description : ""
+                    }
+                    onChange={(e) => {
+                      handleChangeSearchParams("description", e.target.value);
+                    }}
+                  />
+                </Grid>
+                <Grid item md={3} xs={12}>
+                  <FormControl fullWidth size="small" color="warning">
+                    <InputLabel htmlFor="grouped-native-select">
+                      Country
+                    </InputLabel>
+                    <Select
+                      onChange={(e) => {
+                        handleChangeSearchParams("country", e.target.value);
+                      }}
+                      id="grouped-native-select"
+                      label="Country"
+                    >
+                      {countries?.content?.map((country) => (
+                        <MenuItem value={country}> {country.name}</MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
 
