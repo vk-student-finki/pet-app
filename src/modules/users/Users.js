@@ -95,92 +95,92 @@ export const Users = () => {
   return (
     <>
       {redirectTo && <Navigate to={redirectTo} push />}
-      <Grid
-        conatiner
-        spacing={2}
-        style={{
-          backgroundColor: "#f1f2f6",
-          height: "200px",
-        }}
-      >
-        <Grid item xs={12} style={{ textAlign: "center" }}>
-          <Grid container>
-            <Grid item xs={12}>
-              <span
-                style={{
-                  fontFamily: "Copperplate, fantasy",
-                  fontSize: "30px",
-                  color: "#1E1F1C",
-                  display: "block",
-                  paddingTop: "50px",
-                  textTransform: "uppercase",
-                }}
-              >
-                Users
-              </span>
+      <Grid container>
+        <Grid
+          item
+          xs={12}
+          style={{
+            backgroundColor: "#f1f2f6",
+          }}
+        >
+          <Grid item xs={12} style={{ textAlign: "center" }}>
+            <Grid container>
+              <Grid item xs={12}>
+                <span
+                  style={{
+                    fontFamily: "Copperplate, fantasy",
+                    fontSize: "30px",
+                    color: "#1E1F1C",
+                    display: "block",
+                    paddingTop: "50px",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Users
+                </span>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-        {window?.localStorage?.getItem("auth") &&
-          AuthService.hasRole("ROLE_ADMINISTRATOR") && (
-            <Grid
-              item
-              xs={12}
-              md={2.5}
-              style={{
-                marginLeft: "auto",
-                marginRight: "auto",
-                marginTop: "-20px",
-              }}
-            >
-              <Button
-                size="medium"
-                variant="outlined"
+          {window?.localStorage?.getItem("auth") &&
+            AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+              <Grid
+                item
+                xs={12}
+                md={2.5}
+                style={{
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  marginTop: "-20px",
+                }}
+              >
+                <Button
+                  size="medium"
+                  variant="outlined"
+                  fullWidth
+                  style={{
+                    color: "white",
+                    borderColor: "white",
+                    backgroundColor: "#D35400",
+                    marginTop: "20px",
+                  }}
+                  onClick={() => {
+                    setRedirectTo(`/users/create`);
+                  }}
+                >
+                  CREATE NEW USER
+                </Button>
+              </Grid>
+            )}
+          <Grid container spacing={2}>
+            <Grid item md={3}></Grid>
+            <Grid item xs={12} md={3}>
+              <TextField
                 fullWidth
-                style={{
-                  color: "white",
-                  borderColor: "white",
-                  backgroundColor: "#D35400",
-                  marginTop: "20px",
+                label="Name"
+                size="small"
+                color="warning"
+                value={searchParams?.firstName ? searchParams?.firstName : ""}
+                onChange={(e) => {
+                  handleChangeSearchParams("firstName", e.target.value);
                 }}
-                onClick={() => {
-                  setRedirectTo(`/users/create`);
-                }}
-              >
-                CREATE NEW USER
-              </Button>
+                style={{ marginTop: "10px" }}
+              />
             </Grid>
-          )}
-        <Grid container spacing={2}>
-          <Grid item md={3}></Grid>
-          <Grid item xs={12} md={3}>
-            <TextField
-              fullWidth
-              label="Name"
-              size="small"
-              color="warning"
-              value={searchParams?.firstName ? searchParams?.firstName : ""}
-              onChange={(e) => {
-                handleChangeSearchParams("firstName", e.target.value);
-              }}
-              style={{ marginTop: "10px" }}
-            />
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <TextField
-              fullWidth
-              label="LastName"
-              size="small"
-              color="warning"
-              value={searchParams?.lastName ? searchParams?.lastName : ""}
-              onChange={(e) => {
-                handleChangeSearchParams("lastName", e.target.value);
-              }}
-              style={{ marginTop: "10px" }}
-            />
+            <Grid item xs={12} md={3}>
+              <TextField
+                fullWidth
+                label="LastName"
+                size="small"
+                color="warning"
+                value={searchParams?.lastName ? searchParams?.lastName : ""}
+                onChange={(e) => {
+                  handleChangeSearchParams("lastName", e.target.value);
+                }}
+                style={{ marginTop: "10px" }}
+              />
+            </Grid>
           </Grid>
         </Grid>
-
         <Grid item xs={12}>
           <Table>
             <TableBody>

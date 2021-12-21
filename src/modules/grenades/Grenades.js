@@ -13,10 +13,7 @@ import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import { GrenadesRepository } from "./GrenadesRepository";
 import { GrenadeBox } from "./GrenadeBox";
-import SearchIcon from "@mui/icons-material/Search";
-import { alpha } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { Navigate } from "react-router-dom";
 import { AuthService } from "../auth/AuthService";
 import InputLabel from "@mui/material/InputLabel";
@@ -174,127 +171,126 @@ export const Grenades = () => {
           </Grid>
         </Hidden>
       </Grid>
-
-      <Grid
-        conatiner
-        spacing={2}
-        style={{
-          backgroundColor: "#f1f2f6",
-          height: "170px",
-        }}
-      >
-        <Grid item xs={12} style={{ textAlign: "center" }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <span
-                style={{
-                  fontFamily: "Copperplate, fantasy",
-                  fontSize: "30px",
-                  color: "#1E1F1C",
-                  display: "block",
-                  paddingTop: "50px",
-                  textTransform: "uppercase",
-                }}
-              >
-                Grenades
-              </span>
-            </Grid>
-            <Grid item xs={12} style={{ textAlign: "center" }}>
-              <Grid container spacing={2}>
-                <Grid item md={3} xs={12}>
-                  <TextField
-                    fullWidth
-                    label="Name"
-                    size="small"
-                    value={searchParams?.name ? searchParams?.name : ""}
-                    onChange={(e) => {
-                      handleChangeSearchParams("name", e.target.value);
-                    }}
-                  />
-                </Grid>
-                <Grid item md={3} xs={12}>
-                  <TextField
-                    fullWidth
-                    label="Description"
-                    size="small"
-                    value={
-                      searchParams?.description ? searchParams?.description : ""
-                    }
-                    onChange={(e) => {
-                      handleChangeSearchParams("description", e.target.value);
-                    }}
-                  />
-                </Grid>
-                <Grid item md={3} xs={12}>
-                  <FormControl fullWidth size="small" color="warning">
-                    <InputLabel htmlFor="grouped-native-select">
-                      Country
-                    </InputLabel>
-                    <Select
+      <Grid container>
+        <Grid
+          item
+          xs={12}
+          style={{
+            backgroundColor: "#f1f2f6",
+          }}
+        >
+          <Grid item xs={12} style={{ textAlign: "center" }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <span
+                  style={{
+                    fontFamily: "Copperplate, fantasy",
+                    fontSize: "30px",
+                    color: "#1E1F1C",
+                    display: "block",
+                    paddingTop: "50px",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Grenades
+                </span>
+              </Grid>
+              <Grid item xs={12} style={{ textAlign: "center" }}>
+                <Grid container spacing={2}>
+                  <Grid item md={3} xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Name"
+                      size="small"
+                      value={searchParams?.name ? searchParams?.name : ""}
                       onChange={(e) => {
-                        handleChangeSearchParams("country", e.target.value);
+                        handleChangeSearchParams("name", e.target.value);
                       }}
-                      id="grouped-native-select"
-                      label="Country"
-                    >
-                      <MenuItem>{""}</MenuItem>
-                      {countries?.content?.map((country) => (
-                        <MenuItem value={country}> {country.name}</MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item md={3} xs={12}>
-                  <FormControl fullWidth size="small" color="warning">
-                    <InputLabel htmlFor="grouped-native-select2">
-                      Producer
-                    </InputLabel>
-                    <Select
+                    />
+                  </Grid>
+                  <Grid item md={3} xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Description"
+                      size="small"
+                      value={
+                        searchParams?.description
+                          ? searchParams?.description
+                          : ""
+                      }
                       onChange={(e) => {
-                        handleChangeSearchParams("producer", e.target.value);
+                        handleChangeSearchParams("description", e.target.value);
                       }}
-                      id="grouped-native-select2"
-                      label="Producer"
-                    >
-                      <MenuItem>{""}</MenuItem>
-                      {producers?.content?.map((producer) => (
-                        <MenuItem value={producer}> {producer.name}</MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
+                    />
+                  </Grid>
+                  <Grid item md={3} xs={12}>
+                    <FormControl fullWidth size="small" color="warning">
+                      <InputLabel htmlFor="grouped-native-select">
+                        Country
+                      </InputLabel>
+                      <Select
+                        onChange={(e) => {
+                          handleChangeSearchParams("country", e.target.value);
+                        }}
+                        id="grouped-native-select"
+                        label="Country"
+                      >
+                        <MenuItem>{""}</MenuItem>
+                        {countries?.content?.map((country) => (
+                          <MenuItem value={country}> {country.name}</MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item md={3} xs={12}>
+                    <FormControl fullWidth size="small" color="warning">
+                      <InputLabel htmlFor="grouped-native-select2">
+                        Producer
+                      </InputLabel>
+                      <Select
+                        onChange={(e) => {
+                          handleChangeSearchParams("producer", e.target.value);
+                        }}
+                        id="grouped-native-select2"
+                        label="Producer"
+                      >
+                        <MenuItem>{""}</MenuItem>
+                        {producers?.content?.map((producer) => (
+                          <MenuItem value={producer}> {producer.name}</MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
-
-          <Grid container spacing={3} style={{ marginTop: "20px" }}>
-            {grenades?.content?.map((grenade, index) => (
-              <GrenadeBox grenade={grenade} />
-            ))}
-          </Grid>
         </Grid>
+        <Grid container spacing={3} style={{ marginTop: "20px" }}>
+          {grenades?.content?.map((grenade, index) => (
+            <GrenadeBox grenade={grenade} />
+          ))}
+        </Grid>
+      </Grid>
 
-        <Grid container spacing={2}>
-          <Grid item={12} style={{ marginLeft: "auto", marginRight: "auto" }}>
-            {grenades && grenades.number !== undefined && (
-              <Stack spacing={2} style={{ marginTop: "20px" }}>
-                <Pagination
-                  count={
-                    Math.floor(grenades?.totalElements / grenades?.size) + 1
-                  }
-                  color="primary"
-                  shape="rounded"
-                  showFirstButton
-                  showLastButton
-                  style={{
-                    color: "#D35400",
-                  }}
-                  page={grenades.number + 1}
-                  onChange={handleChange}
-                />
-              </Stack>
-            )}
-          </Grid>
+      <Grid container spacing={2}>
+        <Grid item={12} style={{ marginLeft: "auto", marginRight: "auto" }}>
+          {grenades && grenades.number !== undefined && (
+            <Stack spacing={2} style={{ marginTop: "20px" }}>
+              <Pagination
+                count={Math.floor(grenades?.totalElements / grenades?.size) + 1}
+                color="primary"
+                shape="rounded"
+                showFirstButton
+                showLastButton
+                style={{
+                  color: "#D35400",
+                }}
+                page={grenades.number + 1}
+                onChange={handleChange}
+              />
+            </Stack>
+          )}
         </Grid>
       </Grid>
     </>
