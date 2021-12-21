@@ -66,10 +66,17 @@ export const Grenades = () => {
 
   const loadData = (page, size) => {
     let filterParams = { ...searchParams };
+
     if (filterParams.country) {
       filterParams["country.id"] = filterParams.country.id;
       delete filterParams.country;
     }
+
+    if (filterParams.producer) {
+      filterParams["producer.id"] = filterParams.producer.id;
+      delete filterParams.producer;
+    }
+
     GrenadesRepository.all(page, size, filterParams)
       .then((res) => {
         setGrenades(res.data);
@@ -222,6 +229,7 @@ export const Grenades = () => {
                 <Grid item md={3} xs={12}>
                   <TextField
                     fullWidth
+                    color="warning"
                     label="Name"
                     size="small"
                     value={searchParams?.name ? searchParams?.name : ""}
@@ -233,6 +241,7 @@ export const Grenades = () => {
                 <Grid item md={3} xs={12}>
                   <TextField
                     fullWidth
+                    color="warning"
                     label="Description"
                     size="small"
                     value={
@@ -243,7 +252,7 @@ export const Grenades = () => {
                     }}
                   />
                 </Grid>
-                <Grid item md={3} xs={12}>
+                <Grid item md={3} xs={12} style={{ textAlign: "left" }}>
                   <FormControl fullWidth size="small" color="warning">
                     <InputLabel htmlFor="grouped-native-select">
                       Country
@@ -257,6 +266,25 @@ export const Grenades = () => {
                     >
                       {countries?.content?.map((country) => (
                         <MenuItem value={country}> {country.name}</MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+
+                <Grid item md={3} xs={12} style={{ textAlign: "left" }}>
+                  <FormControl fullWidth size="small" color="warning">
+                    <InputLabel htmlFor="grouped-native-select">
+                      Producer
+                    </InputLabel>
+                    <Select
+                      onChange={(e) => {
+                        handleChangeSearchParams("producer", e.target.value);
+                      }}
+                      id="grouped-native-select"
+                      label="Producer"
+                    >
+                      {producers?.content?.map((producer) => (
+                        <MenuItem value={producer}> {producer.name}</MenuItem>
                       ))}
                     </Select>
                   </FormControl>

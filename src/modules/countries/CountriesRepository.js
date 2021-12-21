@@ -2,13 +2,14 @@ import axios from "axios";
 import { SETTINGS } from "../common/Settings";
 
 export const CountriesRepository = {
-  all: (page, size) => {
+  all: (page, size, searchParams) => {
     return axios({
       url: `${SETTINGS.API_BASE_URL}countries`,
       method: "GET",
       params: {
         page: page,
         size: size,
+        searchParams: searchParams,
       },
     });
   },

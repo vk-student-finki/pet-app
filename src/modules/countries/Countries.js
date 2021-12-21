@@ -6,16 +6,21 @@ import {
   DialogContent,
   DialogTitle,
   Divider,
+  FormControl,
   Grid,
   Hidden,
   IconButton,
+  InputLabel,
+  MenuItem,
   Pagination,
+  Select,
   Slide,
   Stack,
   Table,
   TableBody,
   TableCell,
   TableRow,
+  TextField,
   Tooltip,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -35,6 +40,7 @@ export const Countries = () => {
   const [countries, setCountries] = useState();
   const [redirectTo, setRedirectTo] = useState();
   const [selectedCountry, setSelectedCountry] = useState();
+  const [searchParams, setSearchParams] = useState({});
 
   const [open, setOpen] = React.useState(false);
 
@@ -51,8 +57,19 @@ export const Countries = () => {
     loadData(0, 10);
   }, []);
 
+  useEffect(() => {
+    loadData(0, 10);
+  }, [searchParams]);
+
+  const handleChangeSearchParams = (key, value) => {
+    let data = { ...searchParams };
+    data[key] = value;
+    setSearchParams(data);
+  };
+
   const loadData = (page, size) => {
-    CountriesRepository.all(page, size)
+    let filterParams = { ...searchParams };
+    CountriesRepository.all(page, size, filterParams)
       .then((res) => {
         setCountries(res.data);
       })
@@ -127,6 +144,33 @@ export const Countries = () => {
                 )}
               </Grid>
             </Hidden>
+
+            <Grid container>
+              <Grid
+                item
+                md={3}
+                xs={12}
+                style={{
+                  textAlign: "left",
+                  marginTop: "15px",
+                  marginBottom: "15px",
+                }}
+              >
+                <Grid item xs={12} md={8}>
+                  <TextField
+                    fullWidth
+                    label="Country"
+                    size="small"
+                    color="warning"
+                    value={searchParams?.name ? searchParams?.name : ""}
+                    onChange={(e) => {
+                      handleChangeSearchParams("name", e.target.value);
+                    }}
+                    style={{ marginTop: "10px" }}
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
 
             <Hidden mdUp>
               <Grid item xs={12} md={12}>
