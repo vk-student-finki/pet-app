@@ -17,6 +17,7 @@ import {
   Container,
   DialogContent,
   Slide,
+  TextField,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
@@ -39,6 +40,7 @@ export const Users = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useState();
 
   const [open, setOpen] = React.useState(false);
 
@@ -53,10 +55,20 @@ export const Users = () => {
   useEffect(() => {
     loadData(0, 10);
   }, []);
+  useEffect(() => {
+    loadData(0, 10);
+  }, [searchParams]);
+
+  const handleChangeSearchParams = (key, value) => {
+    let data = { ...searchParams };
+    data[key] = value;
+    setSearchParams(data);
+  };
 
   const loadData = (page, size) => {
     setLoading(true);
-    UsersRepository.getAll(page, size)
+    let filterParams = { ...searchParams };
+    UsersRepository.getAll(page, size, filterParams)
       .then((res) => {
         setUsers(res.data);
         setLoading(false);
@@ -88,7 +100,7 @@ export const Users = () => {
         spacing={2}
         style={{
           backgroundColor: "#f1f2f6",
-          height: "132px",
+          height: "200px",
         }}
       >
         <Grid item xs={12} style={{ textAlign: "center" }}>
@@ -139,6 +151,35 @@ export const Users = () => {
               </Button>
             </Grid>
           )}
+        <Grid container spacing={2}>
+          <Grid item md={3}></Grid>
+          <Grid item xs={12} md={3}>
+            <TextField
+              fullWidth
+              label="Name"
+              size="small"
+              color="warning"
+              value={searchParams?.firstName ? searchParams?.firstName : ""}
+              onChange={(e) => {
+                handleChangeSearchParams("firstName", e.target.value);
+              }}
+              style={{ marginTop: "10px" }}
+            />
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <TextField
+              fullWidth
+              label="LastName"
+              size="small"
+              color="warning"
+              value={searchParams?.lastName ? searchParams?.lastName : ""}
+              onChange={(e) => {
+                handleChangeSearchParams("lastName", e.target.value);
+              }}
+              style={{ marginTop: "10px" }}
+            />
+          </Grid>
+        </Grid>
 
         <Grid item xs={12}>
           <Table>

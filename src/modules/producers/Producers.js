@@ -16,6 +16,7 @@ import {
   TableBody,
   TableCell,
   TableRow,
+  TextField,
   Tooltip,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -35,6 +36,7 @@ export const Producers = () => {
   const [producers, setProducers] = useState();
   const [redirectTo, setRedirectTo] = useState();
   const [selectedProducer, setSelectedProducer] = useState();
+  const [searchParams, setSearchParams] = useState({});
 
   const [open, setOpen] = React.useState(false);
 
@@ -51,8 +53,19 @@ export const Producers = () => {
     loadData(0, 10);
   }, []);
 
+  useEffect(() => {
+    loadData(0, 10);
+  }, [searchParams]);
+
+  const handleChangeSearchParams = (key, value) => {
+    let data = { ...searchParams };
+    data[key] = value;
+    setSearchParams(data);
+  };
+
   const loadData = (page, size) => {
-    ProducersRepository.all(page, size)
+    let filterParams = { ...searchParams };
+    ProducersRepository.all(page, size, filterParams)
       .then((res) => {
         setProducers(res.data);
       })
@@ -74,7 +87,7 @@ export const Producers = () => {
         spacing={2}
         style={{
           backgroundColor: "#f1f2f6",
-          height: "132px",
+          height: "200px",
         }}
       >
         <Grid item xs={12} style={{ textAlign: "center" }}>
@@ -93,69 +106,82 @@ export const Producers = () => {
                 Producers
               </span>
             </Grid>
-          </Grid>
 
-          <Grid container>
-            <Hidden mdDown>
-              <Grid
-                item
-                xs={12}
-                md={2.5}
-                style={{
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                  marginTop: "-20px",
-                }}
-              >
-                <Button
-                  size="medium"
-                  variant="outlined"
-                  fullWidth
+            <Grid container>
+              <Hidden mdDown>
+                <Grid
+                  item
+                  xs={12}
+                  md={2.5}
                   style={{
-                    color: "white",
-                    borderColor: "white",
-                    backgroundColor: "#D35400",
-                    marginTop: "20px",
-                  }}
-                  onClick={() => {
-                    setRedirectTo(`/producers/create`);
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    marginTop: "-20px",
                   }}
                 >
-                  ADD NEW PRODUCER
-                </Button>
-              </Grid>
-            </Hidden>
-
-            <Hidden mdUp>
-              <Grid item xs={12} md={12}>
-                {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
                   <Button
+                    size="medium"
+                    variant="outlined"
+                    fullWidth
                     style={{
                       color: "white",
-                      float: "right",
-                      marginRight: "-10px",
-                      marginTop: "-10px",
+                      borderColor: "white",
+                      backgroundColor: "#D35400",
+                      marginTop: "20px",
                     }}
                     onClick={() => {
                       setRedirectTo(`/producers/create`);
                     }}
                   >
-                    <AddIcon
-                      fullWidth
-                      variant="contained"
-                      style={{
-                        float: "right",
-                        backgroundColor: "#D35400",
-                        marginRight: "25px",
-                        marginTop: "20px",
-                      }}
-                    ></AddIcon>
+                    ADD NEW PRODUCER
                   </Button>
-                )}
-              </Grid>
-            </Hidden>
-          </Grid>
+                </Grid>
+              </Hidden>
 
+              <Hidden mdUp>
+                <Grid item xs={12} md={12}>
+                  {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+                    <Button
+                      style={{
+                        color: "white",
+                        float: "right",
+                        marginRight: "-10px",
+                        marginTop: "-10px",
+                      }}
+                      onClick={() => {
+                        setRedirectTo(`/producers/create`);
+                      }}
+                    >
+                      <AddIcon
+                        fullWidth
+                        variant="contained"
+                        style={{
+                          float: "right",
+                          backgroundColor: "#D35400",
+                          marginRight: "25px",
+                          marginTop: "20px",
+                        }}
+                      ></AddIcon>
+                    </Button>
+                  )}
+                </Grid>
+              </Hidden>
+            </Grid>
+            <Grid item md={4.5}></Grid>
+            <Grid item xs={12} md={3}>
+              <TextField
+                fullWidth
+                label="ProducerName"
+                size="small"
+                color="warning"
+                value={searchParams?.name ? searchParams?.name : ""}
+                onChange={(e) => {
+                  handleChangeSearchParams("name", e.target.value);
+                }}
+                style={{ marginTop: "10px" }}
+              />
+            </Grid>
+          </Grid>
           <Grid item xs={12} md={12}>
             {producers?.content?.map((producer, index) => (
               <TableRow

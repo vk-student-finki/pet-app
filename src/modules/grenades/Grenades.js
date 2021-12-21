@@ -71,12 +71,10 @@ export const Grenades = () => {
       filterParams["country.id"] = filterParams.country.id;
       delete filterParams.country;
     }
-
     if (filterParams.producer) {
       filterParams["producer.id"] = filterParams.producer.id;
       delete filterParams.producer;
     }
-
     GrenadesRepository.all(page, size, filterParams)
       .then((res) => {
         setGrenades(res.data);
@@ -270,17 +268,16 @@ export const Grenades = () => {
                     </Select>
                   </FormControl>
                 </Grid>
-
-                <Grid item md={3} xs={12} style={{ textAlign: "left" }}>
+                <Grid item md={3} xs={12}>
                   <FormControl fullWidth size="small" color="warning">
-                    <InputLabel htmlFor="grouped-native-select">
+                    <InputLabel htmlFor="grouped-native-select2">
                       Producer
                     </InputLabel>
                     <Select
                       onChange={(e) => {
                         handleChangeSearchParams("producer", e.target.value);
                       }}
-                      id="grouped-native-select"
+                      id="grouped-native-select2"
                       label="Producer"
                     >
                       {producers?.content?.map((producer) => (
