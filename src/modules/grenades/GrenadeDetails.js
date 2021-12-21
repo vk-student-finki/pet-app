@@ -250,8 +250,9 @@ export const GrenadeDetails = () => {
               }}
             >
               {grenade?.name}
-
-              <Button style={{ color: "#1E1F1C", float: "right" }}>
+            </div>
+            <Grid style={{ float: "right", marginRight: "10px" }}>
+              <Button style={{ color: "#1E1F1C" }}>
                 {window?.localStorage?.getItem("auth") &&
                   AuthService.hasRole("ROLE_ADMINISTRATOR") && (
                     <DeleteIcon
@@ -264,7 +265,7 @@ export const GrenadeDetails = () => {
                   )}
               </Button>
 
-              <Button style={{ color: "#1E1F1C", float: "right" }}>
+              <Button style={{ color: "#1E1F1C" }}>
                 {window?.localStorage?.getItem("auth") &&
                   AuthService.hasRole("ROLE_ADMINISTRATOR") && (
                     <EditIcon
@@ -278,9 +279,9 @@ export const GrenadeDetails = () => {
                     />
                   )}
               </Button>
-            </div>
+            </Grid>
           </Grid>
-          <Divider style={{ marginTop: "10px" }}></Divider>
+          <Divider style={{ marginTop: "60px" }}></Divider>
           <Grid
             item
             xs={12}
