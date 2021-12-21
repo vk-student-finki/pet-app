@@ -91,7 +91,7 @@ export const Countries = () => {
         spacing={2}
         style={{
           backgroundColor: "#f1f2f6",
-          height: "132px",
+          height: "200px",
         }}
       >
         <Grid item xs={12} style={{ textAlign: "center" }}>
@@ -110,98 +110,84 @@ export const Countries = () => {
                 Countries
               </span>
             </Grid>
-          </Grid>
-
-          <Grid container>
-            <Hidden mdDown>
-              <Grid
-                item
-                xs={12}
-                md={2.5}
-                style={{
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                  marginTop: "-20px",
-                }}
-              >
-                {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
-                  <Button
-                    size="medium"
-                    variant="outlined"
-                    fullWidth
-                    style={{
-                      color: "white",
-                      borderColor: "white",
-                      backgroundColor: "#D35400",
-                      marginTop: "20px",
-                    }}
-                    onClick={() => {
-                      setRedirectTo(`/countries/create`);
-                    }}
-                  >
-                    Add new country
-                  </Button>
-                )}
-              </Grid>
-            </Hidden>
 
             <Grid container>
-              <Grid
-                item
-                md={3}
-                xs={12}
-                style={{
-                  textAlign: "left",
-                  marginTop: "15px",
-                  marginBottom: "15px",
-                }}
-              >
-                <Grid item xs={12} md={8}>
-                  <TextField
-                    fullWidth
-                    label="Country"
-                    size="small"
-                    color="warning"
-                    value={searchParams?.name ? searchParams?.name : ""}
-                    onChange={(e) => {
-                      handleChangeSearchParams("name", e.target.value);
-                    }}
-                    style={{ marginTop: "10px" }}
-                  />
-                </Grid>
-              </Grid>
-            </Grid>
-
-            <Hidden mdUp>
-              <Grid item xs={12} md={12}>
-                {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
-                  <Button
-                    style={{
-                      color: "white",
-                      float: "right",
-                      marginRight: "-10px",
-                      marginTop: "-10px",
-                    }}
-                    onClick={() => {
-                      setRedirectTo(`/countries/create`);
-                    }}
-                  >
-                    <AddIcon
+              <Hidden mdDown>
+                <Grid
+                  item
+                  xs={12}
+                  md={2.5}
+                  style={{
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    marginTop: "-20px",
+                  }}
+                >
+                  {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+                    <Button
+                      size="medium"
+                      variant="outlined"
                       fullWidth
-                      variant="contained"
                       style={{
-                        float: "right",
+                        color: "white",
+                        borderColor: "white",
                         backgroundColor: "#D35400",
-                        marginRight: "25px",
                         marginTop: "20px",
                       }}
-                    ></AddIcon>
-                  </Button>
-                )}
-              </Grid>
-            </Hidden>
-          </Grid>
+                      onClick={() => {
+                        setRedirectTo(`/countries/create`);
+                      }}
+                    >
+                      Add new country
+                    </Button>
+                  )}
+                </Grid>
+              </Hidden>
 
+              <Hidden mdUp>
+                <Grid item xs={12} md={12}>
+                  {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+                    <Button
+                      style={{
+                        color: "white",
+                        float: "right",
+                        marginRight: "-10px",
+                        marginTop: "-10px",
+                      }}
+                      onClick={() => {
+                        setRedirectTo(`/countries/create`);
+                      }}
+                    >
+                      <AddIcon
+                        fullWidth
+                        variant="contained"
+                        style={{
+                          float: "right",
+                          backgroundColor: "#D35400",
+                          marginRight: "25px",
+                          marginTop: "20px",
+                        }}
+                      ></AddIcon>
+                    </Button>
+                  )}
+                </Grid>
+              </Hidden>
+            </Grid>
+            <Grid item md={4.5}></Grid>
+            <Grid item xs={12} md={3}>
+              <TextField
+                fullWidth
+                label="Country"
+                size="small"
+                color="warning"
+                value={searchParams?.name ? searchParams?.name : ""}
+                onChange={(e) => {
+                  handleChangeSearchParams("name", e.target.value);
+                }}
+                style={{ marginTop: "10px" }}
+              />
+            </Grid>
+          </Grid>
           <Grid item xs={12} md={12}>
             {countries?.content?.map((country, index) => (
               <TableRow

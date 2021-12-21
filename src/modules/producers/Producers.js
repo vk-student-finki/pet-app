@@ -171,7 +171,7 @@ export const Producers = () => {
             <Grid item xs={12} md={3}>
               <TextField
                 fullWidth
-                label="ProducerName"
+                label="Producer"
                 size="small"
                 color="warning"
                 value={searchParams?.name ? searchParams?.name : ""}
