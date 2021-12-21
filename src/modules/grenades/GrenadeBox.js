@@ -111,14 +111,14 @@ export const GrenadeBox = ({ grenade }) => {
             </CardActions>
           </Hidden>
           <Hidden smUp>
-            <CardActions style={{ float: "right" }}>
+            <CardActions>
               <Button size="small" style={{ color: "#1E1F1C" }}>
                 {window?.localStorage?.getItem("auth") &&
                   AuthService.hasRole("ROLE_ADMINISTRATOR") && (
                     <DeleteIcon
                       style={{
                         color: "#FF6000",
-                        marginRight: "235px",
+                        marginRight: "150px",
                       }}
                       onClick={() => handleClickOpen(grenade)}
                     />
@@ -127,6 +127,7 @@ export const GrenadeBox = ({ grenade }) => {
 
               <Button
                 size="small"
+                float="right"
                 style={{ color: "#1E1F1C" }}
                 onClick={() => {
                   setRedirectTo(`/grenades/details/${grenade.id}`);
@@ -135,7 +136,7 @@ export const GrenadeBox = ({ grenade }) => {
                 <InfoOutlinedIcon
                   style={{
                     color: "#FF6000",
-                    marginRight: "-30px",
+                    marginLeft: "80px",
                   }}
                 />
               </Button>
