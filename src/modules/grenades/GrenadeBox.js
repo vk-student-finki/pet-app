@@ -87,7 +87,7 @@ export const GrenadeBox = ({ grenade }) => {
                     <DeleteIcon
                       style={{
                         color: "#FF6000",
-                        marginRight: "105px",
+                        marginRight: "145px",
                       }}
                       onClick={() => handleClickOpen(grenade)}
                     />

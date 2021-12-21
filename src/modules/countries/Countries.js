@@ -213,7 +213,7 @@ export const Countries = () => {
                     style={{
                       fontFamily: "Helvetica, sans-serif",
                       color: "#1F393C",
-                      fontSize: "18px",
+                      fontSize: "16px",
                       cursor: "pointer",
                     }}
                   >
@@ -226,6 +226,7 @@ export const Countries = () => {
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
+
                 <TableCell
                   style={{
                     textAlign: "left",
@@ -236,6 +237,7 @@ export const Countries = () => {
                     style={{
                       cursor: "pointer",
                       color: "#D35400",
+                      marginLeft: "-15px",
                     }}
                     onClick={() => handleClickOpen(country)}
                   ></DeleteIcon>

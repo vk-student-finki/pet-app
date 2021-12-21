@@ -253,27 +253,44 @@ export const GrenadeDetails = () => {
             >
               {grenade?.name}
             </div>
-            <Grid style={{ float: "right", marginRight: "10px" }}>
-              <Button style={{ color: "#1E1F1C" }}>
+            <Grid
+              style={{
+                textAlign: "center",
+                marginRight: "auto",
+                marginLeft: "auto",
+                marginTop: "-15px",
+              }}
+            >
+              <Button
+                style={{
+                  color: "#1E1F1C",
+                }}
+              >
                 {window?.localStorage?.getItem("auth") &&
                   AuthService.hasRole("ROLE_ADMINISTRATOR") && (
                     <DeleteIcon
                       size="medium"
                       style={{
                         color: "#FF6000",
+                        marginRight: "-32px",
                       }}
                       onClick={() => handleClickOpen(grenade)}
                     />
                   )}
               </Button>
 
-              <Button style={{ color: "#1E1F1C" }}>
+              <Button
+                style={{
+                  color: "#1E1F1C",
+                }}
+              >
                 {window?.localStorage?.getItem("auth") &&
                   AuthService.hasRole("ROLE_ADMINISTRATOR") && (
                     <EditIcon
                       size="medium"
                       style={{
                         color: "#FF6000",
+                        marginLeft: "-32px",
                       }}
                       onClick={() => {
                         setRedirectTo(`/grenades/edit/${grenade?.id}`);
@@ -283,7 +300,7 @@ export const GrenadeDetails = () => {
               </Button>
             </Grid>
           </Grid>
-          <Divider style={{ marginTop: "60px" }}></Divider>
+          <Divider style={{ marginTop: "5px" }}></Divider>
           <Grid
             item
             xs={12}

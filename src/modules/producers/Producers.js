@@ -207,14 +207,13 @@ export const Producers = () => {
                     style={{
                       fontFamily: "Helvetica, sans-serif",
                       color: "#1F393C",
-                      fontSize: "18px",
+                      fontSize: "16px",
                       cursor: "pointer",
                     }}
                   >
                     {producer.name}
                   </TableCell>
                 </Hidden>
-                <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell></TableCell>

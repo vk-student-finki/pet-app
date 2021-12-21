@@ -124,7 +124,7 @@ export const Grenades = () => {
               {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
                 <Button
                   style={{
-                    color: "#1E1F1C",
+                    color: "white",
                     float: "right",
                     marginRight: "-10px",
                     marginTop: "-10px",
@@ -138,9 +138,9 @@ export const Grenades = () => {
                     variant="contained"
                     style={{
                       float: "right",
-                      backgroundColor: "orange",
+                      backgroundColor: "#D35400",
                       marginRight: "10px",
-                      marginTop: "20px",
+                      marginTop: "55px",
                     }}
                   ></AddIcon>
                 </Button>

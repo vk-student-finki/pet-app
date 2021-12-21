@@ -28,6 +28,7 @@ import { AuthService } from "../auth/AuthService";
 import { useDispatch } from "react-redux";
 import { COMMON_ACTIONS } from "../common/CommonActions";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import AddIcon from "@mui/icons-material/Add";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -121,37 +122,77 @@ export const Users = () => {
               </Grid>
             </Grid>
           </Grid>
-          {window?.localStorage?.getItem("auth") &&
-            AuthService.hasRole("ROLE_ADMINISTRATOR") && (
-              <Grid
-                item
-                xs={12}
-                md={2.5}
-                style={{
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                  marginTop: "-20px",
-                }}
-              >
-                <Button
-                  size="medium"
-                  variant="outlined"
-                  fullWidth
+          <Hidden smDown>
+            {window?.localStorage?.getItem("auth") &&
+              AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+                <Grid
+                  item
+                  xs={12}
+                  md={2.5}
                   style={{
-                    color: "white",
-                    borderColor: "white",
-                    backgroundColor: "#D35400",
-                    marginTop: "20px",
-                  }}
-                  onClick={() => {
-                    setRedirectTo(`/users/create`);
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    marginTop: "-20px",
                   }}
                 >
-                  CREATE NEW USER
-                </Button>
-              </Grid>
-            )}
-          <Grid container spacing={2}>
+                  <Button
+                    size="medium"
+                    variant="outlined"
+                    fullWidth
+                    style={{
+                      color: "white",
+                      borderColor: "white",
+                      backgroundColor: "#D35400",
+                      marginTop: "20px",
+                    }}
+                    onClick={() => {
+                      setRedirectTo(`/users/create`);
+                    }}
+                  >
+                    CREATE NEW USER
+                  </Button>
+                </Grid>
+              )}
+          </Hidden>
+          <Hidden smUp>
+            {window?.localStorage?.getItem("auth") &&
+              AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+                <Grid
+                  item
+                  xs={12}
+                  md={2.5}
+                  style={{
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    marginTop: "-20px",
+                  }}
+                >
+                  <Button
+                    style={{
+                      color: "white",
+                      float: "right",
+                      marginRight: "-10px",
+                      marginTop: "-10px",
+                    }}
+                    onClick={() => {
+                      setRedirectTo(`/users/create`);
+                    }}
+                  >
+                    <AddIcon
+                      fullWidth
+                      variant="contained"
+                      style={{
+                        float: "right",
+                        backgroundColor: "#D35400",
+                        marginRight: "25px",
+                        marginTop: "20px",
+                      }}
+                    ></AddIcon>
+                  </Button>
+                </Grid>
+              )}
+          </Hidden>
+          <Grid container spacing={0.5}>
             <Grid item md={3}></Grid>
             <Grid item xs={12} md={3}>
               <TextField
@@ -224,7 +265,7 @@ export const Users = () => {
                         style={{
                           fontFamily: "Helvetica, sans-serif",
                           color: "#1F393C",
-                          fontSize: "18px",
+                          fontSize: "16px",
                           cursor: "pointer",
                         }}
                         onClick={() => {
@@ -234,6 +275,10 @@ export const Users = () => {
                         {user.firstName} {user.lastName}
                       </TableCell>
                     </Hidden>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
+
                     <TableCell
                       style={{
                         textAlign: "right",
@@ -243,6 +288,7 @@ export const Users = () => {
                         fontSize="large"
                         style={{
                           cursor: "pointer",
+                          marginRight: "-25px",
                         }}
                         onClick={() => {
                           setRedirectTo(`/users/edit/${user?.id}`);
@@ -258,7 +304,7 @@ export const Users = () => {
                         fontSize="large"
                         style={{
                           cursor: "pointer",
-                          color: "#989292",
+                          color: "#D35400",
                         }}
                         // onClick={() => {
                         //   setRedirectTo(`/users/delete/${user?.id}`);
@@ -270,21 +316,26 @@ export const Users = () => {
                 ))}
             </TableBody>
           </Table>
-          <Container maxWidth="xs">
-            {!loading && users && users.number !== undefined && (
-              <Stack spacing={2} style={{ marginTop: "20px" }}>
-                <Pagination
-                  count={Math.floor(users.totalElements / users.size) + 1}
-                  shape="rounded"
-                  showFirstButton
-                  showLastButton
-                  style={{ color: "#D35400" }}
-                  page={users.number + 1}
-                  onChange={handleChange}
-                />
-              </Stack>
-            )}
-          </Container>
+        </Grid>
+      </Grid>
+
+      <Grid container spacing={2}>
+        <Grid item={12} style={{ marginLeft: "auto", marginRight: "auto" }}>
+          {users && users.number !== undefined && (
+            <Stack spacing={2} style={{ marginTop: "20px" }}>
+              <Pagination
+                count={Math.floor(users?.totalElements / users?.size) + 1}
+                shape="rounded"
+                showFirstButton
+                showLastButton
+                style={{
+                  color: "#D35400",
+                }}
+                page={users.number + 1}
+                onChange={handleChange}
+              />
+            </Stack>
+          )}
         </Grid>
       </Grid>
       <Dialog
