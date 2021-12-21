@@ -44,7 +44,7 @@ export const GrenadeBox = ({ grenade }) => {
   return (
     <>
       {redirectTo && <Navigate to={redirectTo} push />}
-      <Grid item xs={12} md={3}>
+      <Grid item xs={12} md={3} sm={4}>
         <Card style={{ border: "5px solid white", height: "400px" }}>
           <Link
             to={`/grenades/details/${grenade.id}`}
@@ -87,7 +87,7 @@ export const GrenadeBox = ({ grenade }) => {
                     <DeleteIcon
                       style={{
                         color: "#FF6000",
-                        marginRight: "140px",
+                        marginRight: "105px",
                       }}
                       onClick={() => handleClickOpen(grenade)}
                     />
