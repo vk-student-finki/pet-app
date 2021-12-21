@@ -242,7 +242,7 @@ export const Grenades = () => {
                       </Select>
                     </FormControl>
                   </Grid>
-                  <Grid item md={3} xs={12}>
+                  <Grid item md={3} xs={12} style={{ marginBottom: "5px" }}>
                     <FormControl fullWidth size="small" color="warning">
                       <InputLabel htmlFor="grouped-native-select2">
                         Producer
@@ -266,7 +266,7 @@ export const Grenades = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid container spacing={3} style={{ marginTop: "20px" }}>
+        <Grid container spacing={2}>
           {grenades?.content?.map((grenade, index) => (
             <GrenadeBox grenade={grenade} />
           ))}
