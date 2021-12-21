@@ -118,6 +118,8 @@ export const GrenadeDetails = () => {
             item
             xs={12}
             md={10}
+            item
+            sm={5}
             style={{
               textAlign: "center",
               marginTop: "-350px",
