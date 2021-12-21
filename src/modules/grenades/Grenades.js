@@ -1,21 +1,13 @@
 import {
   Button,
   Container,
-  Divider,
   Grid,
   Hidden,
-  IconButton,
   Pagination,
   Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Tooltip,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
 import { GrenadesRepository } from "./GrenadesRepository";
 import { GrenadeBox } from "./GrenadeBox";
 import SearchIcon from "@mui/icons-material/Search";
@@ -24,11 +16,35 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Navigate } from "react-router-dom";
 import { AuthService } from "../auth/AuthService";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { CountriesRepository } from "../countries/CountriesRepository";
+import { ProducersRepository } from "../producers/ProducersRepository";
 
 export const Grenades = () => {
   const [grenades, setGrenades] = useState();
   const [redirectTo, setRedirectTo] = useState();
+  const [countries, setCountries] = useState();
+  const [producers, setProducers] = useState();
 
+  useEffect(() => {
+    loadDataCountries(0, 1000);
+  }, []);
+  useEffect(() => {
+    loadDataProducers(0, 1000);
+  }, []);
+
+  const loadDataCountries = (page, size) => {
+    CountriesRepository.all(page, size)
+      .then((res) => setCountries(res.data))
+      .catch((err) => console.log(err));
+  };
+  const loadDataProducers = (page, size) => {
+    ProducersRepository.all(page, size)
+      .then((res) => setProducers(res.data))
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
     loadData(0, 8);
   }, []);
@@ -162,7 +178,7 @@ export const Grenades = () => {
         spacing={2}
         style={{
           backgroundColor: "#f1f2f6",
-          height: "132px",
+          height: "170px",
         }}
       >
         <Grid item xs={12} style={{ textAlign: "center" }}>
@@ -180,6 +196,31 @@ export const Grenades = () => {
               >
                 Grenades
               </span>
+            </Grid>
+            <Grid item xs={12} style={{ textAlign: "center" }}>
+              <FormControl color="warning" sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel htmlFor="grouped-native-select">
+                  Filter By
+                </InputLabel>
+                <Select
+                  native
+                  defaultValue=""
+                  id="grouped-native-select"
+                  label="FilterBy"
+                >
+                  <option aria-label="None" value="" />
+                  <optgroup label="Producer">
+                    {producers?.content?.map((producer) => (
+                      <option value={producer}> {producer.name}</option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="Country">
+                    {countries?.content?.map((country) => (
+                      <option value={country}> {country.name}</option>
+                    ))}
+                  </optgroup>
+                </Select>
+              </FormControl>
             </Grid>
           </Grid>
 
