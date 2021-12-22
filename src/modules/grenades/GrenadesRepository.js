@@ -3,6 +3,7 @@ import { SETTINGS } from "../common/Settings";
 
 export const GrenadesRepository = {
   all: (page, size, searchParams) => {
+    if (!searchParams) searchParams = {};
     return axios({
       url: `${SETTINGS.API_BASE_URL}grenades`,
       method: "GET",
