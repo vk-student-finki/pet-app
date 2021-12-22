@@ -201,6 +201,7 @@ export const Grenades = () => {
                     <TextField
                       fullWidth
                       label="Name"
+                      color="warning"
                       size="small"
                       value={searchParams?.name ? searchParams?.name : ""}
                       onChange={(e) => {
@@ -213,6 +214,7 @@ export const Grenades = () => {
                       fullWidth
                       label="Description"
                       size="small"
+                      color="warning"
                       value={
                         searchParams?.description
                           ? searchParams?.description

@@ -197,7 +197,7 @@ export const Users = () => {
             <Grid item xs={12} md={3}>
               <TextField
                 fullWidth
-                label="Name"
+                label="First Name"
                 size="small"
                 color="warning"
                 value={searchParams?.firstName ? searchParams?.firstName : ""}
@@ -210,7 +210,7 @@ export const Users = () => {
             <Grid item xs={12} md={3}>
               <TextField
                 fullWidth
-                label="LastName"
+                label="Last Name"
                 size="small"
                 color="warning"
                 value={searchParams?.lastName ? searchParams?.lastName : ""}
