@@ -154,7 +154,7 @@ export const GrenadeDetails = () => {
                     <EditIcon
                       size="large"
                       style={{
-                        color: "#FF6000",
+                        color: "#202020",
                         marginRight: "-490px",
                         marginTop: "-35px",
                       }}
@@ -289,7 +289,7 @@ export const GrenadeDetails = () => {
                     <EditIcon
                       size="medium"
                       style={{
-                        color: "#FF6000",
+                        color: "#202020",
                         marginLeft: "-32px",
                       }}
                       onClick={() => {
