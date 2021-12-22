@@ -45,7 +45,13 @@ export const GrenadeBox = ({ grenade }) => {
     <>
       {redirectTo && <Navigate to={redirectTo} push />}
       <Grid item xs={12} md={3} sm={4}>
-        <Card style={{ border: "5px solid white", height: "400px" }}>
+        <Card
+          style={{
+            border: "5px solid white",
+            borderRadius: "10px",
+            height: "400px",
+          }}
+        >
           <Link
             to={`/grenades/details/${grenade.id}`}
             style={{ textDecoration: "none", color: "#1E1F1C" }}

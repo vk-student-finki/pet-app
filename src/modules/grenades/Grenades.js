@@ -225,7 +225,7 @@ export const Grenades = () => {
                       }}
                     />
                   </Grid>
-                  <Grid item md={3} xs={12}>
+                  <Grid item md={3} xs={12} style={{ textAlign: "left" }}>
                     <FormControl fullWidth size="small" color="warning">
                       <InputLabel htmlFor="grouped-native-select">
                         Country
@@ -244,7 +244,12 @@ export const Grenades = () => {
                       </Select>
                     </FormControl>
                   </Grid>
-                  <Grid item md={3} xs={12} style={{ marginBottom: "5px" }}>
+                  <Grid
+                    item
+                    md={3}
+                    xs={12}
+                    style={{ marginBottom: "5px", textAlign: "left" }}
+                  >
                     <FormControl fullWidth size="small" color="warning">
                       <InputLabel htmlFor="grouped-native-select2">
                         Producer
@@ -281,8 +286,6 @@ export const Grenades = () => {
             <Stack spacing={2} style={{ marginTop: "20px" }}>
               <Pagination
                 count={Math.floor(grenades?.totalElements / grenades?.size) + 1}
-                color="primary"
-                shape="rounded"
                 showFirstButton
                 showLastButton
                 style={{
