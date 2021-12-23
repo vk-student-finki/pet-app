@@ -1,4 +1,11 @@
-import { CircularProgress, Grid, Hidden } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  CircularProgress,
+  Grid,
+  Hidden,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { TextField, Button, Alert } from "@mui/material";
 
@@ -9,6 +16,7 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { PrivilegesRepository } from "../privileges/PrivilegesRepository";
+import AddIcon from "@mui/icons-material/Add";
 
 export const CreateGroup = (props) => {
   const [globalFormError, setGlobalFormError] = useState();
@@ -101,9 +109,28 @@ export const CreateGroup = (props) => {
           </Grid>
         </>
       )}
-      <h1 style={{ textAlign: "center", marginTop: "20px" }}>
-        Create new group
-      </h1>
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: "#D35400" }}>
+          <AddIcon />
+        </Avatar>
+        <Typography
+          component="h1"
+          variant="h5"
+          style={{
+            textAlign: "center",
+            fontFamily: "Copperplate, fantasy",
+          }}
+        >
+          Create New Group
+        </Typography>
+      </Box>
       <Grid container spacing={2} style={{ marginTop: "40px" }}>
         {loading && (
           <div

@@ -121,7 +121,7 @@ export const CreateGrenade = () => {
     GrenadesRepository.create(formData)
       .then((res) => {
         console.log(res);
-        setSuccessMessage("The new grenade is added");
+        setSuccessMessage("Grenade added!");
         console.log("grenade added");
       })
       .catch((err) => {

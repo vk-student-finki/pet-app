@@ -143,7 +143,11 @@ export const CreateUser = (props) => {
         <Avatar sx={{ m: 1, bgcolor: "#D35400" }}>
           <PersonAddAltOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5" style={{ fontWeight: "bold" }}>
+        <Typography
+          component="h1"
+          variant="h5"
+          style={{ fontFamily: "Copperplate, fantasy" }}
+        >
           Create New User
         </Typography>
       </Box>
