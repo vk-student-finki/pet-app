@@ -2,11 +2,19 @@ import {
   Alert,
   Button,
   Container,
+  Dialog,
+  DialogContent,
+  DialogTitle,
   FormControl,
   Grid,
+  Icon,
+  IconButton,
   InputLabel,
   MenuItem,
   Select,
+  Table,
+  TableCell,
+  TableRow,
   TextField,
 } from "@mui/material";
 import { Box } from "@mui/system";
@@ -22,6 +30,7 @@ import { UpdateGrenadeValidator } from "./GrenadeValidator";
 import { Upload } from "../common/Upload";
 import axios from "axios";
 import { SETTINGS } from "../common/Settings";
+import Delete from "@mui/icons-material/Delete";
 
 export const UpdateGrenade = ({}) => {
   const [globalFormError, setGlobalFormError] = useState();
@@ -33,12 +42,14 @@ export const UpdateGrenade = ({}) => {
   const [countries, setCountries] = useState();
   const [producers, setProducers] = useState();
   const [attachments, setAttachments] = useState([]);
+  const [picturesDialogOpen, setPicturesDialogOpen] = useState(false);
+  const [attributesDialogOpen, setAttributesDialogOpen] = useState(false);
 
   useEffect(() => {
     loadById(id);
   }, []);
 
-  useEffect(() => {
+  const handleUpload = () => {
     if (attachments && attachments.length > 0) {
       let data = new FormData();
       Object.keys(attachments).forEach((key) =>
@@ -48,12 +59,14 @@ export const UpdateGrenade = ({}) => {
       GrenadesRepository.uploadPictures(id, "GRENADE", attachments)
         .then((res) => {
           console.log(res.data);
+          setAttachments([]);
+          loadById(id);
         })
         .catch((err) => {
           console.log(err);
         });
     }
-  }, [attachments]);
+  };
 
   const loadById = (id) => {
     GrenadesRepository.get(id)
@@ -249,8 +262,31 @@ export const UpdateGrenade = ({}) => {
             </FormControl>
           )}
 
-          <Grid item xs={12}>
-            <Upload attachments={attachments} setAttachments={setAttachments} />
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <Button
+                color="secondary"
+                size="small"
+                variant="contained"
+                fullWidth
+                onClick={() => {
+                  setPicturesDialogOpen(true);
+                }}
+              >
+                Pictures
+              </Button>
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <Button
+                color="secondary"
+                fullWidth
+                size="small"
+                variant="contained"
+              >
+                Attributes
+              </Button>
+            </Grid>
           </Grid>
 
           <Grid item xs={12}>
@@ -269,6 +305,60 @@ export const UpdateGrenade = ({}) => {
           </Grid>
         </Grid>
       </Container>
+      <Dialog
+        maxWidth="md"
+        fullWidth={true}
+        open={picturesDialogOpen}
+        onClose={() => setPicturesDialogOpen(false)}
+      >
+        <DialogTitle>Pictures</DialogTitle>
+        <DialogContent>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Upload
+                attachments={attachments}
+                setAttachments={setAttachments}
+              />
+              <Button
+                color="secondary"
+                variant="contained"
+                size="small"
+                onClick={() => {
+                  handleUpload();
+                }}
+                style={{ marginLeft: "5px" }}
+              >
+                Submit pictures
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <Table size="small">
+                {grenade &&
+                  grenade.pictures &&
+                  grenade.pictures.map((picture, index) => (
+                    <TableRow>
+                      <TableCell>
+                        <img
+                          height="30px"
+                          src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
+                        />
+                      </TableCell>
+                      <TableCell>{picture.name}</TableCell>
+                      <TableCell style={{ width: "100px" }}>
+                        {picture.type}
+                      </TableCell>
+                      <TableCell style={{ width: "50px" }}>
+                        <IconButton color="error">
+                          <Delete />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </Table>
+            </Grid>
+          </Grid>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };

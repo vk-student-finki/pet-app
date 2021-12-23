@@ -268,6 +268,30 @@ export const Grenades = () => {
                       </Select>
                     </FormControl>
                   </Grid>
+                  <Grid
+                    item
+                    md={12}
+                    xs={12}
+                    style={{ marginBottom: "5px", textAlign: "left" }}
+                  >
+                    <TextField
+                      fullWidth
+                      label="Search by attributes"
+                      size="small"
+                      color="warning"
+                      value={
+                        searchParams?.searchByAttributes
+                          ? searchParams?.searchByAttributes
+                          : ""
+                      }
+                      onChange={(e) => {
+                        handleChangeSearchParams(
+                          "searchByAttributes",
+                          e.target.value
+                        );
+                      }}
+                    />
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>

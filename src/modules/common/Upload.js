@@ -24,11 +24,10 @@ export const Upload = ({ attachments, setAttachments }) => {
         }}
         color="secondary"
         size="small"
-        variant="contained"
+        variant="outlined"
       >
-        Upload files
+        Upload files ({attachments.length})
       </Button>
-      <Typography>{attachments.length}</Typography>
     </>
   );
 };
