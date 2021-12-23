@@ -54,4 +54,16 @@ export const GrenadesRepository = {
       },
     });
   },
+  uploadPictures: (grenadeId, pictureType, files) => {
+    let data = new FormData();
+    Object.keys(files).forEach((key) => data.append("files", files[key]));
+    return axios({
+      url: `${SETTINGS.API_BASE_URL}grenades/uploadGrenadeImage/${grenadeId}`,
+      data: data,
+      method: "PUT",
+      params: {
+        pictureType: pictureType,
+      },
+    });
+  },
 };

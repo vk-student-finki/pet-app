@@ -19,6 +19,9 @@ import { ProducersRepository } from "../producers/ProducersRepository";
 import { CountriesRepository } from "../countries/CountriesRepository";
 import EditIcon from "@mui/icons-material/Edit";
 import { UpdateGrenadeValidator } from "./GrenadeValidator";
+import { Upload } from "../common/Upload";
+import axios from "axios";
+import { SETTINGS } from "../common/Settings";
 
 export const UpdateGrenade = ({}) => {
   const [globalFormError, setGlobalFormError] = useState();
@@ -29,10 +32,28 @@ export const UpdateGrenade = ({}) => {
   const [redirectTo, setRedirectTo] = useState();
   const [countries, setCountries] = useState();
   const [producers, setProducers] = useState();
+  const [attachments, setAttachments] = useState([]);
 
   useEffect(() => {
     loadById(id);
   }, []);
+
+  useEffect(() => {
+    if (attachments && attachments.length > 0) {
+      let data = new FormData();
+      Object.keys(attachments).forEach((key) =>
+        data.append("files", attachments[key])
+      );
+
+      GrenadesRepository.uploadPictures(id, "GRENADE", attachments)
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [attachments]);
 
   const loadById = (id) => {
     GrenadesRepository.get(id)
@@ -227,6 +248,10 @@ export const UpdateGrenade = ({}) => {
               </Select>
             </FormControl>
           )}
+
+          <Grid item xs={12}>
+            <Upload attachments={attachments} setAttachments={setAttachments} />
+          </Grid>
 
           <Grid item xs={12}>
             <Button
