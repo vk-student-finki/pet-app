@@ -141,15 +141,6 @@ export const CreateGrenade = () => {
 
   return (
     <>
-      {successMessage && (
-        <>
-          <Container style={{ marginTop: "20px", marginBottom: "-30px" }}>
-            <Alert variant="filled" severity="success">
-              {successMessage}
-            </Alert>
-          </Container>
-        </>
-      )}
       <Box
         sx={{
           marginTop: 8,
@@ -333,6 +324,24 @@ export const CreateGrenade = () => {
           </Grid>
         </Container>
       </Hidden>
+      {successMessage && (
+        <>
+          <Container style={{ marginTop: "20px", marginBottom: "-30px" }}>
+            <Alert variant="filled" severity="success">
+              {successMessage}
+            </Alert>
+          </Container>
+        </>
+      )}
+      {globalFormError && (
+        <>
+          <Container style={{ marginTop: "20px", marginBottom: "-30px" }}>
+            <Alert variant="filled" severity="error">
+              {globalFormError?.response?.data?.message}
+            </Alert>
+          </Container>
+        </>
+      )}
     </>
   );
 };
