@@ -21,6 +21,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { AuthService } from "../auth/AuthService";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import EditIcon from "@mui/icons-material/Edit";
+import { SETTINGS } from "../common/Settings";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -103,16 +104,20 @@ export const GrenadeDetails = () => {
           </div>
           <Divider></Divider>
           <Grid item xs={12} md={6}>
-            <img
-              src={img1}
-              style={{
-                height: "350px",
-                width: "300px",
-                border: "1px solid #E5E5E5",
-                marginTop: "10px",
-                borderRadius: "5px",
-              }}
-            />
+            {grenade &&
+              grenade.pictures &&
+              grenade.pictures.map((picture, index) => (
+                <img
+                  src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
+                  style={{
+                    height: "360px",
+                    width: "310px",
+                    border: "1px solid #E5E5E5",
+                    marginTop: "10px",
+                    borderRadius: "5px",
+                  }}
+                ></img>
+              ))}
           </Grid>
           <Grid
             item

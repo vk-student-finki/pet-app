@@ -21,6 +21,7 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { AuthService } from "../auth/AuthService";
+import { SETTINGS } from "../common/Settings";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -29,6 +30,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export const GrenadeBox = ({ grenade }) => {
   const [redirectTo, setRedirectTo] = useState();
   const [selectedGrenade, setSelectedGrenade] = useState();
+  const [attachments, setAttachments] = useState();
 
   const [open, setOpen] = React.useState(false);
 
@@ -56,13 +58,17 @@ export const GrenadeBox = ({ grenade }) => {
             to={`/grenades/details/${grenade.id}`}
             style={{ textDecoration: "none", color: "#1E1F1C" }}
           >
-            <CardMedia
-              style={{ height: "270px" }}
-              component="img"
-              alt="green iguana"
-              height="140"
-              image={img1}
-            />
+            {grenade &&
+              grenade.pictures &&
+              grenade.pictures.map((picture, index) => (
+                <CardMedia
+                  style={{ height: "270px" }}
+                  component="img"
+                  alt="green iguana"
+                  height="140"
+                  src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
+                />
+              ))}
           </Link>
           <Link
             to={`/grenades/details/${grenade.id}`}
