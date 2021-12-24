@@ -284,8 +284,8 @@ export default function Header({}) {
                 style={{
                   color: "#D9D9D9",
                   borderColor: "#17202A",
-                  fontSize: "18px",
-                  fontFamily: "Monaco, monospace",
+                  fontSize: "16px",
+                  fontFamily: "Lucida Console , monospace",
                 }}
               >
                 Grenades
@@ -301,8 +301,8 @@ export default function Header({}) {
                   style={{
                     color: "#D9D9D9",
                     borderColor: "#17202A",
-                    fontSize: "18px",
-                    fontFamily: "Monaco, monospace",
+                    fontSize: "16px",
+                    fontFamily: "Lucida Console , monospace",
                   }}
                 >
                   USERS
@@ -319,8 +319,8 @@ export default function Header({}) {
                   style={{
                     color: "#D9D9D9",
                     borderColor: "#17202A",
-                    fontFamily: "Monaco, monospace",
-                    fontSize: "18px",
+                    fontFamily: "Lucida Console , monospace",
+                    fontSize: "16px",
                   }}
                 >
                   GROUPS
@@ -337,12 +337,11 @@ export default function Header({}) {
                   style={{
                     color: "#D9D9D9",
                     borderColor: "#17202A",
-                    marginLeft: "20px",
-                    fontFamily: "Monaco, monospace",
-                    fontSize: "18px",
+                    fontFamily: "Lucida Console , monospace",
+                    fontSize: "16px",
                   }}
                 >
-                  PRIVILEGES
+                  Privileges
                 </Button>
               </Link>
             )}
@@ -358,8 +357,8 @@ export default function Header({}) {
                     color: "#D9D9D9",
                     borderColor: "#17202A",
                     marginLeft: "500px",
-                    fontFamily: "Monaco, monospace",
-                    fontSize: "18px",
+                    fontFamily: "Lucida Console , monospace",
+                    fontSize: "16px",
                     whiteSpace: "nowrap",
                   }}
                 >
@@ -393,7 +392,13 @@ export default function Header({}) {
                           marginBottom: "3px",
                         }}
                       />{" "}
-                      <span style={{ lineHeight: "2.5" }}>
+                      <span
+                        style={{
+                          lineHeight: "2.5",
+                          fontFamily: "Verdana, sans-serif",
+                          fontSize: "14px",
+                        }}
+                      >
                         {AuthService.getCurrentUser()?.firstName}{" "}
                         {AuthService.getCurrentUser()?.lastName}
                       </span>
