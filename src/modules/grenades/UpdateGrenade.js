@@ -33,12 +33,16 @@ import { Upload } from "../common/Upload";
 import axios from "axios";
 import { SETTINGS } from "../common/Settings";
 import Delete from "@mui/icons-material/Delete";
+<<<<<<< HEAD
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { AttributeTypeRepository } from "../attributeTypes/AttributeTypeRepository";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
+=======
+import { AttributeTypeRepository } from "../attributeTypes/AttributeTypeRepository";
+>>>>>>> fd34cf882b2b5e9324c4851baebf9d8f0304990d
 
 export const UpdateGrenade = ({}) => {
   const [globalFormError, setGlobalFormError] = useState();
@@ -59,19 +63,12 @@ export const UpdateGrenade = ({}) => {
     loadById(id);
   }, []);
 
+  const [attributeTypes, setAttributeTypes] = useState();
+  const [attributeValues, setAttributeValues] = useState();
+
   useEffect(() => {
     loadDataAttrubuteType(0, 1000);
   }, []);
-
-  const handleSubmitUpdateAttributes = () => {
-    GrenadesRepository.updateAttributes(grenade?.id, grenade)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   const loadDataAttrubuteType = (page, size) => {
     AttributeTypeRepository.all(page, size)
@@ -85,22 +82,10 @@ export const UpdateGrenade = ({}) => {
       })
       .catch((err) => console.log(err));
   };
-
   const handleChangeAttributeValue = (key, value) => {
     let data = { ...attributeValues };
     data[key] = value;
     setAttributeValues(data);
-  };
-
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = (attributesDialogOpen) => {
-    setAttributesDialogOpen(attributesDialogOpen);
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
   };
 
   const handleUpload = () => {
@@ -134,7 +119,19 @@ export const UpdateGrenade = ({}) => {
   };
 
   const handleSubmit = () => {
-    let valid = UpdateGrenadeValidator.isValidSync(grenade);
+    let attributes = [];
+    for (var key in attributeValues) {
+      attributes.push({
+        attributeType: {
+          id: key.substring(0, key.length - 1),
+        },
+        value: attributeValues[key],
+      });
+    }
+    console.log(attributes);
+    let formData = { ...grenade };
+    formData.attributes = attributes;
+    let valid = UpdateGrenadeValidator.isValidSync(formData);
     setFormFieldErrors();
     if (!valid) {
       let validationErrors = {};
@@ -337,7 +334,13 @@ export const UpdateGrenade = ({}) => {
                 fullWidth
                 size="small"
                 variant="contained"
+<<<<<<< HEAD
                 onClick={() => handleClickOpen(attributesDialogOpen)}
+=======
+                onClick={() => {
+                  setAttributesDialogOpen(true);
+                }}
+>>>>>>> fd34cf882b2b5e9324c4851baebf9d8f0304990d
               >
                 Attributes
               </Button>
@@ -414,6 +417,7 @@ export const UpdateGrenade = ({}) => {
           </Grid>
         </DialogContent>
       </Dialog>
+<<<<<<< HEAD
 
       {/* ATTRIBUTES DIALOG */}
       <Dialog
@@ -499,6 +503,58 @@ export const UpdateGrenade = ({}) => {
             Update
           </Button>
         </DialogActions>
+=======
+      {/* /////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
+      <Dialog
+        maxWidth="md"
+        fullWidth={true}
+        open={attributesDialogOpen}
+        onClose={() => setAttributesDialogOpen(false)}
+      >
+        <DialogTitle>Attributes</DialogTitle>
+        <DialogContent>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Button
+                color="secondary"
+                variant="contained"
+                size="small"
+                onClick={() => {
+                  handleSubmit();
+                }}
+                style={{ marginLeft: "5px" }}
+              >
+                Submit changes
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+              {attributeTypes?.content?.map((attributeType) => (
+                <Grid item xs={12}>
+                  <TextField
+                    label={attributeType.name}
+                    size="small"
+                    value={
+                      attributeValues[attributeType?.id + "_"]
+                        ? attributeValues[attributeType?.id + "_"]
+                        : ""
+                    }
+                    onChange={(e) =>
+                      handleChangeAttributeValue(
+                        attributeType?.id + "_",
+                        e.target.value
+                      )
+                    }
+                    variant="outlined"
+                    color="warning"
+                    fullWidth
+                    style={{ marginTop: "8px" }}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          </Grid>
+        </DialogContent>
+>>>>>>> fd34cf882b2b5e9324c4851baebf9d8f0304990d
       </Dialog>
     </>
   );
