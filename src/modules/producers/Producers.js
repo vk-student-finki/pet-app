@@ -188,6 +188,7 @@ export const Producers = () => {
                 style={{
                   cursor: "pointer",
                   backgroundColor: index % 2 === 0 ? "#F4F6F6" : "transparent",
+                  whiteSpace: "nowrap",
                 }}
               >
                 <Hidden smDown>

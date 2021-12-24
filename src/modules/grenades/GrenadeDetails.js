@@ -332,7 +332,9 @@ export const GrenadeDetails = () => {
             xs={12}
             md={12}
             style={{
-              textAlign: "left",
+              textAlign: "justify",
+              textJustify: "inter-word",
+              display: "block",
               fontFamily: "Monaco, monospace",
               fontSize: "16px",
               marginTop: "10px",
@@ -352,7 +354,7 @@ export const GrenadeDetails = () => {
               color: "#878786",
             }}
           >
-            <div style={{}}>
+            <div>
               Product ID: <b>{grenade?.id}</b>
               <br />
               Country of origin: <b>{grenade?.country?.name}</b>
