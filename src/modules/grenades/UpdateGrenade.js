@@ -12,10 +12,12 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Slide,
   Table,
   TableCell,
   TableRow,
   TextField,
+  DialogActions,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
@@ -31,6 +33,12 @@ import { Upload } from "../common/Upload";
 import axios from "axios";
 import { SETTINGS } from "../common/Settings";
 import Delete from "@mui/icons-material/Delete";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import { AttributeTypeRepository } from "../attributeTypes/AttributeTypeRepository";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 export const UpdateGrenade = ({}) => {
   const [globalFormError, setGlobalFormError] = useState();
@@ -44,10 +52,56 @@ export const UpdateGrenade = ({}) => {
   const [attachments, setAttachments] = useState([]);
   const [picturesDialogOpen, setPicturesDialogOpen] = useState(false);
   const [attributesDialogOpen, setAttributesDialogOpen] = useState(false);
+  const [attributeTypes, setAttributeTypes] = useState();
+  const [attributeValues, setAttributeValues] = useState();
 
   useEffect(() => {
     loadById(id);
   }, []);
+
+  useEffect(() => {
+    loadDataAttrubuteType(0, 1000);
+  }, []);
+
+  const handleSubmitUpdateAttributes = () => {
+    GrenadesRepository.updateAttributes(grenade?.id, grenade)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const loadDataAttrubuteType = (page, size) => {
+    AttributeTypeRepository.all(page, size)
+      .then((res) => {
+        let values = [];
+        res.data.content.forEach((key) => {
+          values[key.id + "_"] = null;
+        });
+        setAttributeValues(values);
+        setAttributeTypes(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleChangeAttributeValue = (key, value) => {
+    let data = { ...attributeValues };
+    data[key] = value;
+    setAttributeValues(data);
+  };
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = (attributesDialogOpen) => {
+    setAttributesDialogOpen(attributesDialogOpen);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleUpload = () => {
     if (attachments && attachments.length > 0) {
@@ -283,6 +337,7 @@ export const UpdateGrenade = ({}) => {
                 fullWidth
                 size="small"
                 variant="contained"
+                onClick={() => handleClickOpen(attributesDialogOpen)}
               >
                 Attributes
               </Button>
@@ -358,6 +413,92 @@ export const UpdateGrenade = ({}) => {
             </Grid>
           </Grid>
         </DialogContent>
+      </Dialog>
+
+      {/* ATTRIBUTES DIALOG */}
+      <Dialog
+        maxWidth="sm"
+        fullWidth={true}
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <EditIcon
+          style={{
+            color: "#F15E5E",
+            marginLeft: "auto",
+            marginRight: "auto",
+            fontSize: "70px",
+            marginTop: "10px",
+          }}
+        />
+        <DialogTitle
+          style={{
+            fontWeight: "bold",
+            fontFamily: "Monaco, monospace",
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
+        >
+          {"Edit attributes"}
+        </DialogTitle>
+        <DialogContent style={{ textAlign: "center" }}>
+          <Container maxWidth="xs">
+            {attributeTypes?.content?.map((attributeType) => (
+              <Grid item xs={12}>
+                <TextField
+                  label={attributeType.name}
+                  attributeType={attributeType}
+                  attributeValues={attributeValues}
+                  size="small"
+                  value={
+                    attributeValues[attributeType?.id + "_"]
+                      ? attributeValues[attributeType?.id + "_"]
+                      : ""
+                  }
+                  onChange={(e) =>
+                    handleChangeAttributeValue(
+                      attributeType?.id + "_",
+                      e.target.value
+                    )
+                  }
+                  variant="outlined"
+                  color="warning"
+                  fullWidth
+                  style={{ marginTop: "8px" }}
+                />
+              </Grid>
+            ))}
+          </Container>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={handleClose}
+            variant="outlined"
+            size="large"
+            style={{
+              backgroundColor: "#C1C1C1",
+              color: "white",
+              border: "#C1C1C1",
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            size="large"
+            style={{
+              backgroundColor: "#F15E5E",
+              color: "white",
+            }}
+            onClick={() => {
+              handleSubmitUpdateAttributes();
+            }}
+          >
+            Update
+          </Button>
+        </DialogActions>
       </Dialog>
     </>
   );

@@ -110,11 +110,13 @@ export const GrenadeDetails = () => {
                 <img
                   src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
                   style={{
-                    height: "360px",
-                    width: "310px",
+                    height: "320px",
+                    width: "60%",
                     border: "1px solid #E5E5E5",
                     marginTop: "10px",
                     borderRadius: "5px",
+                    marginLeft: "auto",
+                    marginRight: "auto",
                   }}
                 ></img>
               ))}
@@ -134,7 +136,13 @@ export const GrenadeDetails = () => {
               fontSize: "18px",
             }}
           >
-            <div style={{ textAlign: "left", marginLeft: "320px" }}>
+            <div
+              style={{
+                textAlign: "left",
+                marginLeft: "350px",
+                marginTop: "30px",
+              }}
+            >
               {grenade?.name}
             </div>
             <Grid item xs={12} md={12}>
@@ -171,7 +179,7 @@ export const GrenadeDetails = () => {
               </Button>
             </Grid>
             <Divider
-              style={{ marginTop: "10px", marginLeft: "320px" }}
+              style={{ marginTop: "10px", marginLeft: "350px" }}
             ></Divider>
           </Grid>
           <Grid
@@ -186,7 +194,7 @@ export const GrenadeDetails = () => {
               color: "#878786",
             }}
           >
-            <div style={{ textAlign: "left", marginLeft: "320px" }}>
+            <div style={{ textAlign: "left", marginLeft: "350px" }}>
               {grenade?.description}
             </div>
           </Grid>
@@ -202,7 +210,7 @@ export const GrenadeDetails = () => {
               color: "#878786",
             }}
           >
-            <div style={{ textAlign: "left", marginLeft: "427px" }}>
+            <div style={{ textAlign: "left", marginLeft: "460px" }}>
               Product ID: <b>{grenade?.id}</b>
               <br />
               Country of origin: <b>{grenade?.country?.name}</b>

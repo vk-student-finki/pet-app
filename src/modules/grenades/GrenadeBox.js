@@ -65,7 +65,7 @@ export const GrenadeBox = ({ grenade }) => {
                   style={{ height: "270px" }}
                   component="img"
                   alt="green iguana"
-                  height="140"
+                  // height="140"
                   src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
                 />
               ))}
