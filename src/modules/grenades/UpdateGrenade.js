@@ -76,11 +76,11 @@ export const UpdateGrenade = ({}) => {
   const loadDataAttrubuteType = (page, size) => {
     AttributeTypeRepository.all(page, size)
       .then((res) => {
-        let values = [];
-        res.data.content.forEach((key) => {
-          values[key.id + "_"] = null;
-        });
-        setAttributeValues(values);
+        // let values = [];
+        // res.data.content.forEach((key, index) => {
+        //   values[key.id + "_"] = null;
+        // });
+        // setAttributeValues(values);
         setAttributeTypes(res.data);
       })
       .catch((err) => console.log(err));
@@ -115,6 +115,12 @@ export const UpdateGrenade = ({}) => {
       .then((res) => {
         setGrenade(res.data);
         console.log(res.data);
+        let values = [];
+        attributeTypes?.content?.forEach((key, index) => {
+          values[key.id + "_"] = grenade?.attributes[index]?.value;
+        });
+        setAttributeValues(values);
+        console.log(values);
       })
       .catch((err) => {
         console.log(err);
@@ -438,35 +444,39 @@ export const UpdateGrenade = ({}) => {
           style={{
             fontWeight: "bold",
             fontFamily: "Monaco, monospace",
+            float: "center",
           }}
         >
-          {"Edit Attributes"}
+          Edit Attributes
         </DialogTitle>
         <DialogContent style={{ textAlign: "center" }}>
           <Container maxWidth="xs">
-            {attributeTypes?.content?.map((attributeType) => (
-              <Grid item xs={12}>
-                <TextField
-                  label={attributeType.name}
-                  size="small"
-                  value={
-                    attributeValues[attributeType?.id + "_"]
-                      ? attributeValues[attributeType?.id + "_"]
-                      : ""
-                  }
-                  onChange={(e) =>
-                    handleChangeAttributeValue(
-                      attributeType?.id + "_",
-                      e.target.value
-                    )
-                  }
-                  variant="outlined"
-                  color="warning"
-                  fullWidth
-                  style={{ marginTop: "8px" }}
-                />
-              </Grid>
-            ))}
+            {attributeTypes &&
+              grenade &&
+              attributeValues &&
+              attributeTypes?.content?.map((attributeType, index) => (
+                <Grid item xs={12}>
+                  <TextField
+                    label={attributeType?.name}
+                    size="small"
+                    value={
+                      attributeValues[attributeType?.id + "_"]
+                        ? attributeValues[attributeType?.id + "_"]
+                        : ""
+                    }
+                    onChange={(e) =>
+                      handleChangeAttributeValue(
+                        attributeType?.id + "_",
+                        e.target.value
+                      )
+                    }
+                    variant="outlined"
+                    color="warning"
+                    fullWidth
+                    style={{ marginTop: "8px" }}
+                  ></TextField>
+                </Grid>
+              ))}
           </Container>
         </DialogContent>
         <DialogActions>
