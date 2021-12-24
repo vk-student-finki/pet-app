@@ -32,8 +32,9 @@ import { UpdateGrenadeValidator } from "./GrenadeValidator";
 import { Upload } from "../common/Upload";
 import axios from "axios";
 import { SETTINGS } from "../common/Settings";
-import Delete from "@mui/icons-material/Delete";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { AttributeTypeRepository } from "../attributeTypes/AttributeTypeRepository";
+import ReactImageMagnify from "react-image-magnify";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -53,6 +54,7 @@ export const UpdateGrenade = ({}) => {
   const [attributesDialogOpen, setAttributesDialogOpen] = useState(false);
   const [attributeTypes, setAttributeTypes] = useState();
   const [attributeValues, setAttributeValues] = useState();
+  const [deletePictureDialogOpen, setDeletePictureDialogOpen] = useState();
 
   useEffect(() => {
     loadById(id);
@@ -71,6 +73,11 @@ export const UpdateGrenade = ({}) => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleClickOpenDeletePicture = (grenade) => {
+    setDeletePictureDialogOpen(grenade);
+    setOpen(true);
   };
 
   const loadDataAttrubuteType = (page, size) => {
@@ -316,16 +323,17 @@ export const UpdateGrenade = ({}) => {
             </FormControl>
           )}
 
-          <Grid container spacing={2}>
+          <Grid container spacing={0.5} style={{ marginTop: "10px" }}>
             <Grid item xs={12} md={6}>
               <Button
-                color="secondary"
+                // color="warning"
                 size="small"
                 variant="contained"
                 fullWidth
                 onClick={() => {
                   setPicturesDialogOpen(true);
                 }}
+                style={{ backgroundColor: "#D35400" }}
               >
                 Pictures
               </Button>
@@ -333,13 +341,13 @@ export const UpdateGrenade = ({}) => {
 
             <Grid item xs={12} md={6}>
               <Button
-                color="secondary"
                 fullWidth
                 size="small"
                 variant="contained"
                 onClick={() => {
                   handleClickOpen(true);
                 }}
+                style={{ backgroundColor: "#D35400" }}
               >
                 Attributes
               </Button>
@@ -352,7 +360,7 @@ export const UpdateGrenade = ({}) => {
                 handleSubmit();
               }}
               type="submit"
-              style={{ backgroundColor: "#17202A " }}
+              style={{ backgroundColor: "#17202A", marginTop: "8px" }}
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               fullWidth
@@ -405,9 +413,7 @@ export const UpdateGrenade = ({}) => {
                         {picture.type}
                       </TableCell>
                       <TableCell style={{ width: "50px" }}>
-                        <IconButton color="error">
-                          <Delete />
-                        </IconButton>
+                        <DeleteIcon color="error" />
                       </TableCell>
                     </TableRow>
                   ))}
@@ -438,6 +444,8 @@ export const UpdateGrenade = ({}) => {
           style={{
             fontWeight: "bold",
             fontFamily: "Monaco, monospace",
+            marginLeft: "auto",
+            marginRight: "auto",
           }}
         >
           {"Edit Attributes"}

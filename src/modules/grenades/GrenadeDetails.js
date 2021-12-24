@@ -103,15 +103,16 @@ export const GrenadeDetails = () => {
             </Breadcrumbs>
           </div>
           <Divider></Divider>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} style={{ marginTop: "15px" }}>
             {grenade &&
               grenade.pictures &&
               grenade.pictures.map((picture, index) => (
                 <img
                   src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
                   style={{
-                    height: "320px",
+                    height: "350px",
                     width: "60%",
+                    objectFit: "cover",
                     border: "1px solid #E5E5E5",
                     marginTop: "10px",
                     borderRadius: "5px",
@@ -140,7 +141,6 @@ export const GrenadeDetails = () => {
               style={{
                 textAlign: "left",
                 marginLeft: "350px",
-                marginTop: "30px",
               }}
             >
               {grenade?.name}
@@ -179,7 +179,11 @@ export const GrenadeDetails = () => {
               </Button>
             </Grid>
             <Divider
-              style={{ marginTop: "10px", marginLeft: "350px" }}
+              style={{
+                marginTop: "10px",
+                marginLeft: "350px",
+                width: "755px",
+              }}
             ></Divider>
           </Grid>
           <Grid
@@ -201,6 +205,7 @@ export const GrenadeDetails = () => {
           <Grid
             item
             xs={12}
+            md={12}
             style={{
               textAlign: "center",
               fontFamily: "Monaco, monospace",
