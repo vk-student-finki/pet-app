@@ -34,7 +34,6 @@ import axios from "axios";
 import { SETTINGS } from "../common/Settings";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { AttributeTypeRepository } from "../attributeTypes/AttributeTypeRepository";
-import ReactImageMagnify from "react-image-magnify";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -46,23 +45,22 @@ export const UpdateGrenade = ({}) => {
   const [successMessage, setSuccessMessage] = useState(null);
   const [grenade, setGrenade] = useState({});
   const { id } = useParams();
-  const [redirectTo, setRedirectTo] = useState();
   const [countries, setCountries] = useState();
   const [producers, setProducers] = useState();
   const [attachments, setAttachments] = useState([]);
   const [picturesDialogOpen, setPicturesDialogOpen] = useState(false);
   const [attributesDialogOpen, setAttributesDialogOpen] = useState(false);
-  const [attributeTypes, setAttributeTypes] = useState();
-  const [attributeValues, setAttributeValues] = useState();
+  const [attributeTypes, setAttributeTypes] = useState([]);
+  const [attributeValues, setAttributeValues] = useState([]);
   const [deletePictureDialogOpen, setDeletePictureDialogOpen] = useState();
-
-  useEffect(() => {
-    loadById(id);
-  }, []);
 
   useEffect(() => {
     loadDataAttrubuteType(0, 1000);
   }, []);
+
+  useEffect(() => {
+    loadById(id);
+  }, [attributeTypes]);
 
   const [open, setOpen] = React.useState(false);
 
@@ -121,10 +119,12 @@ export const UpdateGrenade = ({}) => {
     GrenadesRepository.get(id)
       .then((res) => {
         setGrenade(res.data);
-        console.log(res.data);
         let values = [];
         attributeTypes?.content?.forEach((key, index) => {
-          values[key.id + "_"] = grenade?.attributes[index]?.value;
+          // console.log(key);
+          console.log(res.data?.attributes);
+          values[key.id + "_"] = res.data?.attributes[index]?.value;
+          // console.log(values[key.id + "_"]);
         });
         setAttributeValues(values);
         console.log(values);
@@ -171,6 +171,7 @@ export const UpdateGrenade = ({}) => {
       .then((res) => {
         console.log(res);
         setSuccessMessage("Grenade is updated successfully");
+        console.log("grenade updated");
       })
       .catch((err) => {
         console.log(err);
@@ -457,13 +458,11 @@ export const UpdateGrenade = ({}) => {
         </DialogTitle>
         <DialogContent style={{ textAlign: "center" }}>
           <Container maxWidth="xs">
-            {attributeTypes &&
-              grenade &&
-              attributeValues &&
+            {attributeValues &&
               attributeTypes?.content?.map((attributeType, index) => (
                 <Grid item xs={12}>
                   <TextField
-                    label={attributeType?.name}
+                    label={attributeType.name}
                     size="small"
                     value={
                       attributeValues[attributeType?.id + "_"]
@@ -496,19 +495,7 @@ export const UpdateGrenade = ({}) => {
               border: "#C1C1C1",
             }}
           >
-            Cancel
-          </Button>
-          <Button
-            size="large"
-            style={{
-              backgroundColor: "#F15E5E",
-              color: "white",
-            }}
-            onClick={() => {
-              // setRedirectTo(`/users/delete/${selectedUser?.id}`);
-            }}
-          >
-            Update
+            Close
           </Button>
         </DialogActions>
       </Dialog>
