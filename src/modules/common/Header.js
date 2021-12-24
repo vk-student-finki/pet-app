@@ -284,8 +284,10 @@ export default function Header({}) {
                 style={{
                   color: "#D9D9D9",
                   borderColor: "#17202A",
-                  fontSize: "16px",
-                  fontFamily: "Lucida Console , monospace",
+                  fontSize: "14px",
+                  fontFamily: "Helvetica, sans-serif",
+                  textTransform: "uppercase",
+                  marginTop: "3px",
                 }}
               >
                 Grenades
@@ -301,8 +303,10 @@ export default function Header({}) {
                   style={{
                     color: "#D9D9D9",
                     borderColor: "#17202A",
-                    fontSize: "16px",
-                    fontFamily: "Lucida Console , monospace",
+                    fontSize: "14px",
+                    fontFamily: "Helvetica, sans-serif",
+                    textTransform: "uppercase",
+                    marginTop: "3px",
                   }}
                 >
                   USERS
@@ -319,8 +323,10 @@ export default function Header({}) {
                   style={{
                     color: "#D9D9D9",
                     borderColor: "#17202A",
-                    fontFamily: "Lucida Console , monospace",
-                    fontSize: "16px",
+                    fontSize: "14px",
+                    fontFamily: "Helvetica, sans-serif",
+                    textTransform: "uppercase",
+                    marginTop: "3px",
                   }}
                 >
                   GROUPS
@@ -337,8 +343,10 @@ export default function Header({}) {
                   style={{
                     color: "#D9D9D9",
                     borderColor: "#17202A",
-                    fontFamily: "Lucida Console , monospace",
-                    fontSize: "16px",
+                    fontSize: "14px",
+                    fontFamily: "Helvetica, sans-serif",
+                    textTransform: "uppercase",
+                    marginTop: "3px",
                   }}
                 >
                   Privileges
