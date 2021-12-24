@@ -83,11 +83,11 @@ export const UpdateGrenade = ({}) => {
   const loadDataAttrubuteType = (page, size) => {
     AttributeTypeRepository.all(page, size)
       .then((res) => {
-        // let values = [];
-        // res.data.content.forEach((key, index) => {
-        //   values[key.id + "_"] = null;
-        // });
-        // setAttributeValues(values);
+        let values = [];
+        res.data.content.forEach((key, index) => {
+          values[key.id + "_"] = null;
+        });
+        setAttributeValues(values);
         setAttributeTypes(res.data);
       })
       .catch((err) => console.log(err));
