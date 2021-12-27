@@ -73,6 +73,15 @@ export const UpdateGrenade = ({}) => {
     setOpen(false);
   };
 
+  const handleDelete = (picture) => {
+    GrenadesRepository.removePicture(id, picture)
+      .then((res) => {
+        loadById(id);
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
+
   const handleClickOpenDeletePicture = (grenade) => {
     setDeletePictureDialogOpen(grenade);
     setOpen(true);
@@ -421,7 +430,13 @@ export const UpdateGrenade = ({}) => {
                         {picture.type}
                       </TableCell>
                       <TableCell style={{ width: "50px" }}>
-                        <DeleteIcon color="error" />
+                        <IconButton
+                          onClick={(e) => {
+                            handleDelete(picture);
+                          }}
+                        >
+                          <DeleteIcon color="error" />
+                        </IconButton>
                       </TableCell>
                     </TableRow>
                   ))}
