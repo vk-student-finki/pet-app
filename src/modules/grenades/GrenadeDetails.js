@@ -9,6 +9,8 @@ import {
   DialogContent,
   DialogTitle,
   Slide,
+  ImageList,
+  ImageListItem,
 } from "@mui/material";
 import img1 from "../images/411uURaRukL.jpg";
 import React, { useEffect, useState } from "react";
@@ -30,6 +32,14 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 function handleClick(event) {
   event.preventDefault();
   console.info("You clicked a breadcrumb.");
+}
+function srcset(image, width, height, rows = 1, cols = 1) {
+  return {
+    src: `${image}?w=${width * cols}&h=${height * rows}&fit=crop&auto=format`,
+    srcSet: `${image}?w=${width * cols}&h=${
+      height * rows
+    }&fit=crop&auto=format&dpr=2 2x`,
+  };
 }
 
 export const GrenadeDetails = () => {
@@ -66,7 +76,7 @@ export const GrenadeDetails = () => {
   return (
     <>
       {redirectTo && <Navigate to={redirectTo} push />}
-      <Container maxWidht="xs" style={{ marginTop: "50px" }}>
+      <Container style={{ marginTop: "50px" }}>
         <Hidden smDown>
           <div role="presentation" onClick={handleClick}>
             <Breadcrumbs
@@ -103,134 +113,163 @@ export const GrenadeDetails = () => {
             </Breadcrumbs>
           </div>
           <Divider></Divider>
-          <Grid item xs={12} md={6} style={{ marginTop: "15px" }}>
-            {grenade &&
-              grenade.pictures &&
-              grenade.pictures.map((picture, index) => (
-                <img
-                  src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
-                  style={{
-                    height: "350px",
-                    width: "60%",
-                    objectFit: "cover",
-                    border: "1px solid #E5E5E5",
-                    marginTop: "10px",
-                    borderRadius: "5px",
-                    marginLeft: "auto",
-                    marginRight: "auto",
-                  }}
-                ></img>
-              ))}
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            md={10}
-            item
-            sm={5}
-            style={{
-              textAlign: "center",
-              marginTop: "-350px",
-              fontFamily: "Monaco, monospace",
-              textTransform: "uppercase",
-              fontWeight: "bold",
-              fontSize: "18px",
-            }}
-          >
-            <div
-              style={{
-                textAlign: "left",
-                marginLeft: "350px",
-              }}
-            >
-              {grenade?.name}
-            </div>
-            <Grid item xs={12} md={12}>
-              <Button style={{ color: "#1E1F1C", float: "right" }}>
-                {window?.localStorage?.getItem("auth") &&
-                  AuthService.hasRole("ROLE_ADMINISTRATOR") && (
-                    <DeleteIcon
-                      size="large"
-                      style={{
-                        color: "#FF6000",
-                        marginRight: "-420px",
-                        marginTop: "-35px",
-                      }}
-                      onClick={() => handleClickOpen(grenade)}
-                    />
-                  )}
-              </Button>
-
-              <Button style={{ color: "#1E1F1C", float: "right" }}>
-                {window?.localStorage?.getItem("auth") &&
-                  AuthService.hasRole("ROLE_ADMINISTRATOR") && (
-                    <EditIcon
-                      size="large"
-                      style={{
-                        color: "#202020",
-                        marginRight: "-490px",
-                        marginTop: "-35px",
-                      }}
-                      onClick={() => {
-                        setRedirectTo(`/grenades/edit/${grenade?.id}`);
-                      }}
-                    />
-                  )}
-              </Button>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={5} style={{ marginTop: "15px" }}>
+              <ImageList
+                style={{
+                  width: "100%",
+                  height: "400px",
+                  // Promote the list into its own layer in Chrome. This costs memory, but helps keeping high FPS.
+                  transform: "translateZ(0)",
+                }}
+                rowHeight={200}
+                gap={1}
+              >
+                {grenade &&
+                  grenade.pictures &&
+                  grenade.pictures.map((picture, index) => {
+                    const cols = picture ? 2 : 1;
+                    const rows = picture ? 2 : 1;
+                    return (
+                      <ImageListItem
+                        key={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
+                        cols={cols}
+                        rows={rows}
+                        style={{ marginTop: "5px" }}
+                      >
+                        <img
+                          {...srcset(
+                            `${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`,
+                            200,
+                            250,
+                            rows,
+                            cols
+                          )}
+                          loading="lazy"
+                          alt={picture.name}
+                        />
+                      </ImageListItem>
+                    );
+                  })}
+              </ImageList>
             </Grid>
-            <Divider
-              style={{
-                marginTop: "10px",
-                marginLeft: "350px",
-                width: "755px",
-              }}
-            ></Divider>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            md={12}
-            style={{
-              textAlign: "center",
-              fontFamily: "Monaco, monospace",
-              fontSize: "16px",
-              marginTop: "10px",
-              color: "#878786",
-            }}
-          >
-            <div style={{ textAlign: "left", marginLeft: "350px" }}>
-              {grenade?.description}
-            </div>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            md={12}
-            style={{
-              textAlign: "center",
-              fontFamily: "Monaco, monospace",
-              fontSize: "16px",
-              marginLeft: "-108px",
-              marginTop: "40px",
-              color: "#878786",
-            }}
-          >
-            <div style={{ textAlign: "left", marginLeft: "460px" }}>
-              Product ID: <b>{grenade?.id}</b>
-              <br />
-              Country of origin: <b>{grenade?.country?.name}</b>
-              <br />
-              Producer: <b>{grenade?.producer?.name}</b>
-              <br />
-              <Divider style={{ marginTop: "10px", width: "300px" }}></Divider>
-              {grenade?.attributes?.map((attribute) => (
-                <span>
-                  {attribute.attributeType.name}: <b>{attribute.value}</b>
+            <Grid item md={7} xs={12}>
+              <Grid
+                item
+                xs={12}
+                md={12}
+                item
+                sm={5}
+                style={{
+                  textAlign: "center",
+                  fontFamily: "Monaco, monospace",
+                  textTransform: "uppercase",
+                  fontWeight: "bold",
+                  fontSize: "18px",
+                  marginTop: "20px",
+                }}
+              >
+                <div
+                  style={{
+                    textAlign: "left",
+                  }}
+                >
+                  {grenade?.name}
+                </div>
+                <Grid item xs={12} md={12}>
+                  <Button
+                    style={{
+                      color: "#1E1F1C",
+                      float: "right",
+                      marginLeft: "-25px",
+                    }}
+                  >
+                    {window?.localStorage?.getItem("auth") &&
+                      AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+                        <DeleteIcon
+                          size="large"
+                          style={{
+                            color: "#FF6000",
+                          }}
+                          onClick={() => handleClickOpen(grenade)}
+                        />
+                      )}
+                  </Button>
+
+                  <Button
+                    style={{
+                      color: "#1E1F1C",
+                      float: "right",
+                    }}
+                  >
+                    {window?.localStorage?.getItem("auth") &&
+                      AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+                        <EditIcon
+                          size="large"
+                          style={{
+                            color: "#202020",
+                          }}
+                          onClick={() => {
+                            setRedirectTo(`/grenades/edit/${grenade?.id}`);
+                          }}
+                        />
+                      )}
+                  </Button>
+                </Grid>
+                <Divider
+                  style={{
+                    marginTop: "10px",
+                    width: "640px",
+                  }}
+                ></Divider>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                md={12}
+                style={{
+                  textAlign: "center",
+                  fontFamily: "Monaco, monospace",
+                  fontSize: "16px",
+                  marginTop: "10px",
+                  color: "#878786",
+                }}
+              >
+                <div style={{ textAlign: "left" }}>{grenade?.description}</div>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                md={12}
+                style={{
+                  textAlign: "center",
+                  fontFamily: "Monaco, monospace",
+                  fontSize: "16px",
+
+                  marginTop: "40px",
+                  color: "#878786",
+                }}
+              >
+                <div style={{ textAlign: "left" }}>
+                  Product ID: <b>{grenade?.id}</b>
                   <br />
-                </span>
-              ))}
-              <br />
-            </div>
+                  Country of origin: <b>{grenade?.country?.name}</b>
+                  <br />
+                  Producer: <b>{grenade?.producer?.name}</b>
+                  <br />
+                  <Divider
+                    style={{ marginTop: "10px", width: "300px" }}
+                  ></Divider>
+                  {grenade?.attributes?.map((attribute) => (
+                    <span>
+                      {attribute.attributeType.name}: <b>{attribute.value}</b>
+                      <br />
+                    </span>
+                  ))}
+                  <br />
+                </div>
+              </Grid>
+            </Grid>
           </Grid>
         </Hidden>
 

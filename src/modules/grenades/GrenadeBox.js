@@ -60,15 +60,19 @@ export const GrenadeBox = ({ grenade }) => {
           >
             {grenade &&
               grenade.pictures &&
-              grenade.pictures.map((picture, index) => (
-                <CardMedia
-                  style={{ height: "270px" }}
-                  component="img"
-                  alt="green iguana"
-                  // height="140"
-                  src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
-                />
-              ))}
+              grenade.pictures.map((picture, index) =>
+                index == 0 ? (
+                  <CardMedia
+                    style={{ height: "270px" }}
+                    component="img"
+                    alt={picture.name}
+                    // height="140"
+                    src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
+                  />
+                ) : (
+                  ""
+                )
+              )}
           </Link>
           <Link
             to={`/grenades/details/${grenade.id}`}
