@@ -128,14 +128,14 @@ export const GrenadeDetails = () => {
                 {grenade &&
                   grenade.pictures &&
                   grenade.pictures.map((picture, index) => {
-                    const cols = picture ? 2 : 1;
-                    const rows = picture ? 2 : 1;
+                    const cols = index == 0 ? 2 : 1;
+                    const rows = index == 0 ? 2 : 1;
+
                     return (
                       <ImageListItem
                         key={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
                         cols={cols}
                         rows={rows}
-                        style={{ marginTop: "5px" }}
                       >
                         <img
                           {...srcset(
