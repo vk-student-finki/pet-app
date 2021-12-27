@@ -81,19 +81,14 @@ export const UpdateGrenade = ({}) => {
   const loadDataAttrubuteType = (page, size) => {
     AttributeTypeRepository.all(page, size)
       .then((res) => {
-        let values = [];
-        res.data.content.forEach((key, index) => {
-          values[key.id + "_"] = null;
-        });
-        setAttributeValues(values);
+        // let values = [];
+        // res.data.content.forEach((key, index) => {
+        //   values[key.id + "_"] = null;
+        // });
+        // setAttributeValues(values);
         setAttributeTypes(res.data);
       })
       .catch((err) => console.log(err));
-  };
-  const handleChangeAttributeValue = (key, value) => {
-    let data = { ...attributeValues };
-    data[key] = value;
-    setAttributeValues(data);
   };
 
   const handleUpload = () => {
@@ -167,7 +162,7 @@ export const UpdateGrenade = ({}) => {
     }
     setGlobalFormError(null);
     setSuccessMessage(null);
-    GrenadesRepository.updateGrenade(grenade)
+    GrenadesRepository.updateGrenade(formData)
       .then((res) => {
         console.log(res);
         setSuccessMessage("Grenade is updated successfully");
@@ -179,6 +174,12 @@ export const UpdateGrenade = ({}) => {
       });
   };
 
+  const handleChangeAttributeValue = (key, value) => {
+    let data = { ...attributeValues };
+    data[key] = value;
+    setAttributeValues(data);
+    console.log(data);
+  };
   const handleChangeGrenadeData = (name, value) => {
     let data = { ...grenade };
     data[name] = value;

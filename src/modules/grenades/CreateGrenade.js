@@ -75,6 +75,7 @@ export const CreateGrenade = () => {
     let data = { ...attributeValues };
     data[key] = value;
     setAttributeValues(data);
+    console.log(data);
   };
 
   const handleChangeGrenadeData = (name, value) => {

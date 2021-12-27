@@ -66,12 +66,4 @@ export const GrenadesRepository = {
       },
     });
   },
-
-  updateAttributes: (id, grenade) => {
-    return axios({
-      url: `${SETTINGS.API_BASE_URL}grenades`,
-      method: "PUT",
-      data: grenade,
-    });
-  },
 };
