@@ -317,6 +317,7 @@ export const Grenades = () => {
           {grenades && grenades.number !== undefined && (
             <Stack spacing={2} style={{ marginTop: "20px" }}>
               <Pagination
+                color="warning"
                 count={Math.floor(grenades?.totalElements / grenades?.size) + 1}
                 showFirstButton
                 showLastButton

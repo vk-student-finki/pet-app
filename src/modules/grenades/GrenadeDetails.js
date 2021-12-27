@@ -166,7 +166,7 @@ export const GrenadeDetails = () => {
                   textTransform: "uppercase",
                   fontWeight: "bold",
                   fontSize: "18px",
-                  marginTop: "20px",
+                  marginTop: "35px",
                 }}
               >
                 <div
@@ -176,7 +176,7 @@ export const GrenadeDetails = () => {
                 >
                   {grenade?.name}
                 </div>
-                <Grid item xs={12} md={12}>
+                <Grid item xs={12} md={12} style={{ marginTop: "-30px" }}>
                   <Button
                     style={{
                       color: "#1E1F1C",
@@ -218,7 +218,7 @@ export const GrenadeDetails = () => {
                 </Grid>
                 <Divider
                   style={{
-                    marginTop: "10px",
+                    marginTop: "5px",
                     width: "640px",
                   }}
                 ></Divider>
