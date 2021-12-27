@@ -66,4 +66,11 @@ export const GrenadesRepository = {
       },
     });
   },
+  removePicture: (grenadeId, picture) => {
+    return axios({
+      url: `${SETTINGS.API_BASE_URL}grenades/removePicture/${grenadeId}`,
+      method: "DELETE",
+      data: picture,
+    });
+  },
 };
