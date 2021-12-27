@@ -393,7 +393,7 @@ export const UpdateGrenade = ({}) => {
                 setAttachments={setAttachments}
               />
               <Button
-                color="secondary"
+                color="success"
                 variant="contained"
                 size="small"
                 onClick={() => {

@@ -22,7 +22,7 @@ export const Upload = ({ attachments, setAttachments }) => {
         onClick={() => {
           uploadFileRef.current.click();
         }}
-        color="secondary"
+        color="inherit"
         size="small"
         variant="outlined"
       >
