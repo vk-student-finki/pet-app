@@ -18,8 +18,10 @@ import {
   TableRow,
   TextField,
   DialogActions,
+  Modal,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import Lightbox from "react-image-lightbox";
 import React, { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { GrenadesRepository } from "./GrenadesRepository";
@@ -39,6 +41,17 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 export const UpdateGrenade = ({}) => {
   const [globalFormError, setGlobalFormError] = useState();
   const [formFieldErrors, setFormFieldErrors] = useState();
@@ -53,6 +66,14 @@ export const UpdateGrenade = ({}) => {
   const [attributeTypes, setAttributeTypes] = useState([]);
   const [attributeValues, setAttributeValues] = useState([]);
   const [deletePictureDialogOpen, setDeletePictureDialogOpen] = useState();
+  const [selectedPicture, setSelectedPicture] = useState();
+
+  const [openPicture, setOpenPicture] = React.useState(false);
+  const handleOpenPicture = (picture) => {
+    setOpenPicture(true);
+    setSelectedPicture(picture);
+  };
+  const handleClosePicture = () => setOpenPicture(false);
 
   useEffect(() => {
     loadDataAttrubuteType(0, 1000);
@@ -420,10 +441,18 @@ export const UpdateGrenade = ({}) => {
                   grenade.pictures.map((picture, index) => (
                     <TableRow>
                       <TableCell>
-                        <img
-                          height="30px"
-                          src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
-                        />
+                        <IconButton
+                          onClick={() => {
+                            handleOpenPicture(picture);
+                          }}
+                        >
+                          <img
+                            height="30px"
+                            key={picture}
+                            alt={picture}
+                            src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
+                          />
+                        </IconButton>
                       </TableCell>
                       <TableCell>{picture.name}</TableCell>
                       <TableCell style={{ width: "100px" }}>
@@ -445,6 +474,21 @@ export const UpdateGrenade = ({}) => {
           </Grid>
         </DialogContent>
       </Dialog>
+      <Modal
+        open={openPicture}
+        onClose={handleClosePicture}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          {""}
+          <img
+            height={"100%"}
+            width={"100%"}
+            src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${selectedPicture?.id}`}
+          />
+        </Box>
+      </Modal>
       <Dialog
         maxWidth="sm"
         fullWidth={true}
