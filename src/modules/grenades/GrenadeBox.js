@@ -128,23 +128,34 @@ export const GrenadeBox = ({ grenade }) => {
           </Hidden>
           <Hidden smUp>
             <CardActions>
-              <Button size="small" style={{ color: "#1E1F1C" }}>
-                {window?.localStorage?.getItem("auth") &&
-                  AuthService.hasRole("ROLE_ADMINISTRATOR") && (
-                    <DeleteIcon
-                      style={{
-                        color: "#FF6000",
-                        marginRight: "150px",
-                      }}
-                      onClick={() => handleClickOpen(grenade)}
-                    />
-                  )}
-              </Button>
+              <Grid container>
+                <Grid item md={12}>
+                  <Button
+                    size="small"
+                    style={{ color: "#1E1F1C", justifyContent: "start" }}
+                  >
+                    {window?.localStorage?.getItem("auth") &&
+                      AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+                        <DeleteIcon
+                          style={{
+                            color: "#FF6000",
+                          }}
+                          onClick={() => handleClickOpen(grenade)}
+                        />
+                      )}
+                  </Button>
+                </Grid>
+              </Grid>
 
+              <Grid container spacing={2}>
+                <Grid item md={12}></Grid>
+              </Grid>
               <Button
                 size="small"
                 float="right"
-                style={{ color: "#1E1F1C" }}
+                style={{
+                  color: "#1E1F1C",
+                }}
                 onClick={() => {
                   setRedirectTo(`/grenades/details/${grenade.id}`);
                 }}
@@ -152,7 +163,7 @@ export const GrenadeBox = ({ grenade }) => {
                 <InfoOutlinedIcon
                   style={{
                     color: "#FF6000",
-                    marginLeft: "80px",
+                    marginRight: "-40px",
                   }}
                 />
               </Button>

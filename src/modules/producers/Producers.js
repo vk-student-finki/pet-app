@@ -202,7 +202,26 @@ export const Producers = () => {
                   >
                     {producer.name}
                   </TableCell>
+
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+
+                  <TableCell style={{}}>
+                    <DeleteIcon
+                      fontSize="large"
+                      style={{
+                        cursor: "pointer",
+                        color: "#D35400",
+                        float: "right",
+                      }}
+                      onClick={() => handleClickOpen(producer)}
+                    ></DeleteIcon>
+                  </TableCell>
                 </Hidden>
+
                 <Hidden smUp>
                   <TableCell
                     style={{
@@ -210,28 +229,24 @@ export const Producers = () => {
                       color: "#1F393C",
                       fontSize: "16px",
                       cursor: "pointer",
+                      width: "400px",
+                      whiteSpace: "normal",
                     }}
                   >
                     {producer.name}
                   </TableCell>
-                </Hidden>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
 
-                <TableCell style={{}}>
-                  <DeleteIcon
-                    fontSize="large"
-                    style={{
-                      cursor: "pointer",
-                      color: "#D35400",
-                      float: "right",
-                    }}
-                    onClick={() => handleClickOpen(producer)}
-                  ></DeleteIcon>
-                </TableCell>
+                  <TableCell width="100px" style={{}}>
+                    <DeleteIcon
+                      fontSize="large"
+                      style={{
+                        cursor: "pointer",
+                        color: "#D35400",
+                        float: "right",
+                      }}
+                    ></DeleteIcon>
+                  </TableCell>
+                </Hidden>
               </TableRow>
             ))}
           </Grid>
