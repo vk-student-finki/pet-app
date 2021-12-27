@@ -19,6 +19,7 @@ import {
   TextField,
   DialogActions,
   Modal,
+  Tooltip,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import Lightbox from "react-image-lightbox";
@@ -46,11 +47,11 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: 650,
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  // border: "1px solid #000",
   boxShadow: 24,
-  p: 4,
+  // p: 1,
 };
 export const UpdateGrenade = ({}) => {
   const [globalFormError, setGlobalFormError] = useState();
@@ -441,18 +442,20 @@ export const UpdateGrenade = ({}) => {
                   grenade.pictures.map((picture, index) => (
                     <TableRow>
                       <TableCell>
-                        <IconButton
-                          onClick={() => {
-                            handleOpenPicture(picture);
-                          }}
-                        >
-                          <img
-                            height="30px"
-                            key={picture}
-                            alt={picture}
-                            src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
-                          />
-                        </IconButton>
+                        <Tooltip title="Open Image" placement="right">
+                          <IconButton
+                            onClick={() => {
+                              handleOpenPicture(picture);
+                            }}
+                          >
+                            <img
+                              height="30px"
+                              key={picture}
+                              alt={picture}
+                              src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
+                            />
+                          </IconButton>
+                        </Tooltip>
                       </TableCell>
                       <TableCell>{picture.name}</TableCell>
                       <TableCell style={{ width: "100px" }}>
