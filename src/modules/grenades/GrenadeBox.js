@@ -141,10 +141,15 @@ export const GrenadeBox = ({ grenade }) => {
                   )}
               </Button>
 
+              <Grid container spacing={2}>
+                <Grid item md={12}></Grid>
+              </Grid>
               <Button
                 size="small"
                 float="right"
-                style={{ color: "#1E1F1C" }}
+                style={{
+                  color: "#1E1F1C",
+                }}
                 onClick={() => {
                   setRedirectTo(`/grenades/details/${grenade.id}`);
                 }}
@@ -152,7 +157,7 @@ export const GrenadeBox = ({ grenade }) => {
                 <InfoOutlinedIcon
                   style={{
                     color: "#FF6000",
-                    marginLeft: "80px",
+                    marginRight: "-40px",
                   }}
                 />
               </Button>

@@ -220,8 +220,7 @@ export const Countries = () => {
                     {country.name}
                   </TableCell>
                 </Hidden>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
+                <TableCell width="50px"></TableCell>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell></TableCell>

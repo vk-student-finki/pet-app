@@ -287,24 +287,44 @@ export const GrenadeDetails = () => {
               }}
             />
           </Grid>
-          <Grid item xs={12} md={6} style={{ marginTop: "-20px" }}>
-            {grenade &&
-              grenade.pictures &&
-              grenade.pictures.map((picture, index) => (
-                <img
-                  src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
-                  style={{
-                    height: "300px",
-                    width: "100%",
-                    objectFit: "cover",
-                    border: "1px solid #E5E5E5",
-                    marginTop: "10px",
-                    borderRadius: "5px",
-                    marginLeft: "auto",
-                    marginRight: "auto",
-                  }}
-                ></img>
-              ))}
+          <Grid item xs={12} md={5} style={{ marginTop: "15px" }}>
+            <ImageList
+              style={{
+                width: "100%",
+                height: "400px",
+                // Promote the list into its own layer in Chrome. This costs memory, but helps keeping high FPS.
+                transform: "translateZ(0)",
+              }}
+              rowHeight={200}
+              gap={1}
+            >
+              {grenade &&
+                grenade.pictures &&
+                grenade.pictures.map((picture, index) => {
+                  const cols = index == 0 ? 2 : 1;
+                  const rows = index == 0 ? 2 : 1;
+
+                  return (
+                    <ImageListItem
+                      key={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
+                      cols={cols}
+                      rows={rows}
+                    >
+                      <img
+                        {...srcset(
+                          `${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`,
+                          200,
+                          250,
+                          rows,
+                          cols
+                        )}
+                        loading="lazy"
+                        alt={picture.name}
+                      />
+                    </ImageListItem>
+                  );
+                })}
+            </ImageList>
           </Grid>
           <Grid item xs={12}>
             <div
