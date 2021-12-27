@@ -21,6 +21,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { CountriesRepository } from "../countries/CountriesRepository";
 import { ProducersRepository } from "../producers/ProducersRepository";
+import { Search } from "@mui/icons-material";
 
 export const Grenades = () => {
   const [grenades, setGrenades] = useState();
@@ -110,8 +111,10 @@ export const Grenades = () => {
 
           <span
             style={{
-              fontFamily: "Monaco, monospace",
+              // fontFamily: "Monaco, monospace",
+              fontFamily: "Trebuchet MS, sans-serif",
               fontSize: "15px",
+              fontStyle: "oblique",
               color: "#FFFFFF",
               display: "block",
               paddingTop: "7px",
@@ -201,6 +204,7 @@ export const Grenades = () => {
                     <TextField
                       fullWidth
                       label="Name"
+                      placeholder="Search by name"
                       color="warning"
                       size="small"
                       value={searchParams?.name ? searchParams?.name : ""}
@@ -209,10 +213,12 @@ export const Grenades = () => {
                       }}
                     />
                   </Grid>
+
                   <Grid item md={3} xs={12}>
                     <TextField
                       fullWidth
                       label="Description"
+                      placeholder="Search by description"
                       size="small"
                       color="warning"
                       value={
@@ -272,11 +278,12 @@ export const Grenades = () => {
                     item
                     md={12}
                     xs={12}
-                    style={{ marginBottom: "5px", textAlign: "left" }}
+                    style={{ marginBottom: "20px", textAlign: "left" }}
                   >
                     <TextField
                       fullWidth
-                      label="Search by attributes"
+                      label="Attributes"
+                      placeholder="Search by attributes"
                       size="small"
                       color="warning"
                       value={
@@ -284,6 +291,7 @@ export const Grenades = () => {
                           ? searchParams?.searchByAttributes
                           : ""
                       }
+                      style={{ marginTop: "-15px" }}
                       onChange={(e) => {
                         handleChangeSearchParams(
                           "searchByAttributes",

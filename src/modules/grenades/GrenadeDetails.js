@@ -248,16 +248,24 @@ export const GrenadeDetails = () => {
               }}
             />
           </Grid>
-          <Grid item xs={12} md={6} style={{ textAlign: "center" }}>
-            <img
-              src={img1}
-              style={{
-                height: "350px",
-                width: "300px",
-                border: "1px solid #E5E5E5",
-                borderRadius: "5px",
-              }}
-            />
+          <Grid item xs={12} md={6} style={{ marginTop: "-20px" }}>
+            {grenade &&
+              grenade.pictures &&
+              grenade.pictures.map((picture, index) => (
+                <img
+                  src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
+                  style={{
+                    height: "300px",
+                    width: "100%",
+                    objectFit: "cover",
+                    border: "1px solid #E5E5E5",
+                    marginTop: "10px",
+                    borderRadius: "5px",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                  }}
+                ></img>
+              ))}
           </Grid>
           <Grid item xs={12}>
             <div
@@ -324,7 +332,9 @@ export const GrenadeDetails = () => {
             xs={12}
             md={12}
             style={{
-              textAlign: "left",
+              textAlign: "justify",
+              textJustify: "inter-word",
+              display: "block",
               fontFamily: "Monaco, monospace",
               fontSize: "16px",
               marginTop: "10px",
@@ -344,7 +354,7 @@ export const GrenadeDetails = () => {
               color: "#878786",
             }}
           >
-            <div style={{}}>
+            <div>
               Product ID: <b>{grenade?.id}</b>
               <br />
               Country of origin: <b>{grenade?.country?.name}</b>
