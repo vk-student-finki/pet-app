@@ -11,6 +11,9 @@ import {
   Slide,
   ImageList,
   ImageListItem,
+  Modal,
+  IconButton,
+  Typography,
 } from "@mui/material";
 import img1 from "../images/411uURaRukL.jpg";
 import React, { useEffect, useState } from "react";
@@ -24,6 +27,9 @@ import { AuthService } from "../auth/AuthService";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import EditIcon from "@mui/icons-material/Edit";
 import { SETTINGS } from "../common/Settings";
+import Slider from "react-touch-drag-slider";
+import CloseIcon from "@mui/icons-material/Close";
+import { Box } from "@mui/system";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -47,6 +53,11 @@ export const GrenadeDetails = () => {
   const { id } = useParams();
   const [redirectTo, setRedirectTo] = useState();
   const [selectedGrenade, setSelectedGrenade] = useState();
+  const [openSlider, setOpenSlider] = useState();
+  const handleOpenSlider = () => {
+    setOpenSlider(true);
+  };
+  const handleCloseSlider = () => setOpenSlider(false);
 
   const [open, setOpen] = React.useState(false);
 
@@ -152,6 +163,7 @@ export const GrenadeDetails = () => {
                     );
                   })}
               </ImageList>
+              <Button onClick={() => handleOpenSlider()}>view pictures</Button>
             </Grid>
             <Grid item md={7} xs={12}>
               <Grid
@@ -321,6 +333,7 @@ export const GrenadeDetails = () => {
                   );
                 })}
             </ImageList>
+            <Button onClick={() => handleOpenSlider()}>view pictures</Button>
           </Grid>
           <Grid item xs={12}>
             <div
@@ -426,6 +439,33 @@ export const GrenadeDetails = () => {
           </Grid>
         </Hidden>
       </Container>
+      <Modal open={openSlider} onClose={handleCloseSlider}>
+        <Box style={{ width: "100%", height: "80%", marginTop: "50px" }}>
+          <Slider
+            onSlideComplete={(i) => {
+              console.log("Finished dragging, current slide is", i);
+            }}
+            onSlideStart={(i) => {
+              console.log("Started dragging on slide", i);
+            }}
+            threshHold={100}
+            transition={0.5}
+            scaleOnDrag={true}
+          >
+            {grenade &&
+              grenade.pictures &&
+              grenade.pictures.map((picture, index) => (
+                <img
+                  src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture?.id}`}
+                  key={index}
+                ></img>
+              ))}
+          </Slider>
+          <Typography style={{ textAlign: "center" }}>
+            Click below to close
+          </Typography>
+        </Box>
+      </Modal>
       <Dialog
         open={open}
         TransitionComponent={Transition}
