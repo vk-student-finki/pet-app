@@ -119,22 +119,24 @@ export const Producers = () => {
                     marginTop: "-20px",
                   }}
                 >
-                  <Button
-                    size="medium"
-                    variant="outlined"
-                    fullWidth
-                    style={{
-                      color: "white",
-                      borderColor: "white",
-                      backgroundColor: "#D35400",
-                      marginTop: "20px",
-                    }}
-                    onClick={() => {
-                      setRedirectTo(`/producers/create`);
-                    }}
-                  >
-                    ADD NEW PRODUCER
-                  </Button>
+                  {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+                    <Button
+                      size="medium"
+                      variant="outlined"
+                      fullWidth
+                      style={{
+                        color: "white",
+                        borderColor: "white",
+                        backgroundColor: "#D35400",
+                        marginTop: "20px",
+                      }}
+                      onClick={() => {
+                        setRedirectTo(`/producers/create`);
+                      }}
+                    >
+                      ADD NEW PRODUCER
+                    </Button>
+                  )}
                 </Grid>
               </Hidden>
 
@@ -244,6 +246,7 @@ export const Producers = () => {
                         color: "#D35400",
                         float: "right",
                       }}
+                      onClick={() => handleClickOpen(producer)}
                     ></DeleteIcon>
                   </TableCell>
                 </Hidden>
