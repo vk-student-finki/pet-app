@@ -1,4 +1,4 @@
-import { Button, Typography } from "@mui/material";
+import { Button, Hidden, Typography } from "@mui/material";
 import React, { useRef } from "react";
 
 export const Upload = ({ attachments, setAttachments }) => {
@@ -18,16 +18,40 @@ export const Upload = ({ attachments, setAttachments }) => {
         onChange={onFileUploadChange}
         style={{ display: "none" }}
       />
-      <Button
-        onClick={() => {
-          uploadFileRef.current.click();
-        }}
-        color="inherit"
-        size="small"
-        variant="outlined"
-      >
-        Upload files ({attachments.length})
-      </Button>
+
+      {/* DESKTOP */}
+      <Hidden smDown>
+        <Button
+          onClick={() => {
+            uploadFileRef.current.click();
+          }}
+          color="inherit"
+          size="small"
+          variant="outlined"
+        >
+          Upload files ({attachments.length})
+        </Button>
+      </Hidden>
+
+      {/* MOBILE */}
+      <Hidden smUp>
+        <Button
+          fullWidth
+          onClick={() => {
+            uploadFileRef.current.click();
+          }}
+          size="small"
+          variant="outlined"
+          style={{
+            backgroundColor: "#17202A",
+            color: "white",
+            fontSize: "12px",
+            fontFamily: "Verdana, sans-serif",
+          }}
+        >
+          Upload ({attachments.length})
+        </Button>
+      </Hidden>
     </>
   );
 };

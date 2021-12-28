@@ -20,6 +20,8 @@ import {
   DialogActions,
   Modal,
   Tooltip,
+  Hidden,
+  Divider,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import Lightbox from "react-image-lightbox";
@@ -37,6 +39,7 @@ import axios from "axios";
 import { SETTINGS } from "../common/Settings";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { AttributeTypeRepository } from "../attributeTypes/AttributeTypeRepository";
+import ImageIcon from "@mui/icons-material/Image";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -280,7 +283,15 @@ export const UpdateGrenade = ({}) => {
         <Avatar sx={{ m: 1, bgcolor: "#D35400" }}>
           <EditIcon />
         </Avatar>
-        <Typography component="h1" variant="h5" style={{ fontWeight: "bold" }}>
+        <Typography
+          component="h1"
+          variant="h5"
+          style={{
+            fontWeight: "bold",
+            fontFamily: "Verdana, sans-serif",
+            fontSize: "20px",
+          }}
+        >
           Edit Grenade
         </Typography>
       </Box>
@@ -372,7 +383,10 @@ export const UpdateGrenade = ({}) => {
                 onClick={() => {
                   setPicturesDialogOpen(true);
                 }}
-                style={{ backgroundColor: "#D35400" }}
+                style={{
+                  backgroundColor: "#D35400",
+                  fontFamily: "Verdana, sans-serif",
+                }}
               >
                 Pictures
               </Button>
@@ -386,7 +400,10 @@ export const UpdateGrenade = ({}) => {
                 onClick={() => {
                   handleClickOpen(true);
                 }}
-                style={{ backgroundColor: "#D35400" }}
+                style={{
+                  backgroundColor: "#D35400",
+                  fontFamily: "Verdana, sans-serif",
+                }}
               >
                 Attributes
               </Button>
@@ -399,7 +416,11 @@ export const UpdateGrenade = ({}) => {
                 handleSubmit();
               }}
               type="submit"
-              style={{ backgroundColor: "#17202A", marginTop: "8px" }}
+              style={{
+                backgroundColor: "#17202A",
+                marginTop: "8px",
+                fontFamily: "Verdana, sans-serif",
+              }}
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               fullWidth
@@ -409,40 +430,145 @@ export const UpdateGrenade = ({}) => {
           </Grid>
         </Grid>
       </Container>
-      <Dialog
-        maxWidth="md"
-        fullWidth={true}
-        open={picturesDialogOpen}
-        onClose={() => setPicturesDialogOpen(false)}
-      >
-        <DialogTitle>Pictures</DialogTitle>
-        <DialogContent>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Upload
-                attachments={attachments}
-                setAttachments={setAttachments}
-              />
-              <Button
-                color="success"
-                variant="contained"
-                size="small"
-                onClick={() => {
-                  handleUpload();
-                }}
-                style={{ marginLeft: "5px" }}
-              >
-                Submit pictures
-              </Button>
+
+      <Hidden smDown>
+        <Dialog
+          maxWidth="md"
+          fullWidth={true}
+          open={picturesDialogOpen}
+          onClose={() => setPicturesDialogOpen(false)}
+        >
+          <DialogTitle>Pictures</DialogTitle>
+          <DialogContent>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Upload
+                  attachments={attachments}
+                  setAttachments={setAttachments}
+                />
+                <Button
+                  color="success"
+                  variant="contained"
+                  size="small"
+                  onClick={() => {
+                    handleUpload();
+                  }}
+                  style={{ marginLeft: "5px" }}
+                >
+                  Submit pictures
+                </Button>
+              </Grid>
+              <Grid item xs={12}>
+                <Table size="small">
+                  {grenade &&
+                    grenade.pictures &&
+                    grenade.pictures.map((picture, index) => (
+                      <TableRow>
+                        <TableCell>
+                          <Tooltip title="Open Image" placement="right">
+                            <IconButton
+                              onClick={() => {
+                                handleOpenPicture(picture);
+                              }}
+                            >
+                              <img
+                                height="30px"
+                                key={picture}
+                                alt={picture}
+                                src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
+                              />
+                            </IconButton>
+                          </Tooltip>
+                        </TableCell>
+                        <TableCell>{picture.name}</TableCell>
+                        <TableCell style={{ width: "100px" }}>
+                          {picture.type}
+                        </TableCell>
+                        <TableCell style={{ width: "50px" }}>
+                          <IconButton
+                            onClick={(e) => {
+                              handleDelete(picture);
+                            }}
+                          >
+                            <DeleteIcon color="error" />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                </Table>
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <Table size="small">
-                {grenade &&
-                  grenade.pictures &&
-                  grenade.pictures.map((picture, index) => (
-                    <TableRow>
-                      <TableCell>
-                        <Tooltip title="Open Image" placement="right">
+          </DialogContent>
+        </Dialog>
+        <Modal
+          open={openPicture}
+          onClose={handleClosePicture}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            {""}
+            <img
+              height={"100%"}
+              width={"100%"}
+              src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${selectedPicture?.id}`}
+            />
+          </Box>
+        </Modal>
+      </Hidden>
+
+      <Hidden smUp>
+        <Dialog
+          maxWidth="sm"
+          fullWidth={true}
+          open={picturesDialogOpen}
+          onClose={() => setPicturesDialogOpen(false)}
+        >
+          <DialogTitle
+            style={{
+              fontWeight: "bold",
+              fontFamily: "Verdana, sans-serif",
+              textAlign: "center",
+              fontSize: "16px",
+            }}
+          >
+            Upload pictures
+          </DialogTitle>
+          <DialogContent>
+            <Grid container>
+              <Grid item xs={12}>
+                <Upload
+                  attachments={attachments}
+                  setAttachments={setAttachments}
+                ></Upload>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Button
+                  fullWidth
+                  color="success"
+                  variant="contained"
+                  size="small"
+                  onClick={() => {
+                    handleUpload();
+                  }}
+                  style={{
+                    marginTop: "5px",
+                    fontSize: "12px",
+                    fontFamily: "Verdana, sans-serif",
+                  }}
+                >
+                  Submit
+                </Button>
+              </Grid>
+              <Divider></Divider>
+              <Grid item xs={12}>
+                <Table size="small">
+                  {grenade &&
+                    grenade.pictures &&
+                    grenade.pictures.map((picture, index) => (
+                      <TableRow>
+                        <TableCell style={{}}>
                           <IconButton
                             onClick={() => {
                               handleOpenPicture(picture);
@@ -450,48 +576,61 @@ export const UpdateGrenade = ({}) => {
                           >
                             <img
                               height="30px"
+                              width="40px"
                               key={picture}
                               alt={picture}
                               src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
+                              style={{ marginLeft: "-20px" }}
                             />
                           </IconButton>
-                        </Tooltip>
-                      </TableCell>
-                      <TableCell>{picture.name}</TableCell>
-                      <TableCell style={{ width: "100px" }}>
-                        {picture.type}
-                      </TableCell>
-                      <TableCell style={{ width: "50px" }}>
-                        <IconButton
-                          onClick={(e) => {
-                            handleDelete(picture);
-                          }}
-                        >
-                          <DeleteIcon color="error" />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-              </Table>
+                        </TableCell>
+                        <TableCell>
+                          <span
+                            style={{
+                              fontSize: "12px",
+                              marginLeft: "-35px",
+                              whiteSpace: "normal",
+                              fontFamily: "Verdana, sans-serif",
+                            }}
+                          >
+                            {picture.name}
+                          </span>
+                        </TableCell>
+                        <TableCell>
+                          <IconButton>
+                            <DeleteIcon
+                              color="error"
+                              style={{}}
+                              onClick={(e) => {
+                                handleDelete(picture);
+                              }}
+                            ></DeleteIcon>
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                </Table>
+              </Grid>
             </Grid>
-          </Grid>
-        </DialogContent>
-      </Dialog>
-      <Modal
-        open={openPicture}
-        onClose={handleClosePicture}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          {""}
-          <img
-            height={"100%"}
-            width={"100%"}
-            src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${selectedPicture?.id}`}
-          />
-        </Box>
-      </Modal>
+          </DialogContent>
+        </Dialog>
+        <Modal
+          open={openPicture}
+          onClose={handleClosePicture}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            {""}
+            <img
+              height={"100%"}
+              width={"100%"}
+              src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${selectedPicture?.id}`}
+            />
+          </Box>
+        </Modal>
+      </Hidden>
+
       <Dialog
         maxWidth="sm"
         fullWidth={true}
@@ -513,8 +652,9 @@ export const UpdateGrenade = ({}) => {
         <DialogTitle
           style={{
             fontWeight: "bold",
-            fontFamily: "Monaco, monospace",
-            float: "center",
+            fontFamily: "Verdana, sans-serif",
+            textAlign: "center",
+            fontSize: "16px",
           }}
         >
           Edit Attributes
