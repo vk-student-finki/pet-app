@@ -277,6 +277,7 @@ export const Users = () => {
                     </Hidden>
 
                     <TableCell
+                      width="160px"
                       style={{
                         textAlign: "right",
                       }}
@@ -285,7 +286,7 @@ export const Users = () => {
                         fontSize="large"
                         style={{
                           cursor: "pointer",
-                          marginRight: "-25px",
+                          marginRight: "-30px",
                         }}
                         onClick={() => {
                           setRedirectTo(`/users/edit/${user?.id}`);
@@ -303,9 +304,6 @@ export const Users = () => {
                           cursor: "pointer",
                           color: "#D35400",
                         }}
-                        // onClick={() => {
-                        //   setRedirectTo(`/users/delete/${user?.id}`);
-                        // }}
                         onClick={() => handleClickOpen(user)}
                       ></DeleteIcon>
                     </TableCell>
