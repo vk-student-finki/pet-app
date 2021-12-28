@@ -144,6 +144,7 @@ export const GrenadeDetails = () => {
 
                     return (
                       <ImageListItem
+                        onClick={() => handleOpenSlider()}
                         key={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
                         cols={cols}
                         rows={rows}
@@ -163,7 +164,7 @@ export const GrenadeDetails = () => {
                     );
                   })}
               </ImageList>
-              <Button onClick={() => handleOpenSlider()}>view pictures</Button>
+              {/* <Button onClick={() => handleOpenSlider()}>view pictures</Button> */}
             </Grid>
             <Grid item md={7} xs={12}>
               <Grid
@@ -282,6 +283,7 @@ export const GrenadeDetails = () => {
           </Grid>
         </Hidden>
 
+        {/* MOBILE */}
         <Hidden smUp>
           <Grid item xs={12}>
             <ArrowBackIcon
@@ -437,35 +439,98 @@ export const GrenadeDetails = () => {
               ))}
             </div>
           </Grid>
+          <Modal
+            open={openSlider}
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <Box
+              style={{
+                width: "100%",
+                height: "70%",
+                marginTop: "100px",
+                objectFit: "contain",
+              }}
+            >
+              <Grid item xs={8.5}>
+                <IconButton
+                  onClick={handleCloseSlider}
+                  style={{
+                    float: "right",
+                  }}
+                >
+                  <CloseIcon
+                    style={{
+                      color: "white",
+                    }}
+                  ></CloseIcon>
+                </IconButton>
+              </Grid>
+              <Slider
+                onSlideComplete={(i) => {
+                  console.log("Finished dragging, current slide is", i);
+                }}
+                onSlideStart={(i) => {
+                  console.log("Started dragging on slide", i);
+                }}
+                threshHold={100}
+                transition={0.5}
+                scaleOnDrag={true}
+              >
+                {grenade &&
+                  grenade.pictures &&
+                  grenade.pictures.map((picture, index) => (
+                    <img
+                      src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture?.id}`}
+                      key={index}
+                    ></img>
+                  ))}
+              </Slider>
+            </Box>
+          </Modal>
         </Hidden>
       </Container>
-      <Modal open={openSlider} onClose={handleCloseSlider}>
-        <Box style={{ width: "100%", height: "80%", marginTop: "50px" }}>
-          <Slider
-            onSlideComplete={(i) => {
-              console.log("Finished dragging, current slide is", i);
+
+      <Hidden smDown>
+        <Modal open={openSlider} style={{ width: "100%", height: "100%" }}>
+          <Box
+            style={{
+              width: "100%",
+              height: "80%",
+              marginTop: "100px",
             }}
-            onSlideStart={(i) => {
-              console.log("Started dragging on slide", i);
-            }}
-            threshHold={100}
-            transition={0.5}
-            scaleOnDrag={true}
           >
-            {grenade &&
-              grenade.pictures &&
-              grenade.pictures.map((picture, index) => (
-                <img
-                  src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture?.id}`}
-                  key={index}
-                ></img>
-              ))}
-          </Slider>
-          <Typography style={{ textAlign: "center" }}>
-            Click below to close
-          </Typography>
-        </Box>
-      </Modal>
+            <Slider
+              onSlideComplete={(i) => {
+                console.log("Finished dragging, current slide is", i);
+              }}
+              onSlideStart={(i) => {
+                console.log("Started dragging on slide", i);
+              }}
+              threshHold={100}
+              transition={0.5}
+              scaleOnDrag={true}
+            >
+              {grenade &&
+                grenade.pictures &&
+                grenade.pictures.map((picture, index) => (
+                  <img
+                    style={{ marginLeft: "auto", marginRight: "auto" }}
+                    src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture?.id}`}
+                    key={index}
+                  ></img>
+                ))}
+            </Slider>
+            <Typography style={{ textAlign: "center" }}>
+              <IconButton onClick={handleCloseSlider}>
+                <CloseIcon style={{ color: "white" }}></CloseIcon>
+              </IconButton>
+            </Typography>
+          </Box>
+        </Modal>
+      </Hidden>
       <Dialog
         open={open}
         TransitionComponent={Transition}
