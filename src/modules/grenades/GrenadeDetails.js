@@ -157,6 +157,7 @@ export const GrenadeDetails = () => {
                             rows,
                             cols
                           )}
+                          style={{ cursor: "pointer" }}
                           loading="lazy"
                           alt={picture.name}
                         />
@@ -328,6 +329,8 @@ export const GrenadeDetails = () => {
                           rows,
                           cols
                         )}
+                        style={{ cursor: "pointer" }}
+                        onClick={() => handleOpenSlider()}
                         loading="lazy"
                         alt={picture.name}
                       />
@@ -335,7 +338,6 @@ export const GrenadeDetails = () => {
                   );
                 })}
             </ImageList>
-            <Button onClick={() => handleOpenSlider()}>view pictures</Button>
           </Grid>
           <Grid item xs={12}>
             <div
@@ -443,31 +445,17 @@ export const GrenadeDetails = () => {
             open={openSlider}
             style={{
               width: "100%",
-              height: "100%",
+              height: "80%",
             }}
           >
             <Box
               style={{
                 width: "100%",
-                height: "70%",
+                height: "80%",
                 marginTop: "100px",
                 objectFit: "contain",
               }}
             >
-              <Grid item xs={8.5}>
-                <IconButton
-                  onClick={handleCloseSlider}
-                  style={{
-                    float: "right",
-                  }}
-                >
-                  <CloseIcon
-                    style={{
-                      color: "white",
-                    }}
-                  ></CloseIcon>
-                </IconButton>
-              </Grid>
               <Slider
                 onSlideComplete={(i) => {
                   console.log("Finished dragging, current slide is", i);
@@ -475,7 +463,7 @@ export const GrenadeDetails = () => {
                 onSlideStart={(i) => {
                   console.log("Started dragging on slide", i);
                 }}
-                threshHold={100}
+                threshHold={80}
                 transition={0.5}
                 scaleOnDrag={true}
               >
@@ -488,6 +476,11 @@ export const GrenadeDetails = () => {
                     ></img>
                   ))}
               </Slider>
+              <Typography style={{ textAlign: "center" }}>
+                <IconButton onClick={handleCloseSlider}>
+                  <CloseIcon style={{ color: "white" }}></CloseIcon>
+                </IconButton>
+              </Typography>
             </Box>
           </Modal>
         </Hidden>
@@ -500,6 +493,7 @@ export const GrenadeDetails = () => {
               width: "100%",
               height: "80%",
               marginTop: "100px",
+              objectFit: "contain",
             }}
           >
             <Slider
@@ -509,7 +503,7 @@ export const GrenadeDetails = () => {
               onSlideStart={(i) => {
                 console.log("Started dragging on slide", i);
               }}
-              threshHold={100}
+              threshHold={80}
               transition={0.5}
               scaleOnDrag={true}
             >
@@ -517,7 +511,6 @@ export const GrenadeDetails = () => {
                 grenade.pictures &&
                 grenade.pictures.map((picture, index) => (
                   <img
-                    style={{ marginLeft: "auto", marginRight: "auto" }}
                     src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture?.id}`}
                     key={index}
                   ></img>
