@@ -194,6 +194,7 @@ export const Countries = () => {
                 style={{
                   cursor: "pointer",
                   backgroundColor: index % 2 === 0 ? "#F4F6F6" : "transparent",
+                  whiteSpace: "nowrap",
                 }}
               >
                 <Hidden smDown>
@@ -207,7 +208,26 @@ export const Countries = () => {
                   >
                     {country.name}
                   </TableCell>
+
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+
+                  <TableCell style={{}}>
+                    <DeleteIcon
+                      fontSize="large"
+                      style={{
+                        cursor: "pointer",
+                        color: "#D35400",
+                        float: "right",
+                      }}
+                      onClick={() => handleClickOpen(country)}
+                    ></DeleteIcon>
+                  </TableCell>
                 </Hidden>
+
                 <Hidden smUp>
                   <TableCell
                     style={{
@@ -215,32 +235,25 @@ export const Countries = () => {
                       color: "#1F393C",
                       fontSize: "16px",
                       cursor: "pointer",
+                      width: "400px",
+                      whiteSpace: "normal",
                     }}
                   >
                     {country.name}
                   </TableCell>
-                </Hidden>
-                <TableCell width="50px"></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
 
-                <TableCell
-                  style={{
-                    textAlign: "left",
-                  }}
-                >
-                  <DeleteIcon
-                    fontSize="large"
-                    style={{
-                      cursor: "pointer",
-                      color: "#D35400",
-                      marginLeft: "-15px",
-                    }}
-                    onClick={() => handleClickOpen(country)}
-                  ></DeleteIcon>
-                </TableCell>
+                  <TableCell width="100px" style={{}}>
+                    <DeleteIcon
+                      fontSize="large"
+                      style={{
+                        cursor: "pointer",
+                        color: "#D35400",
+                        float: "right",
+                      }}
+                      onClick={() => handleClickOpen(country)}
+                    ></DeleteIcon>
+                  </TableCell>
+                </Hidden>
               </TableRow>
             ))}
           </Grid>
