@@ -3,66 +3,66 @@ import * as yup from "yup";
 export const CreateUserValidator = yup.object().shape({
   firstName: yup
     .string()
-    .min(2, "Полето име мора да содржи минимум 2 карактери")
-    .max(20, "Полето име може да содржи максимум 20 карактери")
+    .min(2, "First Name must have at least 2 characters")
+    .max(20, "First Name must have maximum of 20 characters")
     .test(
       "is-first-upper",
-      "Првата буква на името мора да биде голема буква",
+      "First Name must start with capital letter",
       (value) => {
         if (value.charCodeAt(0) >= 65 && value.charCodeAt(0) <= 90) return true;
         else return false;
       }
     )
-    .required("Име е задолжително поле"),
+    .required("First Name is required"),
   lastName: yup
     .string()
-    .min(2, "Полето презиме мора да содржи минимум 2 карактери")
-    .max(20, "Полето презиме може да содржи максимум 20 карактери")
+    .min(2, "Last Name must have at least 2 characters")
+    .max(30, "Last Name must have maximum of 30 characters")
     .test(
       "is-first-upper",
-      "Првата буква на презимето мора да биде голема буква",
+      "Last Name must start with capital letter",
       (value) => {
         if (value.charCodeAt(0) >= 65 && value.charCodeAt(0) <= 90) return true;
         else return false;
       }
     )
-    .required("Презиме е задолжително поле"),
+    .required("Last Name is required"),
   username: yup
     .string()
-    .min(2, 'Полето "username" мора да содржи минимум 2 карактери')
-    .max(20, 'Полето "username" мора да содржи максимум 20 карактери')
-    .required("username е задолжително поле"),
+    .min(2, "Username must have at least 2 characters")
+    .max(20, "Username must have maximum of 20 characters")
+    .required("Username is required"),
   newPassword: yup
     .string()
-    .min(8, 'Полето "newPassword" мора да содржи минимум 8 карактери')
-    .max(20, 'Полето "newPassword" мора да содржи максимум 20 карактери')
-    .required("newPassword е задолжително поле")
+    .min(8, "Password must have at least 8 characters")
+    .max(20, "Password must have maximum of 20 characters")
+    .required("Password is required")
     .matches(
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-      "Мора да содржи барем 8 карактери, една голема буква, број и специјален карактер(@$!%*#?&)"
+      "Password must have at least 1 uppercase letter, at least 1 digit and at least 1 special character(@$!%*#?&)"
     ),
 
   email: yup
     .string()
-    .email("Внесете валидна електронска адреса")
-    .required("Полето е задолжително"),
+    .email("Please enter a valid email address")
+    .required("Email is required"),
   phoneNumber: yup
     .string()
     .matches(
       /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
-      "Внесениот број не е валиден"
+      "Phone Number is not valid"
     )
-    .required("Полето е задолжително"),
+    .required("Phone number is required"),
 });
 export const ChangePasswordUserValidator = yup.object().shape({
   newPassword: yup
     .string()
-    .min(8, 'Полето "newPassword" мора да содржи минимум 8 карактери')
-    .max(20, 'Полето "newPassword" мора да содржи максимум 20 карактери')
-    .required("newPassword е задолжително поле")
+    .min(8, "Password must have at least 8 characters")
+    .max(20, "Password must have maximum of 20 characters")
+    .required("Password is required")
     .matches(
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-      "Мора да содржи барем 8 карактери, една голема буква, број и специјален карактер(@$!%*#?&)"
+      "Password must have at least 1 uppercase letter, at least 1 digit and at least 1 special character(@$!%*#?&)"
     ),
 
   confirmPassword: yup
@@ -73,47 +73,44 @@ export const ChangePasswordUserValidator = yup.object().shape({
 export const UpdateUserValidator = yup.object().shape({
   firstName: yup
     .string()
-
-    .min(2, "Полето име мора да содржи минимум 2 карактери")
-    .max(20, "Полето име може да содржи максимум 20 карактери")
+    .min(2, "First Name must have at least 2 characters")
+    .max(20, "First Name must have maximum of 20 characters")
     .test(
       "is-first-upper",
-      "Првата буква на името мора да биде голема буква",
-      //check if first letter is uppercase
+      "First Name must start with capital letter",
       (value) => {
         if (value.charCodeAt(0) >= 65 && value.charCodeAt(0) <= 90) return true;
         else return false;
       }
     )
-    .required("Име е задолжително поле"),
+    .required("First Name is required"),
   lastName: yup
     .string()
-
-    .min(2, "Полето презиме мора да содржи минимум 2 карактери")
-    .max(20, "Полето презиме може да содржи максимум 20 карактери")
+    .min(2, "Last Name must have at least 2 characters")
+    .max(30, "Last Name must have maximum of 30 characters")
     .test(
       "is-first-upper",
-      "Првата буква на презимето мора да биде голема буква",
+      "Last Name must start with capital letter",
       (value) => {
         if (value.charCodeAt(0) >= 65 && value.charCodeAt(0) <= 90) return true;
         else return false;
       }
     )
-    .required("Презиме е задолжително поле"),
+    .required("Last Name is required"),
   username: yup
     .string()
-    .min(2, 'Полето "username" мора да содржи минимум 2 карактери')
-    .max(20, 'Полето "username" мора да содржи максимум 20 карактери')
-    .required("username е задолжително поле"),
+    .min(2, "Username must have at least 2 characters")
+    .max(20, "Username must have maximum of 20 characters")
+    .required("Username is required"),
   email: yup
     .string()
-    .email("Внесете валидна електронска адреса")
-    .required("Полето е задолжително"),
+    .email("Please enter a valid email address")
+    .required("Email is required"),
   phoneNumber: yup
     .string()
     .matches(
       /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
-      "Внесениот број не е валиден"
+      "Phone Number is not valid"
     )
-    .required("Полето е задолжително"),
+    .required("Phone number is required"),
 });

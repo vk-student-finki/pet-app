@@ -275,9 +275,6 @@ export const Users = () => {
                         {user.firstName} {user.lastName}
                       </TableCell>
                     </Hidden>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
 
                     <TableCell
                       style={{
@@ -297,7 +294,7 @@ export const Users = () => {
                     </TableCell>
                     <TableCell
                       style={{
-                        textAlign: "left",
+                        textAlign: "right",
                       }}
                     >
                       <DeleteIcon

@@ -176,16 +176,16 @@ export const GrenadeDetails = () => {
                 >
                   {grenade?.name}
                 </div>
-                <Grid item xs={12} md={12} style={{ marginTop: "-30px" }}>
-                  <Button
-                    style={{
-                      color: "#1E1F1C",
-                      float: "right",
-                      marginLeft: "-25px",
-                    }}
-                  >
-                    {window?.localStorage?.getItem("auth") &&
-                      AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+                {window?.localStorage?.getItem("auth") &&
+                  AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+                    <Grid item xs={12} md={12} style={{ marginTop: "-30px" }}>
+                      <Button
+                        style={{
+                          color: "#1E1F1C",
+                          float: "right",
+                          marginLeft: "-25px",
+                        }}
+                      >
                         <DeleteIcon
                           size="large"
                           style={{
@@ -193,17 +193,14 @@ export const GrenadeDetails = () => {
                           }}
                           onClick={() => handleClickOpen(grenade)}
                         />
-                      )}
-                  </Button>
+                      </Button>
 
-                  <Button
-                    style={{
-                      color: "#1E1F1C",
-                      float: "right",
-                    }}
-                  >
-                    {window?.localStorage?.getItem("auth") &&
-                      AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+                      <Button
+                        style={{
+                          color: "#1E1F1C",
+                          float: "right",
+                        }}
+                      >
                         <EditIcon
                           size="large"
                           style={{
@@ -213,9 +210,9 @@ export const GrenadeDetails = () => {
                             setRedirectTo(`/grenades/edit/${grenade?.id}`);
                           }}
                         />
-                      )}
-                  </Button>
-                </Grid>
+                      </Button>
+                    </Grid>
+                  )}
                 <Divider
                   style={{
                     marginTop: "5px",
@@ -292,7 +289,6 @@ export const GrenadeDetails = () => {
               style={{
                 width: "100%",
                 height: "400px",
-                // Promote the list into its own layer in Chrome. This costs memory, but helps keeping high FPS.
                 transform: "translateZ(0)",
               }}
               rowHeight={200}

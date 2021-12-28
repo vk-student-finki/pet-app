@@ -178,8 +178,7 @@ export const Groups = () => {
                         style={{
                           fontFamily: "Helvetica, sans-serif",
                           color: "#1F393C",
-                          fontSize: "18px",
-
+                          fontSize: "16px",
                           cursor: "pointer",
                         }}
                         onClick={() => {
@@ -189,9 +188,6 @@ export const Groups = () => {
                         {group.name}
                       </TableCell>
                     </Hidden>
-                    <TableCell> </TableCell>
-                    <TableCell> </TableCell>
-                    <TableCell> </TableCell>
 
                     <TableCell
                       style={{
@@ -200,27 +196,24 @@ export const Groups = () => {
                     >
                       <EditIcon
                         fontSize="large"
-                        style={{ width: "1.7em" }}
                         style={{
                           cursor: "pointer",
-                          marginRight: "-25px",
                         }}
                         onClick={() => {
                           setRedirectTo(`/groups/edit/${group?.id}`);
                         }}
                       ></EditIcon>
-                    </TableCell>
+                      {/* </TableCell>
                     <TableCell
                       style={{
-                        textAlign: "left",
+                        textAlign: "right",
                       }}
-                    >
+                    > */}
                       <DeleteIcon
                         fontSize="large"
                         style={{
                           cursor: "pointer",
                           color: "#D35400",
-                          marginRight: "-15px",
                         }}
                         onClick={() => handleClickOpen(group)}
                       ></DeleteIcon>
