@@ -698,7 +698,7 @@ export const UpdateGrenade = ({}) => {
               border: "#C1C1C1",
             }}
           >
-            Close
+            done
           </Button>
         </DialogActions>
       </Dialog>
