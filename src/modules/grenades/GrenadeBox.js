@@ -85,9 +85,10 @@ export const GrenadeBox = ({ grenade }) => {
                 component="div"
                 style={{
                   fontFamily: "Monaco, monospace",
-                  fontSize: "18px",
+                  fontSize: "17px",
                   textTransform: "uppercase",
                   fontWeight: "bold",
+                  textAlign: "center",
                 }}
               >
                 {grenade.name}

@@ -25,11 +25,16 @@ export const Upload = ({ attachments, setAttachments }) => {
           onClick={() => {
             uploadFileRef.current.click();
           }}
-          color="inherit"
           size="small"
           variant="outlined"
+          style={{
+            backgroundColor: "#17202A",
+            color: "white",
+            fontSize: "12px",
+            fontFamily: "Verdana, sans-serif",
+          }}
         >
-          Upload files ({attachments.length})
+          Upload ({attachments.length})
         </Button>
       </Hidden>
 

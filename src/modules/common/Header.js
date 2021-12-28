@@ -284,10 +284,11 @@ export default function Header({}) {
                 style={{
                   color: "#D9D9D9",
                   borderColor: "#17202A",
-                  fontSize: "14px",
-                  fontFamily: "Helvetica, sans-serif",
+                  fontSize: "13px",
+                  fontFamily: "Verdana, sans-serif",
+                  fontWeight: "bold",
                   textTransform: "uppercase",
-                  marginTop: "3px",
+                  marginTop: "5px",
                 }}
               >
                 Grenades
@@ -303,10 +304,11 @@ export default function Header({}) {
                   style={{
                     color: "#D9D9D9",
                     borderColor: "#17202A",
-                    fontSize: "14px",
-                    fontFamily: "Helvetica, sans-serif",
+                    fontSize: "13px",
+                    fontFamily: "Verdana, sans-serif",
+                    fontWeight: "bold",
                     textTransform: "uppercase",
-                    marginTop: "3px",
+                    marginTop: "5px",
                   }}
                 >
                   USERS
@@ -323,10 +325,11 @@ export default function Header({}) {
                   style={{
                     color: "#D9D9D9",
                     borderColor: "#17202A",
-                    fontSize: "14px",
-                    fontFamily: "Helvetica, sans-serif",
+                    fontSize: "13px",
+                    fontFamily: "Verdana, sans-serif",
                     textTransform: "uppercase",
-                    marginTop: "3px",
+                    fontWeight: "bold",
+                    marginTop: "5px",
                   }}
                 >
                   GROUPS
@@ -343,10 +346,11 @@ export default function Header({}) {
                   style={{
                     color: "#D9D9D9",
                     borderColor: "#17202A",
-                    fontSize: "14px",
-                    fontFamily: "Helvetica, sans-serif",
+                    fontSize: "13px",
+                    fontFamily: "Verdana, sans-serif",
+                    fontWeight: "bold",
                     textTransform: "uppercase",
-                    marginTop: "3px",
+                    marginTop: "5px",
                   }}
                 >
                   Privileges

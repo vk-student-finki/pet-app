@@ -438,14 +438,24 @@ export const UpdateGrenade = ({}) => {
           open={picturesDialogOpen}
           onClose={() => setPicturesDialogOpen(false)}
         >
-          <DialogTitle>Pictures</DialogTitle>
+          <DialogTitle
+            style={{
+              fontFamily: "Verdana, sans-serif",
+              fontSize: "16px",
+              fontWeight: "bold",
+            }}
+          >
+            Upload pictures
+          </DialogTitle>
           <DialogContent>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
+              <Grid item md={3}>
                 <Upload
                   attachments={attachments}
                   setAttachments={setAttachments}
                 />
+              </Grid>
+              <Grid item md={9}>
                 <Button
                   color="success"
                   variant="contained"
@@ -453,9 +463,14 @@ export const UpdateGrenade = ({}) => {
                   onClick={() => {
                     handleUpload();
                   }}
-                  style={{ marginLeft: "5px" }}
+                  style={{
+                    fontSize: "12px",
+                    fontFamily: "Verdana, sans-serif",
+                    marginLeft: "-110px",
+                    width: "50px",
+                  }}
                 >
-                  Submit pictures
+                  Submit
                 </Button>
               </Grid>
               <Grid item xs={12}>
@@ -464,7 +479,7 @@ export const UpdateGrenade = ({}) => {
                     grenade.pictures &&
                     grenade.pictures.map((picture, index) => (
                       <TableRow>
-                        <TableCell>
+                        <TableCell style={{ width: "40px" }}>
                           <Tooltip title="Open Image" placement="right">
                             <IconButton
                               onClick={() => {
@@ -472,7 +487,7 @@ export const UpdateGrenade = ({}) => {
                               }}
                             >
                               <img
-                                height="30px"
+                                height="35px"
                                 key={picture}
                                 alt={picture}
                                 src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
@@ -480,7 +495,14 @@ export const UpdateGrenade = ({}) => {
                             </IconButton>
                           </Tooltip>
                         </TableCell>
-                        <TableCell>{picture.name}</TableCell>
+                        <TableCell
+                          style={{
+                            fontFamily: "Verdana, sans-serif",
+                            marginLeft: "20px",
+                          }}
+                        >
+                          {picture.name}
+                        </TableCell>
                         <TableCell style={{ width: "100px" }}>
                           {picture.type}
                         </TableCell>

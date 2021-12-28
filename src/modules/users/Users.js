@@ -200,6 +200,7 @@ export const Users = () => {
                 label="First Name"
                 size="small"
                 color="warning"
+                placeholder="Search by first name"
                 value={searchParams?.firstName ? searchParams?.firstName : ""}
                 onChange={(e) => {
                   handleChangeSearchParams("firstName", e.target.value);
@@ -213,6 +214,7 @@ export const Users = () => {
                 label="Last Name"
                 size="small"
                 color="warning"
+                placeholder="Search by last name"
                 value={searchParams?.lastName ? searchParams?.lastName : ""}
                 onChange={(e) => {
                   handleChangeSearchParams("lastName", e.target.value);

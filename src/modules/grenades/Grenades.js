@@ -156,19 +156,27 @@ export const Grenades = () => {
             item
             xs={12}
             md={12}
-            style={{ textAlign: "center", marginTop: "5px" }}
+            style={{
+              marginTop: "5px",
+              textAlign: "center",
+            }}
           >
             {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
               <Button
-                variant="contained"
+                size="medium"
+                fullWi
+                variant="outlined"
                 style={{
+                  color: "white",
+                  borderColor: "#D35400",
                   backgroundColor: "#D35400",
+                  marginTop: "20px",
                 }}
                 onClick={() => {
                   setRedirectTo(`/grenades/create`);
                 }}
               >
-                Add new grenade
+                add new grenade
               </Button>
             )}
           </Grid>
@@ -198,7 +206,11 @@ export const Grenades = () => {
                   Grenades
                 </span>
               </Grid>
-              <Grid item xs={12} style={{ textAlign: "center" }}>
+              <Grid
+                item
+                xs={12}
+                style={{ textAlign: "center", marginTop: "30px" }}
+              >
                 <Grid container spacing={2}>
                   <Grid item md={3} xs={12}>
                     <TextField
