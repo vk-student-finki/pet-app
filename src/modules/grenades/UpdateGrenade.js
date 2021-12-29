@@ -40,6 +40,7 @@ import { SETTINGS } from "../common/Settings";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { AttributeTypeRepository } from "../attributeTypes/AttributeTypeRepository";
 import ImageIcon from "@mui/icons-material/Image";
+import CloseIcon from "@mui/icons-material/Close";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -71,6 +72,7 @@ export const UpdateGrenade = ({}) => {
   const [attributeValues, setAttributeValues] = useState([]);
   const [deletePictureDialogOpen, setDeletePictureDialogOpen] = useState();
   const [selectedPicture, setSelectedPicture] = useState();
+  const [successUploadPicture, setSuccessUploadPicture] = useState();
 
   const [openPicture, setOpenPicture] = React.useState(false);
   const handleOpenPicture = (picture) => {
@@ -92,6 +94,11 @@ export const UpdateGrenade = ({}) => {
   const handleClickOpen = (attributesDialogOpen) => {
     setAttributesDialogOpen(attributesDialogOpen);
     setOpen(true);
+  };
+
+  const handleClickClose = (attributestDialogOpen) => {
+    setAttributesDialogOpen(attributesDialogOpen);
+    setOpen(false);
   };
 
   const handleClose = () => {
@@ -132,11 +139,13 @@ export const UpdateGrenade = ({}) => {
         data.append("files", attachments[key])
       );
 
+      setSuccessUploadPicture();
       GrenadesRepository.uploadPictures(id, "GRENADE", attachments)
         .then((res) => {
           console.log(res.data);
           setAttachments([]);
           loadById(id);
+          setSuccessUploadPicture("Pictures uploaded successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -432,23 +441,51 @@ export const UpdateGrenade = ({}) => {
       </Container>
 
       <Hidden smDown>
-        <Dialog
-          maxWidth="md"
-          fullWidth={true}
-          open={picturesDialogOpen}
-          onClose={() => setPicturesDialogOpen(false)}
-        >
-          <DialogTitle
-            style={{
-              fontFamily: "Verdana, sans-serif",
-              fontSize: "16px",
-              fontWeight: "bold",
-            }}
-          >
-            Upload pictures
-          </DialogTitle>
+        <Dialog maxWidth="md" fullWidth={true} open={picturesDialogOpen}>
+          <Grid item xs={12} style={{ backgroundColor: "black" }}>
+            <DialogTitle
+              style={{
+                fontFamily: "Verdana, sans-serif",
+                fontSize: "15px",
+                fontWeight: "bold",
+                color: "white",
+              }}
+            >
+              Upload pictures
+            </DialogTitle>
+          </Grid>
+          {successUploadPicture && (
+            <>
+              <Grid style={{}}>
+                <Alert
+                  severity="success"
+                  variant="filled"
+                  style={{ borderRadius: "0px" }}
+                >
+                  {successUploadPicture}
+                </Alert>
+              </Grid>
+            </>
+          )}
+          <div style={{ marginTop: "-50px" }}>
+            <IconButton
+              size="small"
+              style={{
+                float: "right",
+                marginRight: "10px",
+                color: "white",
+                marginTop: "5px",
+              }}
+              onClick={() => {
+                setPicturesDialogOpen(false);
+              }}
+            >
+              <CloseIcon style={{ fontSize: 20 }}></CloseIcon>
+            </IconButton>
+          </div>
+
           <DialogContent>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} style={{ marginTop: "-5px" }}>
               <Grid item md={3}>
                 <Upload
                   attachments={attachments}
@@ -466,8 +503,9 @@ export const UpdateGrenade = ({}) => {
                   style={{
                     fontSize: "12px",
                     fontFamily: "Verdana, sans-serif",
-                    marginLeft: "-110px",
-                    width: "50px",
+                    marginLeft: "-115px",
+                    width: "95px",
+                    borderColor: "#2E7D32",
                   }}
                 >
                   Submit
@@ -540,22 +578,32 @@ export const UpdateGrenade = ({}) => {
       </Hidden>
 
       <Hidden smUp>
-        <Dialog
-          maxWidth="sm"
-          fullWidth={true}
-          open={picturesDialogOpen}
-          onClose={() => setPicturesDialogOpen(false)}
-        >
-          <DialogTitle
-            style={{
-              fontWeight: "bold",
-              fontFamily: "Verdana, sans-serif",
-              textAlign: "center",
-              fontSize: "16px",
-            }}
-          >
-            Upload pictures
-          </DialogTitle>
+        <Dialog maxWidth="sm" fullWidth={true} open={picturesDialogOpen}>
+          <Grid item xs={12} style={{ background: "black" }}>
+            <DialogTitle
+              style={{
+                fontWeight: "bold",
+                fontFamily: "Verdana, sans-serif",
+                fontSize: "14px",
+                color: "white",
+              }}
+            >
+              Upload pictures
+              <IconButton
+                size="small"
+                style={{
+                  color: "white",
+                  float: "right",
+                  marginTop: "-3px",
+                }}
+                onClick={() => {
+                  setPicturesDialogOpen(false);
+                }}
+              >
+                <CloseIcon style={{ fontSize: 20 }}></CloseIcon>
+              </IconButton>
+            </DialogTitle>
+          </Grid>
           <DialogContent>
             <Grid container>
               <Grid item xs={12}>
@@ -653,77 +701,181 @@ export const UpdateGrenade = ({}) => {
         </Modal>
       </Hidden>
 
-      <Dialog
-        maxWidth="sm"
-        fullWidth={true}
-        open={open}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <EditIcon
-          style={{
-            color: "#F15E5E",
-            marginLeft: "auto",
-            marginRight: "auto",
-            fontSize: "70px",
-            marginTop: "10px",
-          }}
-        />
-        <DialogTitle
-          style={{
-            fontWeight: "bold",
-            fontFamily: "Verdana, sans-serif",
-            textAlign: "center",
-            fontSize: "16px",
-          }}
+      <Hidden smDown>
+        <Dialog
+          maxWidth="sm"
+          fullWidth={true}
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          aria-describedby="alert-dialog-slide-description"
         >
-          Edit Attributes
-        </DialogTitle>
-        <DialogContent style={{ textAlign: "center" }}>
-          <Container maxWidth="xs">
-            {attributeValues &&
-              attributeTypes?.content?.map((attributeType, index) => (
-                <Grid item xs={12}>
-                  <TextField
-                    label={attributeType.name}
-                    size="small"
-                    value={
-                      attributeValues[attributeType?.id + "_"]
-                        ? attributeValues[attributeType?.id + "_"]
-                        : ""
-                    }
-                    onChange={(e) =>
-                      handleChangeAttributeValue(
-                        attributeType?.id + "_",
-                        e.target.value
-                      )
-                    }
-                    variant="outlined"
-                    color="warning"
-                    fullWidth
-                    style={{ marginTop: "8px" }}
-                  ></TextField>
-                </Grid>
-              ))}
-          </Container>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={handleClose}
-            variant="outlined"
-            size="large"
+          <Grid item xs={12} style={{ background: "black" }}>
+            <DialogTitle
+              style={{
+                fontWeight: "bold",
+                fontFamily: "Verdana, sans-serif",
+                fontSize: "16px",
+                color: "white",
+              }}
+            >
+              Edit Attributes
+              <IconButton
+                size="small"
+                style={{
+                  color: "white",
+                  float: "right",
+                  marginRight: "-10px",
+                }}
+                onClick={() => {
+                  handleClose();
+                }}
+              >
+                <CloseIcon style={{ fontSize: 20 }}></CloseIcon>
+              </IconButton>
+            </DialogTitle>
+          </Grid>
+          <EditIcon
             style={{
-              backgroundColor: "#C1C1C1",
-              color: "white",
-              border: "#C1C1C1",
+              color: "#F15E5E",
+              marginLeft: "auto",
+              marginRight: "auto",
+              fontSize: "70px",
+              marginTop: "10px",
             }}
-          >
-            done
-          </Button>
-        </DialogActions>
-      </Dialog>
+          />
+          <DialogContent style={{ textAlign: "center" }}>
+            <Container maxWidth="xs">
+              {attributeValues &&
+                attributeTypes?.content?.map((attributeType, index) => (
+                  <Grid item xs={12}>
+                    <TextField
+                      label={attributeType.name}
+                      size="small"
+                      value={
+                        attributeValues[attributeType?.id + "_"]
+                          ? attributeValues[attributeType?.id + "_"]
+                          : ""
+                      }
+                      onChange={(e) =>
+                        handleChangeAttributeValue(
+                          attributeType?.id + "_",
+                          e.target.value
+                        )
+                      }
+                      variant="outlined"
+                      color="warning"
+                      fullWidth
+                      style={{ marginTop: "8px" }}
+                    ></TextField>
+                  </Grid>
+                ))}
+            </Container>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={handleClose}
+              variant="outlined"
+              size="large"
+              style={{
+                backgroundColor: "#C1C1C1",
+                color: "white",
+                border: "#C1C1C1",
+              }}
+            >
+              done
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Hidden>
+
+      <Hidden smUp>
+        <Dialog
+          maxWidth="sm"
+          fullWidth={true}
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <Grid item xs={12} style={{ background: "black" }}>
+            <DialogTitle
+              style={{
+                fontWeight: "bold",
+                fontFamily: "Verdana, sans-serif",
+                fontSize: "16px",
+                color: "white",
+              }}
+            >
+              Edit Attributes
+              <IconButton
+                size="small"
+                style={{
+                  color: "white",
+                  marginTop: "1px",
+                  float: "right",
+                }}
+                onClick={() => {
+                  handleClose();
+                }}
+              >
+                <CloseIcon style={{ fontSize: 20 }}></CloseIcon>
+              </IconButton>
+            </DialogTitle>
+          </Grid>
+          <EditIcon
+            style={{
+              color: "#F15E5E",
+              marginLeft: "auto",
+              marginRight: "auto",
+              fontSize: "70px",
+              marginTop: "10px",
+            }}
+          />
+          <DialogContent style={{ textAlign: "center" }}>
+            <Container maxWidth="xs">
+              {attributeValues &&
+                attributeTypes?.content?.map((attributeType, index) => (
+                  <Grid item xs={12}>
+                    <TextField
+                      label={attributeType.name}
+                      size="small"
+                      value={
+                        attributeValues[attributeType?.id + "_"]
+                          ? attributeValues[attributeType?.id + "_"]
+                          : ""
+                      }
+                      onChange={(e) =>
+                        handleChangeAttributeValue(
+                          attributeType?.id + "_",
+                          e.target.value
+                        )
+                      }
+                      variant="outlined"
+                      color="warning"
+                      fullWidth
+                      style={{ marginTop: "8px" }}
+                    ></TextField>
+                  </Grid>
+                ))}
+            </Container>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={handleClose}
+              variant="outlined"
+              size="large"
+              style={{
+                backgroundColor: "#C1C1C1",
+                color: "white",
+                border: "#C1C1C1",
+              }}
+            >
+              done
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Hidden>
     </>
   );
 };
