@@ -451,7 +451,19 @@ export const UpdateGrenade = ({}) => {
                 color: "white",
               }}
             >
-              Upload pictures
+              Upload pictures{" "}
+              <IconButton
+                size="small"
+                style={{
+                  float: "right",
+                  color: "white",
+                }}
+                onClick={() => {
+                  setPicturesDialogOpen(false);
+                }}
+              >
+                <CloseIcon style={{ fontSize: 20 }}></CloseIcon>
+              </IconButton>
             </DialogTitle>
           </Grid>
           {successUploadPicture && (
@@ -467,25 +479,9 @@ export const UpdateGrenade = ({}) => {
               </Grid>
             </>
           )}
-          <div style={{ marginTop: "-50px" }}>
-            <IconButton
-              size="small"
-              style={{
-                float: "right",
-                marginRight: "10px",
-                color: "white",
-                marginTop: "5px",
-              }}
-              onClick={() => {
-                setPicturesDialogOpen(false);
-              }}
-            >
-              <CloseIcon style={{ fontSize: 20 }}></CloseIcon>
-            </IconButton>
-          </div>
 
           <DialogContent>
-            <Grid container spacing={2} style={{ marginTop: "-5px" }}>
+            <Grid container spacing={2} style={{}}>
               <Grid item md={3}>
                 <Upload
                   attachments={attachments}
