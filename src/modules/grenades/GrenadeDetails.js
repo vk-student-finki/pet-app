@@ -17,7 +17,7 @@ import {
   Tooltip,
   Fade,
 } from "@mui/material";
-import img1 from "../images/411uURaRukL.jpg";
+import img1 from "../images/image.jpg";
 import React, { useEffect, useState } from "react";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { GrenadesRepository } from "./GrenadesRepository";
@@ -131,29 +131,29 @@ export const GrenadeDetails = () => {
           <Divider></Divider>
           <Grid container spacing={2}>
             <Grid item xs={12} md={5} style={{ marginTop: "15px" }}>
-              <Tooltip
-                title="Open Images"
-                TransitionComponent={Fade}
-                TransitionProps={{ timeout: 300 }}
-                placement="bottom-end"
+              <ImageList
+                style={{
+                  width: "100%",
+                  height: "400px",
+                  // Promote the list into its own layer in Chrome. This costs memory, but helps keeping high FPS.
+                  transform: "translateZ(0)",
+                }}
+                rowHeight={200}
+                gap={1}
               >
-                <ImageList
-                  style={{
-                    width: "100%",
-                    height: "400px",
-                    // Promote the list into its own layer in Chrome. This costs memory, but helps keeping high FPS.
-                    transform: "translateZ(0)",
-                  }}
-                  rowHeight={200}
-                  gap={1}
-                >
-                  {grenade &&
-                    grenade.pictures &&
-                    grenade.pictures.map((picture, index) => {
-                      const cols = index == 0 ? 2 : 1;
-                      const rows = index == 0 ? 2 : 1;
+                {grenade &&
+                  grenade.pictures &&
+                  grenade.pictures.map((picture, index) => {
+                    const cols = index == 0 ? 2 : 1;
+                    const rows = index == 0 ? 2 : 1;
 
-                      return (
+                    return (
+                      <Tooltip
+                        title="Open Image"
+                        TransitionComponent={Fade}
+                        TransitionProps={{ timeout: 300 }}
+                        placement="bottom-end"
+                      >
                         <ImageListItem
                           onClick={() => handleOpenSlider(index)}
                           key={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
@@ -173,10 +173,11 @@ export const GrenadeDetails = () => {
                             alt={picture.name}
                           />
                         </ImageListItem>
-                      );
-                    })}
-                </ImageList>
-              </Tooltip>
+                      </Tooltip>
+                    );
+                  })}
+              </ImageList>
+
               {/* <Button onClick={() => handleOpenSlider()}>view pictures</Button> */}
             </Grid>
             <Grid item md={7} xs={12}>

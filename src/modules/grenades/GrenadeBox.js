@@ -14,14 +14,14 @@ import {
   Slide,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
-import img1 from "../images/411uURaRukL.jpg";
+import React, { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { AuthService } from "../auth/AuthService";
 import { SETTINGS } from "../common/Settings";
+import img1 from "../images/image.jpg";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -30,7 +30,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export const GrenadeBox = ({ grenade }) => {
   const [redirectTo, setRedirectTo] = useState();
   const [selectedGrenade, setSelectedGrenade] = useState();
-  const [attachments, setAttachments] = useState();
 
   const [open, setOpen] = React.useState(false);
 
@@ -59,20 +58,29 @@ export const GrenadeBox = ({ grenade }) => {
             style={{ textDecoration: "none", color: "#1E1F1C" }}
           >
             {grenade &&
-              grenade.pictures &&
-              grenade.pictures.map((picture, index) =>
-                index == 0 ? (
-                  <CardMedia
-                    style={{ height: "270px" }}
-                    component="img"
-                    alt={picture.name}
-                    // height="140"
-                    src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
-                  />
-                ) : (
-                  ""
-                )
-              )}
+            grenade.pictures &&
+            grenade.pictures.filter((g) => g.type === "GRENADE").length > 0 &&
+            grenade.pictures.filter((g) => g.type === "GRENADE")[0] ? (
+              <CardMedia
+                style={{ height: "270px" }}
+                component="img"
+                alt={
+                  grenade.pictures.filter((g) => g.type === "GRENADE")[0].name
+                }
+                // height="140"
+                src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${
+                  grenade.pictures.filter((g) => g.type === "GRENADE")[0].id
+                }`}
+              />
+            ) : (
+              <>
+                <CardMedia
+                  style={{ height: "270px" }}
+                  component="img"
+                  src={img1}
+                />
+              </>
+            )}
           </Link>
           <Link
             to={`/grenades/details/${grenade.id}`}
