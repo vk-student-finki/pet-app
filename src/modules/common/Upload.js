@@ -28,8 +28,8 @@ export const Upload = ({ attachments, setAttachments }) => {
           size="small"
           variant="outlined"
           style={{
-            backgroundColor: "#D35400",
-            borderColor: "#D35400",
+            backgroundColor: "#C1C1C1",
+            borderColor: "#C1C1C1",
             color: "white",
             fontSize: "12px",
             fontFamily: "Verdana, sans-serif",
@@ -49,8 +49,8 @@ export const Upload = ({ attachments, setAttachments }) => {
           size="small"
           variant="outlined"
           style={{
-            backgroundColor: "#D35400",
-            border: "1px solid transparent",
+            backgroundColor: "#C1C1C1",
+            borderColor: "#C1C1C1",
             color: "white",
             fontSize: "12px",
             fontFamily: "Verdana, sans-serif",
