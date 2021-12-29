@@ -27,9 +27,10 @@ import { AuthService } from "../auth/AuthService";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import EditIcon from "@mui/icons-material/Edit";
 import { SETTINGS } from "../common/Settings";
-import Slider from "react-touch-drag-slider";
 import CloseIcon from "@mui/icons-material/Close";
 import { Box } from "@mui/system";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from "react-responsive-carousel";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -444,78 +445,55 @@ export const GrenadeDetails = () => {
           <Modal
             open={openSlider}
             style={{
-              width: "100%",
+              // width: "100%",
               height: "80%",
+              display: "block",
             }}
           >
             <Box
               style={{
-                width: "100%",
-                height: "80%",
-                marginTop: "100px",
-                objectFit: "contain",
+                marginTop: "40px",
               }}
             >
-              <Slider
-                onSlideComplete={(i) => {
-                  console.log("Finished dragging, current slide is", i);
-                }}
-                onSlideStart={(i) => {
-                  console.log("Started dragging on slide", i);
-                }}
-                threshHold={80}
-                transition={0.5}
-                scaleOnDrag={true}
-              >
-                {grenade &&
-                  grenade.pictures &&
-                  grenade.pictures.map((picture, index) => (
-                    <img
-                      src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture?.id}`}
-                      key={index}
-                    ></img>
-                  ))}
-              </Slider>
               <Typography style={{ textAlign: "center" }}>
                 <IconButton onClick={handleCloseSlider}>
                   <CloseIcon style={{ color: "white" }}></CloseIcon>
                 </IconButton>
               </Typography>
+              <Carousel
+                centerMode={true}
+                dynamicHeight={true}
+                infiniteLoop={true}
+              >
+                {grenade &&
+                  grenade.pictures &&
+                  grenade.pictures.map((picture, index) => (
+                    <div style={{}}>
+                      <img
+                        src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture?.id}`}
+                        key={index}
+                      ></img>
+                    </div>
+                  ))}
+              </Carousel>{" "}
             </Box>
           </Modal>
         </Hidden>
       </Container>
 
       <Hidden smDown>
-        <Modal open={openSlider} style={{ width: "100%", height: "100%" }}>
-          <Box
-            style={{
-              width: "100%",
-              height: "80%",
-              marginTop: "100px",
-              objectFit: "contain",
-            }}
-          >
-            <Slider
-              onSlideComplete={(i) => {
-                console.log("Finished dragging, current slide is", i);
-              }}
-              onSlideStart={(i) => {
-                console.log("Started dragging on slide", i);
-              }}
-              threshHold={80}
-              transition={0.5}
-              scaleOnDrag={true}
-            >
+        <Modal open={openSlider}>
+          <Box>
+            <Carousel emulateTouch={true} swipeable={true} width={"300px"}>
               {grenade &&
                 grenade.pictures &&
                 grenade.pictures.map((picture, index) => (
                   <img
                     src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture?.id}`}
                     key={index}
-                  ></img>
+                  />
                 ))}
-            </Slider>
+            </Carousel>
             <Typography style={{ textAlign: "center" }}>
               <IconButton onClick={handleCloseSlider}>
                 <CloseIcon style={{ color: "white" }}></CloseIcon>
