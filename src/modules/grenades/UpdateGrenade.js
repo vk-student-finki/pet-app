@@ -451,7 +451,7 @@ export const UpdateGrenade = ({}) => {
                 color: "white",
               }}
             >
-              Upload pictures{" "}
+              Upload pictures
               <IconButton
                 size="small"
                 style={{
