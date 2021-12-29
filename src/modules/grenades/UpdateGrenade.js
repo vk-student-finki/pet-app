@@ -766,22 +766,23 @@ export const UpdateGrenade = ({}) => {
                     ></TextField>
                   </Grid>
                 ))}
+              <Button
+                onClick={handleClose}
+                variant="outlined"
+                size="small"
+                style={{
+                  backgroundColor: "#C1C1C1",
+                  color: "white",
+                  border: "#C1C1C1",
+                  float: "right",
+                  marginTop: "10px",
+                  width: "20px",
+                }}
+              >
+                done
+              </Button>
             </Container>
           </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={handleClose}
-              variant="outlined"
-              size="large"
-              style={{
-                backgroundColor: "#C1C1C1",
-                color: "white",
-                border: "#C1C1C1",
-              }}
-            >
-              done
-            </Button>
-          </DialogActions>
         </Dialog>
       </Hidden>
 
