@@ -736,11 +736,11 @@ export const UpdateGrenade = ({}) => {
               color: "#F15E5E",
               marginLeft: "auto",
               marginRight: "auto",
-              fontSize: "70px",
+              fontSize: "50px",
               marginTop: "10px",
             }}
           />
-          <DialogContent style={{ textAlign: "center" }}>
+          <DialogContent style={{ textAlign: "center", marginTop: "-20px" }}>
             <Container maxWidth="xs">
               {attributeValues &&
                 attributeTypes?.content?.map((attributeType, index) => (
@@ -825,11 +825,11 @@ export const UpdateGrenade = ({}) => {
               color: "#F15E5E",
               marginLeft: "auto",
               marginRight: "auto",
-              fontSize: "70px",
-              marginTop: "10px",
+              fontSize: "50px",
+              marginTop: "15px",
             }}
           />
-          <DialogContent style={{ textAlign: "center" }}>
+          <DialogContent style={{ textAlign: "center", marginTop: "-20px" }}>
             <Container maxWidth="xs">
               {attributeValues &&
                 attributeTypes?.content?.map((attributeType, index) => (
@@ -855,22 +855,22 @@ export const UpdateGrenade = ({}) => {
                     ></TextField>
                   </Grid>
                 ))}
+              <Button
+                onClick={handleClose}
+                variant="outlined"
+                size="small"
+                style={{
+                  backgroundColor: "#C1C1C1",
+                  color: "white",
+                  border: "#C1C1C1",
+                  float: "right",
+                  marginTop: "15px",
+                }}
+              >
+                done
+              </Button>
             </Container>
           </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={handleClose}
-              variant="outlined"
-              size="large"
-              style={{
-                backgroundColor: "#C1C1C1",
-                color: "white",
-                border: "#C1C1C1",
-              }}
-            >
-              done
-            </Button>
-          </DialogActions>
         </Dialog>
       </Hidden>
     </>
