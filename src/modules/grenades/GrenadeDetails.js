@@ -14,6 +14,8 @@ import {
   Modal,
   IconButton,
   Typography,
+  Tooltip,
+  Fade,
 } from "@mui/material";
 import img1 from "../images/411uURaRukL.jpg";
 import React, { useEffect, useState } from "react";
@@ -55,8 +57,10 @@ export const GrenadeDetails = () => {
   const [redirectTo, setRedirectTo] = useState();
   const [selectedGrenade, setSelectedGrenade] = useState();
   const [openSlider, setOpenSlider] = useState();
-  const handleOpenSlider = () => {
+  const [selectedPicture, setSelectedPicture] = useState();
+  const handleOpenSlider = (index) => {
     setOpenSlider(true);
+    setSelectedPicture(index);
   };
   const handleCloseSlider = () => setOpenSlider(false);
 
@@ -127,45 +131,52 @@ export const GrenadeDetails = () => {
           <Divider></Divider>
           <Grid container spacing={2}>
             <Grid item xs={12} md={5} style={{ marginTop: "15px" }}>
-              <ImageList
-                style={{
-                  width: "100%",
-                  height: "400px",
-                  // Promote the list into its own layer in Chrome. This costs memory, but helps keeping high FPS.
-                  transform: "translateZ(0)",
-                }}
-                rowHeight={200}
-                gap={1}
+              <Tooltip
+                title="Open Images"
+                TransitionComponent={Fade}
+                TransitionProps={{ timeout: 300 }}
+                placement="bottom-end"
               >
-                {grenade &&
-                  grenade.pictures &&
-                  grenade.pictures.map((picture, index) => {
-                    const cols = index == 0 ? 2 : 1;
-                    const rows = index == 0 ? 2 : 1;
+                <ImageList
+                  style={{
+                    width: "100%",
+                    height: "400px",
+                    // Promote the list into its own layer in Chrome. This costs memory, but helps keeping high FPS.
+                    transform: "translateZ(0)",
+                  }}
+                  rowHeight={200}
+                  gap={1}
+                >
+                  {grenade &&
+                    grenade.pictures &&
+                    grenade.pictures.map((picture, index) => {
+                      const cols = index == 0 ? 2 : 1;
+                      const rows = index == 0 ? 2 : 1;
 
-                    return (
-                      <ImageListItem
-                        onClick={() => handleOpenSlider()}
-                        key={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
-                        cols={cols}
-                        rows={rows}
-                      >
-                        <img
-                          {...srcset(
-                            `${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`,
-                            200,
-                            250,
-                            rows,
-                            cols
-                          )}
-                          style={{ cursor: "pointer" }}
-                          loading="lazy"
-                          alt={picture.name}
-                        />
-                      </ImageListItem>
-                    );
-                  })}
-              </ImageList>
+                      return (
+                        <ImageListItem
+                          onClick={() => handleOpenSlider(index)}
+                          key={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
+                          cols={cols}
+                          rows={rows}
+                        >
+                          <img
+                            {...srcset(
+                              `${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`,
+                              200,
+                              250,
+                              rows,
+                              cols
+                            )}
+                            style={{ cursor: "pointer" }}
+                            loading="lazy"
+                            alt={picture.name}
+                          />
+                        </ImageListItem>
+                      );
+                    })}
+                </ImageList>
+              </Tooltip>
               {/* <Button onClick={() => handleOpenSlider()}>view pictures</Button> */}
             </Grid>
             <Grid item md={7} xs={12}>
@@ -331,7 +342,7 @@ export const GrenadeDetails = () => {
                           cols
                         )}
                         style={{ cursor: "pointer" }}
-                        onClick={() => handleOpenSlider()}
+                        onClick={() => handleOpenSlider(index)}
                         loading="lazy"
                         alt={picture.name}
                       />
@@ -442,17 +453,11 @@ export const GrenadeDetails = () => {
               ))}
             </div>
           </Grid>
-          <Modal
-            open={openSlider}
-            style={{
-              // width: "100%",
-              height: "80%",
-              display: "block",
-            }}
-          >
+          <Modal open={openSlider} selectedPicture={selectedPicture}>
             <Box
               style={{
-                marginTop: "40px",
+                padding: "5%",
+                marginTop: "50px",
               }}
             >
               <Typography style={{ textAlign: "center" }}>
@@ -461,9 +466,12 @@ export const GrenadeDetails = () => {
                 </IconButton>
               </Typography>
               <Carousel
-                centerMode={true}
+                centerMode={false}
                 dynamicHeight={true}
                 infiniteLoop={true}
+                showThumbs={false}
+                useKeyboardArrows={true}
+                selectedItem={selectedPicture}
               >
                 {grenade &&
                   grenade.pictures &&
@@ -472,6 +480,10 @@ export const GrenadeDetails = () => {
                       <img
                         src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture?.id}`}
                         key={index}
+                        style={{
+                          height: "auto",
+                          width: "100%",
+                        }}
                       ></img>
                     </div>
                   ))}
@@ -482,23 +494,38 @@ export const GrenadeDetails = () => {
       </Container>
 
       <Hidden smDown>
-        <Modal open={openSlider}>
-          <Box>
-            <Carousel emulateTouch={true} swipeable={true} width={"300px"}>
-              {grenade &&
-                grenade.pictures &&
-                grenade.pictures.map((picture, index) => (
-                  <img
-                    src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture?.id}`}
-                    key={index}
-                  />
-                ))}
-            </Carousel>
+        <Modal open={openSlider} selectedPicture={selectedPicture}>
+          <Box style={{ padding: "5%" }}>
             <Typography style={{ textAlign: "center" }}>
               <IconButton onClick={handleCloseSlider}>
                 <CloseIcon style={{ color: "white" }}></CloseIcon>
               </IconButton>
             </Typography>
+            <Carousel
+              emulateTouch={true}
+              swipeable={true}
+              width="100%"
+              dynamicHeight={false}
+              infiniteLoop={true}
+              showThumbs={false}
+              useKeyboardArrows={true}
+              selectedItem={selectedPicture}
+            >
+              {grenade &&
+                grenade.pictures &&
+                grenade.pictures.map((picture, index) => (
+                  <div style={{ height: "450px" }}>
+                    <img
+                      src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture?.id}`}
+                      key={index}
+                      style={{
+                        height: "450px",
+                        width: "auto",
+                      }}
+                    />
+                  </div>
+                ))}
+            </Carousel>
           </Box>
         </Modal>
       </Hidden>
