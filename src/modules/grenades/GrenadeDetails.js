@@ -148,7 +148,7 @@ export const GrenadeDetails = () => {
 
                     return (
                       <Tooltip
-                        title="Open Image"
+                        title="Click to open image"
                         TransitionComponent={Fade}
                         TransitionProps={{ timeout: 300 }}
                         placement="bottom-end"
