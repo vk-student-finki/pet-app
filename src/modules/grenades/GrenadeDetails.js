@@ -141,8 +141,7 @@ export const GrenadeDetails = () => {
                 rowHeight={200}
                 gap={1}
               >
-                {grenade &&
-                  grenade.pictures &&
+                {grenade && grenade.pictures && grenade.pictures.length > 0 ? (
                   grenade.pictures.map((picture, index) => {
                     const cols = index == 0 ? 2 : 1;
                     const rows = index == 0 ? 2 : 1;
@@ -175,7 +174,16 @@ export const GrenadeDetails = () => {
                         </ImageListItem>
                       </Tooltip>
                     );
-                  })}
+                  })
+                ) : (
+                  <img
+                    src={img1}
+                    style={{
+                      width: "100%",
+                      padding: "30%",
+                    }}
+                  />
+                )}
               </ImageList>
 
               {/* <Button onClick={() => handleOpenSlider()}>view pictures</Button> */}
