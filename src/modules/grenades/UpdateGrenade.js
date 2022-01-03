@@ -74,6 +74,8 @@ export const UpdateGrenade = ({}) => {
   const [deletePictureDialogOpen, setDeletePictureDialogOpen] = useState();
   const [selectedPicture, setSelectedPicture] = useState();
   const [successUploadPicture, setSuccessUploadPicture] = useState();
+  const [pictureTypes, setPictureTypes] = useState();
+  const [pictureType, setPictureType] = useState();
 
   const [openPicture, setOpenPicture] = React.useState(false);
   const handleOpenPicture = (picture) => {
@@ -86,9 +88,27 @@ export const UpdateGrenade = ({}) => {
     loadDataAttrubuteType(0, 1000);
   }, []);
 
+  useEffect(
+    () => {
+      loadById(id);
+    },
+    [attributeTypes],
+    [pictureTypes]
+  );
+
   useEffect(() => {
-    loadById(id);
-  }, [attributeTypes]);
+    loadPictureTypes();
+  }, []);
+
+  const loadPictureTypes = () => {
+    GrenadesRepository.pictureTypes()
+      .then((res) => {
+        console.log("picture types");
+        console.log(res.data);
+        setPictureTypes(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const [open, setOpen] = React.useState(false);
 
@@ -141,10 +161,11 @@ export const UpdateGrenade = ({}) => {
       );
 
       setSuccessUploadPicture();
-      GrenadesRepository.uploadPictures(id, "GRENADE", attachments)
+      GrenadesRepository.uploadPictures(id, pictureType, attachments)
         .then((res) => {
           console.log(res.data);
           setAttachments([]);
+          setPictureType(null);
           loadById(id);
           setSuccessUploadPicture("Pictures uploaded successfully");
         })
@@ -540,24 +561,47 @@ export const UpdateGrenade = ({}) => {
 
           <DialogContent>
             <Grid container spacing={2} style={{}}>
-              <Grid item md={3}>
+              <Grid item md={2.5}>
+                <FormControl
+                  fullWidth
+                  size="small"
+                  color="grey"
+                  variant="outlined"
+                >
+                  <InputLabel>Picture Type</InputLabel>
+                  <Select
+                    sx={{
+                      height: "39px",
+                    }}
+                    onChange={(e) => {
+                      setPictureType(e.target.value);
+                    }}
+                  >
+                    {pictureTypes &&
+                      pictureTypes?.map((type) => (
+                        <MenuItem value={type}>{type}</MenuItem>
+                      ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item md={7.5}>
                 <Upload
                   attachments={attachments}
                   setAttachments={setAttachments}
                 />
               </Grid>
-              <Grid item md={9}>
+
+              <Grid item md={2}>
                 <Button
                   color="success"
                   variant="contained"
-                  size="small"
+                  size="large"
                   onClick={() => {
                     handleUpload();
                   }}
                   style={{
                     fontSize: "12px",
                     fontFamily: "Verdana, sans-serif",
-                    marginLeft: "-115px",
                     width: "95px",
                     borderColor: "#2E7D32",
                   }}
@@ -659,7 +703,27 @@ export const UpdateGrenade = ({}) => {
             </DialogTitle>
           </Grid>
           <DialogContent>
-            <Grid container>
+            <Grid container spacing={1}>
+              <Grid item xs={12}>
+                <FormControl
+                  fullWidth
+                  size="small"
+                  color="grey"
+                  variant="outlined"
+                >
+                  <InputLabel>Picture Type</InputLabel>
+                  <Select
+                    onChange={(e) => {
+                      setPictureType(e.target.value);
+                    }}
+                  >
+                    {pictureTypes &&
+                      pictureTypes?.map((type) => (
+                        <MenuItem value={type}>{type}</MenuItem>
+                      ))}
+                  </Select>
+                </FormControl>
+              </Grid>
               <Grid item xs={12}>
                 <Upload
                   attachments={attachments}
@@ -672,12 +736,11 @@ export const UpdateGrenade = ({}) => {
                   fullWidth
                   color="success"
                   variant="contained"
-                  size="small"
+                  size="large"
                   onClick={() => {
                     handleUpload();
                   }}
                   style={{
-                    marginTop: "5px",
                     fontSize: "12px",
                     fontFamily: "Verdana, sans-serif",
                   }}

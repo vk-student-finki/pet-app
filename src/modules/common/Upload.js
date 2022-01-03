@@ -25,8 +25,8 @@ export const Upload = ({ attachments, setAttachments }) => {
           onClick={() => {
             uploadFileRef.current.click();
           }}
-          size="small"
-          variant="outlined"
+          size="large"
+          variant="contained"
           style={{
             backgroundColor: "#C1C1C1",
             borderColor: "#C1C1C1",
@@ -46,8 +46,8 @@ export const Upload = ({ attachments, setAttachments }) => {
           onClick={() => {
             uploadFileRef.current.click();
           }}
-          size="small"
-          variant="outlined"
+          size="large"
+          variant="contained"
           style={{
             backgroundColor: "#C1C1C1",
             borderColor: "#C1C1C1",
