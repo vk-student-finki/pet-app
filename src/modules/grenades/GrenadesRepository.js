@@ -73,4 +73,10 @@ export const GrenadesRepository = {
       data: picture,
     });
   },
+  pictureTypes: () => {
+    return axios({
+      url: `${SETTINGS.API_BASE_URL}grenades/pictureTypes`,
+      method: "GET",
+    });
+  },
 };
