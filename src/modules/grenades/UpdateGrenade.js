@@ -539,6 +539,7 @@ export const UpdateGrenade = ({}) => {
                 }}
                 onClick={() => {
                   setPicturesDialogOpen(false);
+                  setSuccessUploadPicture(null);
                 }}
               >
                 <CloseIcon style={{ fontSize: 20 }}></CloseIcon>
