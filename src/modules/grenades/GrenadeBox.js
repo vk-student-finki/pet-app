@@ -9,9 +9,11 @@ import {
   DialogContent,
   DialogTitle,
   Divider,
+  Fade,
   Grid,
   Hidden,
   Slide,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -121,17 +123,27 @@ export const GrenadeBox = ({ grenade }) => {
 
               <Button
                 size="small"
-                style={{ color: "#1E1F1C" }}
+                style={{
+                  color: "#1E1F1C",
+                  fontSize: 20,
+                }}
                 onClick={() => {
                   setRedirectTo(`/grenades/details/${grenade.id}`);
                 }}
               >
-                <InfoOutlinedIcon
-                  style={{
-                    color: "#FF6000",
-                    marginRight: "-30px",
-                  }}
-                />
+                <Tooltip
+                  title="More details"
+                  TransitionComponent={Fade}
+                  TransitionProps={{ timeout: 300 }}
+                  placement="bottom"
+                >
+                  <InfoOutlinedIcon
+                    style={{
+                      color: "#FF6000",
+                      marginRight: "-30px",
+                    }}
+                  />
+                </Tooltip>
               </Button>
             </CardActions>
           </Hidden>

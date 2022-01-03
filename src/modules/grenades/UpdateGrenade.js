@@ -22,11 +22,12 @@ import {
   Tooltip,
   Hidden,
   Divider,
+  Breadcrumbs,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import Lightbox from "react-image-lightbox";
 import React, { useEffect, useState } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { GrenadesRepository } from "./GrenadesRepository";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
@@ -263,6 +264,11 @@ export const UpdateGrenade = ({}) => {
     handleChangeGrenadeData("producer", e.target.value);
   };
 
+  function handleClick(event) {
+    event.preventDefault();
+    console.info("You clicked a breadcrumb.");
+  }
+
   return (
     <>
       {successMessage && (
@@ -281,6 +287,58 @@ export const UpdateGrenade = ({}) => {
           </Alert>
         </Grid>
       )}
+
+      <Hidden smDown>
+        <Container style={{ marginTop: "50px" }}>
+          <div role="presentation" onClick={handleClick}>
+            <Breadcrumbs
+              aria-label="breadcrumb"
+              style={{
+                fontFamily: "Lucida Console, monospace",
+                fontSize: "16px",
+              }}
+            >
+              <Link
+                underline="hover"
+                color="inherit"
+                to="/"
+                style={{
+                  textDecoration: "none",
+                  color: "#878786",
+                  marginLeft: "-19px",
+                }}
+              >
+                Home
+              </Link>
+              <Link
+                underline="hover"
+                color="inherit"
+                to="/grenades"
+                style={{ textDecoration: "none", color: "#878786" }}
+              >
+                Grenades
+              </Link>
+              <Link
+                underline="hover"
+                to={`/grenades/details/${grenade?.id}`}
+                aria-current="page"
+                style={{ textDecoration: "none", color: "#878786" }}
+              >
+                {grenade?.name}
+              </Link>
+              <Link
+                underline="hover"
+                to={`/grenades/edit/${grenade?.id}`}
+                aria-current="page"
+                style={{ textDecoration: "none", color: "#D35400" }}
+              >
+                Edit
+              </Link>
+            </Breadcrumbs>
+          </div>
+        </Container>
+        <Divider></Divider>
+      </Hidden>
       <Box
         sx={{
           marginTop: 8,
