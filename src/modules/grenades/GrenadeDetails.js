@@ -134,12 +134,13 @@ export const GrenadeDetails = () => {
               <ImageList
                 style={{
                   width: "100%",
-                  height: "400px",
+                  height: "450px",
                   // Promote the list into its own layer in Chrome. This costs memory, but helps keeping high FPS.
                   transform: "translateZ(0)",
                 }}
+                variant="quilted"
                 rowHeight={200}
-                gap={1}
+                gap={3}
               >
                 {grenade && grenade.pictures && grenade.pictures.length > 0 ? (
                   grenade.pictures.map((picture, index) => {

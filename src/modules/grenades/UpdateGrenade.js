@@ -654,19 +654,15 @@ export const UpdateGrenade = ({}) => {
                           <span
                             style={{
                               fontSize: "12px",
-                              marginLeft: "-35px",
                               whiteSpace: "normal",
                               fontFamily: "Verdana, sans-serif",
                             }}
                           >
                             {picture.name}
                           </span>
-                        </TableCell>
-                        <TableCell>
-                          <IconButton>
+                          <IconButton style={{ float: "right" }}>
                             <DeleteIcon
                               color="error"
-                              style={{}}
                               onClick={(e) => {
                                 handleDelete(picture);
                               }}
