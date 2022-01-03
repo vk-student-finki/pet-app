@@ -188,7 +188,6 @@ export const Producers = () => {
             {producers?.content?.map((producer, index) => (
               <TableRow
                 style={{
-                  cursor: "pointer",
                   backgroundColor: index % 2 === 0 ? "#F4F6F6" : "transparent",
                   whiteSpace: "nowrap",
                 }}
@@ -205,13 +204,9 @@ export const Producers = () => {
                     {producer.name}
                   </TableCell>
 
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
+                  <TableCell width={"123px"}></TableCell>
 
-                  <TableCell style={{}}>
+                  <TableCell>
                     <DeleteIcon
                       fontSize="large"
                       style={{
@@ -230,7 +225,6 @@ export const Producers = () => {
                       fontFamily: "Helvetica, sans-serif",
                       color: "#1F393C",
                       fontSize: "16px",
-                      cursor: "pointer",
                       width: "400px",
                       whiteSpace: "normal",
                     }}
@@ -260,10 +254,10 @@ export const Producers = () => {
             {producers && producers.number !== undefined && (
               <Stack spacing={2} style={{ marginTop: "20px" }}>
                 <Pagination
+                  color="warning"
                   count={
                     Math.floor(producers?.totalElements / producers?.size) + 1
                   }
-                  shape="rounded"
                   showFirstButton
                   showLastButton
                   style={{

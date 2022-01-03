@@ -192,7 +192,6 @@ export const Countries = () => {
             {countries?.content?.map((country, index) => (
               <TableRow
                 style={{
-                  cursor: "pointer",
                   backgroundColor: index % 2 === 0 ? "#F4F6F6" : "transparent",
                   whiteSpace: "nowrap",
                 }}
@@ -234,7 +233,6 @@ export const Countries = () => {
                       fontFamily: "Helvetica, sans-serif",
                       color: "#1F393C",
                       fontSize: "16px",
-                      cursor: "pointer",
                       width: "400px",
                       whiteSpace: "normal",
                     }}
@@ -264,10 +262,10 @@ export const Countries = () => {
             {countries && countries.number !== undefined && (
               <Stack spacing={2} style={{ marginTop: "20px" }}>
                 <Pagination
+                  color="warning"
                   count={
                     Math.floor(countries?.totalElements / countries?.size) + 1
                   }
-                  shape="rounded"
                   showFirstButton
                   showLastButton
                   style={{

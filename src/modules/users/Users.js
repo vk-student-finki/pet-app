@@ -321,8 +321,8 @@ export const Users = () => {
           {users && users.number !== undefined && (
             <Stack spacing={2} style={{ marginTop: "20px" }}>
               <Pagination
+                color="warning"
                 count={Math.floor(users?.totalElements / users?.size) + 1}
-                shape="rounded"
                 showFirstButton
                 showLastButton
                 style={{

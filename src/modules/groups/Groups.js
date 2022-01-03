@@ -203,12 +203,7 @@ export const Groups = () => {
                           setRedirectTo(`/groups/edit/${group?.id}`);
                         }}
                       ></EditIcon>
-                      {/* </TableCell>
-                    <TableCell
-                      style={{
-                        textAlign: "right",
-                      }}
-                    > */}
+
                       <DeleteIcon
                         fontSize="large"
                         style={{
@@ -227,8 +222,8 @@ export const Groups = () => {
               {groups && groups.number !== undefined && (
                 <Stack spacing={2} style={{ marginTop: "20px" }}>
                   <Pagination
+                    color="warning"
                     count={Math.floor(groups?.totalElements / groups?.size) + 1}
-                    shape="rounded"
                     showFirstButton
                     showLastButton
                     style={{

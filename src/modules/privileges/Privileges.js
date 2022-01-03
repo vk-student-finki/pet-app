@@ -123,12 +123,12 @@ export const Privileges = () => {
                 {privileges && privileges.number !== undefined && (
                   <Stack spacing={2} style={{ marginTop: "20px" }}>
                     <Pagination
+                      color="warning"
                       count={
                         Math.floor(
                           privileges?.totalElements / privileges?.size
                         ) + 1
                       }
-                      shape="rounded"
                       showFirstButton
                       showLastButton
                       style={{

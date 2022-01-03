@@ -164,7 +164,6 @@ export const Grenades = () => {
             {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
               <Button
                 size="medium"
-                fullWi
                 variant="outlined"
                 style={{
                   color: "white",
@@ -176,7 +175,7 @@ export const Grenades = () => {
                   setRedirectTo(`/grenades/create`);
                 }}
               >
-                add new grenade
+                ADD NEW GRENADE
               </Button>
             )}
           </Grid>
