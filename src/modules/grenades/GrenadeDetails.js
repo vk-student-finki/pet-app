@@ -221,13 +221,13 @@ export const GrenadeDetails = () => {
                           float: "right",
                           marginLeft: "-25px",
                         }}
+                        onClick={() => handleClickOpen(grenade)}
                       >
                         <DeleteIcon
                           size="large"
                           style={{
                             color: "#FF6000",
                           }}
-                          onClick={() => handleClickOpen(grenade)}
                         />
                       </Button>
 
@@ -236,14 +236,14 @@ export const GrenadeDetails = () => {
                           color: "#1E1F1C",
                           float: "right",
                         }}
+                        onClick={() => {
+                          setRedirectTo(`/grenades/edit/${grenade?.id}`);
+                        }}
                       >
                         <EditIcon
                           size="large"
                           style={{
                             color: "#202020",
-                          }}
-                          onClick={() => {
-                            setRedirectTo(`/grenades/edit/${grenade?.id}`);
                           }}
                         />
                       </Button>
@@ -406,16 +406,22 @@ export const GrenadeDetails = () => {
               >
                 {window?.localStorage?.getItem("auth") &&
                   AuthService.hasRole("ROLE_ADMINISTRATOR") && (
-                    <EditIcon
-                      size="medium"
+                    <Button
                       style={{
-                        color: "#202020",
-                        marginLeft: "-32px",
+                        color: "#1E1F1C",
+                        float: "right",
                       }}
                       onClick={() => {
                         setRedirectTo(`/grenades/edit/${grenade?.id}`);
                       }}
-                    />
+                    >
+                      <EditIcon
+                        size="large"
+                        style={{
+                          color: "#202020",
+                        }}
+                      />
+                    </Button>
                   )}
               </Button>
             </Grid>
