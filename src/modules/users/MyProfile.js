@@ -17,6 +17,8 @@ import {
   Snackbar,
   IconButton,
   Hidden,
+  Tooltip,
+  Fade,
 } from "@mui/material";
 import { UsersRepository } from "./UsersRepository";
 import {
@@ -238,12 +240,19 @@ export const MyProfile = () => {
             {AuthService.getCurrentUser()?.firstName}{" "}
             {AuthService.getCurrentUser()?.lastName}{" "}
             {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
-              <EditIcon
-                style={{ color: "#D35400", cursor: "pointer" }}
-                onClick={() => {
-                  setRedirectTo(`/users/edit/${user?.id}`);
-                }}
-              />
+              <Tooltip
+                title="Edit your profile"
+                TransitionComponent={Fade}
+                TransitionProps={{ timeout: 300 }}
+                placement="bottom"
+              >
+                <EditIcon
+                  style={{ color: "#D35400", cursor: "pointer" }}
+                  onClick={() => {
+                    setRedirectTo(`/users/edit/${user?.id}`);
+                  }}
+                />
+              </Tooltip>
             )}
           </h2>
         </Grid>
@@ -251,7 +260,7 @@ export const MyProfile = () => {
       <Divider></Divider>
       <Grid container spacing={1}>
         <Grid item xs={12} md={6}>
-          <h3 style={{ fontFamily: "Helvetica, sans-serif", color: "#1F393C" }}>
+          <h3 style={{ fontFamily: "Verdana, sans-serif", color: "#1F393C" }}>
             Account Info
           </h3>
           <Divider></Divider>
@@ -406,7 +415,7 @@ export const MyProfile = () => {
         <Grid item xs={12} md={6}>
           <h3
             style={{
-              fontFamily: "Helvetica, sans-serif",
+              fontFamily: "Verdana, sans-serif",
               color: "#1F393C",
             }}
           >
@@ -419,16 +428,41 @@ export const MyProfile = () => {
             onClick={handleClickOpen}
             style={{ marginTop: "10px", float: "right " }}
           ></Chip>
-          <Dialog open={open} onClose={handleClose}>
+          <Dialog open={open}>
             {globalFormError && (
               <Alert severity="error">
                 {globalFormError?.response?.data?.message}
               </Alert>
             )}
 
-            <DialogTitle>Change Password</DialogTitle>
+            <Grid item xs={12} style={{ backgroundColor: "black" }}>
+              <DialogTitle
+                style={{
+                  color: "white",
+                  fontFamily: "Verdana, sans-serif",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                }}
+              >
+                Change Password
+                <IconButton
+                  size="small"
+                  style={{
+                    float: "right",
+                    color: "white",
+                  }}
+                  onClick={handleClose}
+                >
+                  <CloseIcon
+                    style={{ fontSize: 20, marginTop: "-3px" }}
+                  ></CloseIcon>
+                </IconButton>
+              </DialogTitle>
+            </Grid>
             <DialogContent>
-              <DialogContentText>
+              <DialogContentText
+                style={{ fontFamily: "Verdana, sans-serif", fontSize: "14px" }}
+              >
                 To change your password please insert new password and then
                 submit.
               </DialogContentText>
@@ -469,14 +503,47 @@ export const MyProfile = () => {
             </DialogContent>
 
             <DialogActions>
-              <Button onClick={handleClose}>Close</Button>
-              <Button
-                onClick={() => {
-                  handleSubmitPassword();
-                }}
-              >
-                Submit
-              </Button>
+              {/* <Button onClick={handleClose}>Close</Button> */}
+              <Hidden smDown>
+                <Button
+                  variant="contained"
+                  size="medium"
+                  onClick={() => {
+                    handleSubmitPassword();
+                  }}
+                  style={{
+                    backgroundColor: "#2DA44E",
+                    marginRight: "15px",
+                    marginTop: "-20px",
+                  }}
+                >
+                  Submit
+                </Button>
+              </Hidden>
+
+              <Hidden smUp>
+                <Grid
+                  item
+                  xs={11}
+                  style={{ marginLeft: "auto", marginRight: "auto" }}
+                >
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    size="small"
+                    onClick={() => {
+                      handleSubmitPassword();
+                    }}
+                    style={{
+                      backgroundColor: "#2DA44E",
+                      marginRight: "15px",
+                      marginTop: "-20px",
+                    }}
+                  >
+                    Submit
+                  </Button>
+                </Grid>
+              </Hidden>
               <Snackbar
                 open={openMessage}
                 autoHideDuration={6000}

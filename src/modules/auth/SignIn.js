@@ -14,7 +14,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { AuthService } from "./AuthService";
 import { useNavigate } from "react-router";
-import { Alert } from "@mui/material";
+import { Alert, Hidden } from "@mui/material";
 
 const theme = createTheme();
 export const SignIn = () => {
@@ -110,6 +110,7 @@ export const SignIn = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                style={{ marginTop: "-1px" }}
               />
               {/* <FormControlLabel
                 control={
@@ -117,11 +118,12 @@ export const SignIn = () => {
                 }
                 label="Remember me"
               /> */}
+
               <Button
                 onClick={() => handleSubmit()}
                 type="submit"
                 fullWidth
-                style={{ backgroundColor: "#17202A " }}
+                style={{ backgroundColor: "#17202A" }}
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
