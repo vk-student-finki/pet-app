@@ -16,6 +16,9 @@ import {
   Chip,
   Snackbar,
   IconButton,
+  Hidden,
+  Tooltip,
+  Fade,
 } from "@mui/material";
 import { UsersRepository } from "./UsersRepository";
 import {
@@ -37,6 +40,11 @@ export const MyProfile = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleCloseSuccessMessage = () => {
+    setSuccessMessage(false);
+  };
+
   const [globalFormError, setGlobalFormError] = useState();
   const [formFieldErrors, setFormFieldErrors] = useState();
   const [successMessage, setSuccessMessage] = useState(null);
@@ -79,8 +87,10 @@ export const MyProfile = () => {
           return;
         }
       );
+
       return;
     }
+    handleClose();
     setLoading(true);
     setGlobalFormError(null);
     setSuccessMessage(null);
@@ -155,7 +165,9 @@ export const MyProfile = () => {
         size="small"
         aria-label="close"
         color="inherit"
-        onClick={handleCloseMessage}
+        onClick={() => {
+          setSuccessMessage(false);
+        }}
       >
         <CloseIcon fontSize="small" />
       </IconButton>
@@ -164,6 +176,56 @@ export const MyProfile = () => {
   return (
     <>
       {redirectTo && <Navigate to={redirectTo} push />}
+      {successMessage && (
+        <Hidden smDown>
+          <Grid item fullWidth xs={12} md={12} style={{}}>
+            <Alert
+              severity="success"
+              variant="filled"
+              style={{ borderRadius: 0 }}
+            >
+              {successMessage}
+              <IconButton
+                size="small"
+                style={{
+                  color: "white",
+                  marginLeft: "910px",
+                }}
+                onClick={() => {
+                  handleCloseSuccessMessage();
+                }}
+              >
+                <CloseIcon style={{ fontSize: 20 }}></CloseIcon>
+              </IconButton>
+            </Alert>
+          </Grid>
+        </Hidden>
+      )}
+      {successMessage && (
+        <Hidden smUp>
+          <Grid item fullWidth xs={12} md={12} style={{}}>
+            <Alert
+              severity="success"
+              variant="filled"
+              style={{ borderRadius: 0 }}
+            >
+              {successMessage}
+              <IconButton
+                size="small"
+                style={{
+                  color: "white",
+                  marginLeft: "110px",
+                }}
+                onClick={() => {
+                  handleCloseSuccessMessage();
+                }}
+              >
+                <CloseIcon style={{ fontSize: 20 }}></CloseIcon>
+              </IconButton>
+            </Alert>
+          </Grid>
+        </Hidden>
+      )}
 
       <Container maxWidth="xs">
         <Grid item xs={12} style={{ textAlign: "center", marginTop: "10px" }}>
@@ -178,12 +240,19 @@ export const MyProfile = () => {
             {AuthService.getCurrentUser()?.firstName}{" "}
             {AuthService.getCurrentUser()?.lastName}{" "}
             {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
-              <EditIcon
-                style={{ color: "#D35400", cursor: "pointer" }}
-                onClick={() => {
-                  setRedirectTo(`/users/edit/${user?.id}`);
-                }}
-              />
+              <Tooltip
+                title="Edit your profile"
+                TransitionComponent={Fade}
+                TransitionProps={{ timeout: 300 }}
+                placement="bottom"
+              >
+                <EditIcon
+                  style={{ color: "#D35400", cursor: "pointer" }}
+                  onClick={() => {
+                    setRedirectTo(`/users/edit/${user?.id}`);
+                  }}
+                />
+              </Tooltip>
             )}
           </h2>
         </Grid>
@@ -191,7 +260,7 @@ export const MyProfile = () => {
       <Divider></Divider>
       <Grid container spacing={1}>
         <Grid item xs={12} md={6}>
-          <h3 style={{ fontFamily: "Helvetica, sans-serif", color: "#1F393C" }}>
+          <h3 style={{ fontFamily: "Verdana, sans-serif", color: "#1F393C" }}>
             Account Info
           </h3>
           <Divider></Divider>
@@ -292,21 +361,41 @@ export const MyProfile = () => {
               />
             </Grid>
             <Grid item xs={12} md={4}>
-              <Button
-                fullWidth
-                style={{
-                  marginTop: "10px",
-                  marginBottom: "10px",
-                  backgroundColor: "#2DA44E",
-                  float: "right",
-                }}
-                variant="contained"
-                onClick={() => {
-                  handleSubmit();
-                }}
-              >
-                Update Profile
-              </Button>
+              <Hidden smDown>
+                <Button
+                  fullWidth
+                  style={{
+                    marginTop: "10px",
+                    marginBottom: "10px",
+                    backgroundColor: "#2DA44E",
+                    float: "right",
+                    marginRight: "-380px",
+                  }}
+                  variant="contained"
+                  onClick={() => {
+                    handleSubmit();
+                  }}
+                >
+                  Update Profile
+                </Button>
+              </Hidden>
+              <Hidden smUp>
+                <Button
+                  fullWidth
+                  style={{
+                    marginTop: "10px",
+                    marginBottom: "10px",
+                    backgroundColor: "#2DA44E",
+                    float: "right",
+                  }}
+                  variant="contained"
+                  onClick={() => {
+                    handleSubmit();
+                  }}
+                >
+                  Update Profile
+                </Button>
+              </Hidden>
             </Grid>
             {globalFormError && (
               <Grid item xs={12} style={{ marginTop: "10px" }}>
@@ -315,18 +404,18 @@ export const MyProfile = () => {
                 </Alert>
               </Grid>
             )}
-            {successMessage && (
+            {/* {successMessage && (
               <Grid item xs={12} style={{ marginTop: "10px" }}>
                 <Alert severity="success">{successMessage}</Alert>
               </Grid>
-            )}
+            )} */}
           </Grid>
         </Grid>
 
         <Grid item xs={12} md={6}>
           <h3
             style={{
-              fontFamily: "Helvetica, sans-serif",
+              fontFamily: "Verdana, sans-serif",
               color: "#1F393C",
             }}
           >
@@ -339,16 +428,41 @@ export const MyProfile = () => {
             onClick={handleClickOpen}
             style={{ marginTop: "10px", float: "right " }}
           ></Chip>
-          <Dialog open={open} onClose={handleClose}>
+          <Dialog open={open}>
             {globalFormError && (
               <Alert severity="error">
                 {globalFormError?.response?.data?.message}
               </Alert>
             )}
 
-            <DialogTitle>Change Password</DialogTitle>
+            <Grid item xs={12} style={{ backgroundColor: "black" }}>
+              <DialogTitle
+                style={{
+                  color: "white",
+                  fontFamily: "Verdana, sans-serif",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                }}
+              >
+                Change Password
+                <IconButton
+                  size="small"
+                  style={{
+                    float: "right",
+                    color: "white",
+                  }}
+                  onClick={handleClose}
+                >
+                  <CloseIcon
+                    style={{ fontSize: 20, marginTop: "-3px" }}
+                  ></CloseIcon>
+                </IconButton>
+              </DialogTitle>
+            </Grid>
             <DialogContent>
-              <DialogContentText>
+              <DialogContentText
+                style={{ fontFamily: "Verdana, sans-serif", fontSize: "14px" }}
+              >
                 To change your password please insert new password and then
                 submit.
               </DialogContentText>
@@ -370,11 +484,11 @@ export const MyProfile = () => {
               <TextField
                 margin="dense"
                 id="name"
-                onKeyPress={(e) => {
-                  if (e.key === "Enter") {
-                    handleSubmitPassword();
-                  }
-                }}
+                // onKeyPress={(e) => {
+                //   if (e.key === "Enter") {
+                //     handleSubmitPassword();
+                //   }
+                // }}
                 label="Confirm Password"
                 type="password"
                 color="warning"
@@ -389,15 +503,47 @@ export const MyProfile = () => {
             </DialogContent>
 
             <DialogActions>
-              <Button onClick={handleClose}>Close</Button>
-              <Button
-                onClick={() => {
-                  handleSubmitPassword();
-                  handleClick();
-                }}
-              >
-                Submit
-              </Button>
+              {/* <Button onClick={handleClose}>Close</Button> */}
+              <Hidden smDown>
+                <Button
+                  variant="contained"
+                  size="medium"
+                  onClick={() => {
+                    handleSubmitPassword();
+                  }}
+                  style={{
+                    backgroundColor: "#2DA44E",
+                    marginRight: "15px",
+                    marginTop: "-20px",
+                  }}
+                >
+                  Submit
+                </Button>
+              </Hidden>
+
+              <Hidden smUp>
+                <Grid
+                  item
+                  xs={11}
+                  style={{ marginLeft: "auto", marginRight: "auto" }}
+                >
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    size="small"
+                    onClick={() => {
+                      handleSubmitPassword();
+                    }}
+                    style={{
+                      backgroundColor: "#2DA44E",
+                      marginRight: "15px",
+                      marginTop: "-20px",
+                    }}
+                  >
+                    Submit
+                  </Button>
+                </Grid>
+              </Hidden>
               <Snackbar
                 open={openMessage}
                 autoHideDuration={6000}
