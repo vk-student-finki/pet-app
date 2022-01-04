@@ -208,8 +208,23 @@ export const Grenades = () => {
               <Grid
                 item
                 xs={12}
-                style={{ textAlign: "center", marginTop: "30px" }}
+                style={{ textAlign: "left", marginTop: "30px" }}
               >
+                <span
+                  style={{
+                    fontFamily: "Copperplate, fantasy",
+                    fontSize: "16px",
+                    color: "#6c757d",
+                    display: "block",
+                    textTransform: "uppercase",
+                    letterSpacing: ".05rem",
+                    marginLeft: "7px",
+                    marginBottom: "6px",
+                  }}
+                >
+                  search
+                </span>
+
                 <Grid container spacing={2}>
                   <Grid item md={3} xs={12}>
                     <TextField

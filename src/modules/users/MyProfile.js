@@ -260,7 +260,13 @@ export const MyProfile = () => {
       <Divider></Divider>
       <Grid container spacing={1}>
         <Grid item xs={12} md={6}>
-          <h3 style={{ fontFamily: "Verdana, sans-serif", color: "#1F393C" }}>
+          <h3
+            style={{
+              fontFamily: "Verdana, sans-serif",
+              color: "#1F393C",
+              fontSize: "16px",
+            }}
+          >
             Account Info
           </h3>
           <Divider></Divider>
@@ -417,6 +423,7 @@ export const MyProfile = () => {
             style={{
               fontFamily: "Verdana, sans-serif",
               color: "#1F393C",
+              fontSize: "16px",
             }}
           >
             Change password
