@@ -23,6 +23,7 @@ import {
   Hidden,
   Divider,
   Breadcrumbs,
+  NativeSelect,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import Lightbox from "react-image-lightbox";
@@ -46,6 +47,20 @@ import CloseIcon from "@mui/icons-material/Close";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
+const styleChild = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  background: "white",
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  pt: 2,
+  px: 4,
+  pb: 3,
+};
 
 const style = {
   position: "absolute",
@@ -76,13 +91,30 @@ export const UpdateGrenade = ({}) => {
   const [successUploadPicture, setSuccessUploadPicture] = useState();
   const [pictureTypes, setPictureTypes] = useState();
   const [pictureType, setPictureType] = useState();
+  const [uploadError, setUploadError] = useState();
+  const [openPictureType, setOpenPictureType] = useState();
+  const [selectedPictureType, setSelectedPictureType] = useState();
+
+  const handleOpenPictureType = (picture) => {
+    setOpenPictureType(true);
+    setSelectedPictureType(picture.type);
+    setSelectedPicture(picture);
+  };
+  const handleClosePictureType = () => {
+    setOpenPictureType(false);
+    setSelectedPictureType(null);
+    setSelectedPicture(null);
+  };
 
   const [openPicture, setOpenPicture] = React.useState(false);
   const handleOpenPicture = (picture) => {
     setOpenPicture(true);
     setSelectedPicture(picture);
   };
-  const handleClosePicture = () => setOpenPicture(false);
+  const handleClosePicture = () => {
+    setSelectedPicture(null);
+    setOpenPicture(false);
+  };
 
   useEffect(() => {
     loadDataAttrubuteType(0, 1000);
@@ -93,7 +125,8 @@ export const UpdateGrenade = ({}) => {
       loadById(id);
     },
     [attributeTypes],
-    [pictureTypes]
+    [pictureTypes],
+    [attachments]
   );
 
   useEffect(() => {
@@ -159,18 +192,19 @@ export const UpdateGrenade = ({}) => {
       Object.keys(attachments).forEach((key) =>
         data.append("files", attachments[key])
       );
-
+      setUploadError(null);
       setSuccessUploadPicture();
       GrenadesRepository.uploadPictures(id, pictureType, attachments)
         .then((res) => {
           console.log(res.data);
           setAttachments([]);
-          setPictureType(null);
           loadById(id);
           setSuccessUploadPicture("Pictures uploaded successfully");
+          console.log(pictureType);
         })
         .catch((err) => {
           console.log(err);
+          setUploadError(err);
         });
     }
   };
@@ -208,6 +242,7 @@ export const UpdateGrenade = ({}) => {
     let formData = { ...grenade };
     formData.attributes = attributes;
     let valid = UpdateGrenadeValidator.isValidSync(formData);
+    setGlobalFormError(null);
     setFormFieldErrors();
     if (!valid) {
       let validationErrors = {};
@@ -220,6 +255,7 @@ export const UpdateGrenade = ({}) => {
           });
           console.log(validationErrors);
           setFormFieldErrors(validationErrors);
+          setGlobalFormError(err);
           return;
         }
       );
@@ -521,6 +557,13 @@ export const UpdateGrenade = ({}) => {
 
       <Hidden smDown>
         <Dialog maxWidth="md" fullWidth={true} open={picturesDialogOpen}>
+          {uploadError && (
+            <Grid item xs={12}>
+              <Alert severity="error">
+                {uploadError?.response?.data?.message}
+              </Alert>
+            </Grid>
+          )}
           <Grid item xs={12} style={{ backgroundColor: "black" }}>
             <DialogTitle
               style={{
@@ -632,6 +675,7 @@ export const UpdateGrenade = ({}) => {
                             </IconButton>
                           </Tooltip>
                         </TableCell>
+
                         <TableCell
                           style={{
                             fontFamily: "Verdana, sans-serif",
@@ -640,9 +684,16 @@ export const UpdateGrenade = ({}) => {
                         >
                           {picture.name}
                         </TableCell>
-                        <TableCell style={{ width: "100px" }}>
-                          {picture.type}
-                        </TableCell>
+                        <Tooltip title="Change picture type" placement="left">
+                          <TableCell
+                            style={{ width: "100px", cursor: "pointer" }}
+                            onClick={() => {
+                              handleOpenPictureType(picture);
+                            }}
+                          >
+                            {picture.type}
+                          </TableCell>
+                        </Tooltip>
                         <TableCell style={{ width: "50px" }}>
                           <IconButton
                             onClick={(e) => {
@@ -678,6 +729,13 @@ export const UpdateGrenade = ({}) => {
 
       <Hidden smUp>
         <Dialog maxWidth="sm" fullWidth={true} open={picturesDialogOpen}>
+          {uploadError && (
+            <Grid item xs={12}>
+              <Alert severity="error">
+                {uploadError?.response?.data?.message}
+              </Alert>
+            </Grid>
+          )}
           <Grid item xs={12} style={{ background: "black" }}>
             <DialogTitle
               style={{
@@ -991,6 +1049,50 @@ export const UpdateGrenade = ({}) => {
           </DialogContent>
         </Dialog>
       </Hidden>
+
+      <Modal
+        hideBackdrop
+        open={openPictureType}
+        onClose={handleClosePictureType}
+        aria-labelledby="child-modal-title"
+        aria-describedby="child-modal-description"
+      >
+        <Box sx={{ ...styleChild, width: 280 }}>
+          <h2 id="child-modal-title">Change Picture Type</h2>
+          <p id="child-modal-description">
+            <FormControl fullWidth size="small" color="grey" variant="outlined">
+              <InputLabel>Picture Type</InputLabel>
+              <Select
+                onChange={(e) => {
+                  setPictureType(e.target.value);
+                  console.log(pictureType);
+                }}
+              >
+                {pictureTypes &&
+                  pictureTypes?.map((type) => (
+                    <MenuItem value={type}>{type}</MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+          </p>
+          <Button
+            onClick={() => {
+              handleClosePictureType();
+            }}
+            variant="outlined"
+            size="small"
+            style={{
+              backgroundColor: "#C1C1C1",
+              color: "white",
+              border: "#C1C1C1",
+              float: "right",
+              marginTop: "15px",
+            }}
+          >
+            Done
+          </Button>
+        </Box>
+      </Modal>
     </>
   );
 };
