@@ -111,12 +111,12 @@ export const SignIn = () => {
                 id="password"
                 autoComplete="current-password"
               />
-              <FormControlLabel
+              {/* <FormControlLabel
                 control={
                   <Checkbox value="remember" style={{ color: "#D35400" }} />
                 }
                 label="Remember me"
-              />
+              /> */}
               <Button
                 onClick={() => handleSubmit()}
                 type="submit"
