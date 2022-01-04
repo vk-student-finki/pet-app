@@ -80,4 +80,14 @@ export const GrenadesRepository = {
       method: "GET",
     });
   },
+  updatePictureType: (grenadeId, pictureId, pictureType) => {
+    return axios({
+      url: `${SETTINGS.API_BASE_URL}grenades/updatePictureType/${grenadeId}`,
+      method: "PUT",
+      params: {
+        pictureId: pictureId,
+        pictureType: pictureType,
+      },
+    });
+  },
 };

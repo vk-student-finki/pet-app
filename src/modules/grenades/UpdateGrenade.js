@@ -93,17 +93,13 @@ export const UpdateGrenade = ({}) => {
   const [pictureType, setPictureType] = useState();
   const [uploadError, setUploadError] = useState();
   const [openPictureType, setOpenPictureType] = useState();
-  const [selectedPictureType, setSelectedPictureType] = useState();
 
   const handleOpenPictureType = (picture) => {
     setOpenPictureType(true);
-    setSelectedPictureType(picture.type);
     setSelectedPicture(picture);
   };
   const handleClosePictureType = () => {
     setOpenPictureType(false);
-    setSelectedPictureType(null);
-    setSelectedPicture(null);
   };
 
   const [openPicture, setOpenPicture] = React.useState(false);
@@ -126,7 +122,8 @@ export const UpdateGrenade = ({}) => {
     },
     [attributeTypes],
     [pictureTypes],
-    [attachments]
+    [attachments],
+    [pictureType]
   );
 
   useEffect(() => {
@@ -186,6 +183,20 @@ export const UpdateGrenade = ({}) => {
       .catch((err) => console.log(err));
   };
 
+  const handleUpdatePictureType = () => {
+    GrenadesRepository.updatePictureType(
+      id,
+      selectedPicture.id,
+      selectedPicture.type
+    )
+      .then((res) => {
+        console.log(res);
+        console.log(selectedPicture);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const handleUpload = () => {
     if (attachments && attachments.length > 0) {
       let data = new FormData();
@@ -1064,8 +1075,7 @@ export const UpdateGrenade = ({}) => {
               <InputLabel>Picture Type</InputLabel>
               <Select
                 onChange={(e) => {
-                  setPictureType(e.target.value);
-                  console.log(pictureType);
+                  selectedPicture.type = e.target.value;
                 }}
               >
                 {pictureTypes &&
@@ -1077,6 +1087,7 @@ export const UpdateGrenade = ({}) => {
           </p>
           <Button
             onClick={() => {
+              handleUpdatePictureType();
               handleClosePictureType();
             }}
             variant="outlined"

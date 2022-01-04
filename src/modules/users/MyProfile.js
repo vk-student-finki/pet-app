@@ -130,7 +130,7 @@ export const MyProfile = () => {
     UsersRepository.updateUser(user?.id, user)
       .then((res) => {
         console.log(res);
-        setSuccessMessage("User info is changed");
+        setSuccessMessage("User info is updated");
         setLoading(false);
       })
       .catch((err) => {
@@ -176,56 +176,6 @@ export const MyProfile = () => {
   return (
     <>
       {redirectTo && <Navigate to={redirectTo} push />}
-      {successMessage && (
-        <Hidden smDown>
-          <Grid item fullWidth xs={12} md={12} style={{}}>
-            <Alert
-              severity="success"
-              variant="filled"
-              style={{ borderRadius: 0 }}
-            >
-              {successMessage}
-              <IconButton
-                size="small"
-                style={{
-                  color: "white",
-                  marginLeft: "910px",
-                }}
-                onClick={() => {
-                  handleCloseSuccessMessage();
-                }}
-              >
-                <CloseIcon style={{ fontSize: 20 }}></CloseIcon>
-              </IconButton>
-            </Alert>
-          </Grid>
-        </Hidden>
-      )}
-      {successMessage && (
-        <Hidden smUp>
-          <Grid item fullWidth xs={12} md={12} style={{}}>
-            <Alert
-              severity="success"
-              variant="filled"
-              style={{ borderRadius: 0 }}
-            >
-              {successMessage}
-              <IconButton
-                size="small"
-                style={{
-                  color: "white",
-                  marginLeft: "110px",
-                }}
-                onClick={() => {
-                  handleCloseSuccessMessage();
-                }}
-              >
-                <CloseIcon style={{ fontSize: 20 }}></CloseIcon>
-              </IconButton>
-            </Alert>
-          </Grid>
-        </Hidden>
-      )}
 
       <Container maxWidth="xs">
         <Grid item xs={12} style={{ textAlign: "center", marginTop: "10px" }}>
@@ -415,7 +365,34 @@ export const MyProfile = () => {
                 <Alert severity="success">{successMessage}</Alert>
               </Grid>
             )} */}
+
+            {successMessage && (
+              <Hidden smUp>
+                <Grid item fullWidth xs={12} md={12} style={{}}>
+                  <Alert
+                    severity="success"
+                    variant="filled"
+                    style={{ borderRadius: 0 }}
+                  >
+                    {successMessage}
+                  </Alert>
+                </Grid>
+              </Hidden>
+            )}
           </Grid>
+          {successMessage && (
+            <Hidden smDown>
+              <Grid item fullWidth xs={12} md={7.5} style={{}}>
+                <Alert
+                  severity="success"
+                  variant="filled"
+                  style={{ borderRadius: 0 }}
+                >
+                  {successMessage}
+                </Alert>
+              </Grid>
+            </Hidden>
+          )}
         </Grid>
 
         <Grid item xs={12} md={6}>
