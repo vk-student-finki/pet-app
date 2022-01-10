@@ -159,6 +159,12 @@ export const GrenadeDetails = () => {
                           key={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
                           cols={cols}
                           rows={rows}
+                          style={{
+                            widht: "100%",
+                            height: "100%",
+                            overflow: "hidden",
+                            position: "relative",
+                          }}
                         >
                           <img
                             {...srcset(
