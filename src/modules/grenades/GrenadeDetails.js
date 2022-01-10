@@ -131,22 +131,16 @@ export const GrenadeDetails = () => {
           <Divider></Divider>
           <Grid container spacing={2}>
             <Grid item xs={12} md={5} style={{ marginTop: "15px" }}>
-              <ImageList
-                style={{
-                  width: "100%",
-                  height: "450px",
-                  // Promote the list into its own layer in Chrome. This costs memory, but helps keeping high FPS.
-                  transform: "translateZ(0)",
-                }}
-                variant="quilted"
-                rowHeight={200}
-                gap={3}
+              <Carousel
+                centerMode={false}
+                dynamicHeight={true}
+                infiniteLoop={true}
+                showThumbs={false}
+                useKeyboardArrows={true}
+                selectedItem={selectedPicture}
               >
                 {grenade && grenade.pictures && grenade.pictures.length > 0 ? (
                   grenade.pictures.map((picture, index) => {
-                    const cols = index == 0 ? 2 : 1;
-                    const rows = index == 0 ? 2 : 1;
-
                     return (
                       <Tooltip
                         title="Click to open image"
@@ -154,31 +148,17 @@ export const GrenadeDetails = () => {
                         TransitionProps={{ timeout: 300 }}
                         placement="bottom-end"
                       >
-                        <ImageListItem
+                        <div
                           onClick={() => handleOpenSlider(index)}
                           key={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
-                          cols={cols}
-                          rows={rows}
-                          style={{
-                            widht: "100%",
-                            height: "100%",
-                            overflow: "hidden",
-                            position: "relative",
-                          }}
+                          style={{ cursor: "pointer" }}
                         >
                           <img
-                            {...srcset(
-                              `${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`,
-                              200,
-                              250,
-                              rows,
-                              cols
-                            )}
-                            style={{ cursor: "pointer" }}
+                            src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
                             loading="lazy"
                             alt={picture.name}
                           />
-                        </ImageListItem>
+                        </div>
                       </Tooltip>
                     );
                   })
@@ -191,7 +171,7 @@ export const GrenadeDetails = () => {
                     }}
                   />
                 )}
-              </ImageList>
+              </Carousel>
 
               {/* <Button onClick={() => handleOpenSlider()}>view pictures</Button> */}
             </Grid>
