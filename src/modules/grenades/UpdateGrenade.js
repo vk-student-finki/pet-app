@@ -37,11 +37,9 @@ import { CountriesRepository } from "../countries/CountriesRepository";
 import EditIcon from "@mui/icons-material/Edit";
 import { UpdateGrenadeValidator } from "./GrenadeValidator";
 import { Upload } from "../common/Upload";
-import axios from "axios";
 import { SETTINGS } from "../common/Settings";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { AttributeTypeRepository } from "../attributeTypes/AttributeTypeRepository";
-import ImageIcon from "@mui/icons-material/Image";
 import CloseIcon from "@mui/icons-material/Close";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -93,6 +91,8 @@ export const UpdateGrenade = ({}) => {
   const [pictureType, setPictureType] = useState();
   const [uploadError, setUploadError] = useState();
   const [openPictureType, setOpenPictureType] = useState();
+  const [successUpdatePicture, setSuccessUpdatePicture] = useState();
+  const [updateError, setUpdateError] = useState();
 
   const handleOpenPictureType = (picture) => {
     setOpenPictureType(true);
@@ -218,6 +218,23 @@ export const UpdateGrenade = ({}) => {
           setUploadError(err);
         });
     }
+  };
+  const updateType = () => {
+    setUpdateError(null);
+    setSuccessUpdatePicture();
+    GrenadesRepository.updatePictureType(id, selectedPicture.id, pictureType)
+      .then((res) => {
+        console.log(res.data);
+        loadById(id);
+        setSuccessUpdatePicture("Pictures updated successfully");
+        console.log(pictureType);
+        console.log("passed");
+      })
+      .catch((err) => {
+        console.log(err);
+        setUpdateError(err);
+        console.log("didn't pass");
+      });
   };
 
   const loadById = (id) => {
@@ -1043,7 +1060,10 @@ export const UpdateGrenade = ({}) => {
                   </Grid>
                 ))}
               <Button
-                onClick={handleClose}
+                onClick={() => {
+                  handleClose();
+                  updateType();
+                }}
                 variant="outlined"
                 size="small"
                 style={{
