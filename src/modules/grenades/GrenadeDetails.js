@@ -165,9 +165,11 @@ export const GrenadeDetails = () => {
                         >
                           <ImageListItemBar
                             sx={{
-                              background:
-                                "linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, " +
-                                "rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
+                              height: "30px",
+                              background: "black",
+                              opacity: "25%",
+                              fontFamily: "Monaco, monospace",
+                              fontSize: "12px",
                             }}
                             title={picture.type}
                           />
