@@ -130,14 +130,13 @@ export const GrenadeDetails = () => {
           </div>
           <Divider></Divider>
           <Grid container spacing={2}>
-            <Grid item xs={12} md={5} style={{ marginTop: "15px" }}>
+            <Grid item xs={12} md={5} style={{ marginTop: "40px" }}>
               <Carousel
                 centerMode={false}
-                dynamicHeight={true}
+                dynamicHeight={false}
                 infiniteLoop={true}
                 showThumbs={false}
                 useKeyboardArrows={true}
-                selectedItem={selectedPicture}
               >
                 {grenade && grenade.pictures && grenade.pictures.length > 0 ? (
                   grenade.pictures.map((picture, index) => {
@@ -151,7 +150,11 @@ export const GrenadeDetails = () => {
                         <div
                           onClick={() => handleOpenSlider(index)}
                           key={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
-                          style={{ cursor: "pointer" }}
+                          style={{
+                            cursor: "pointer",
+                            width: "auto",
+                            height: "300px",
+                          }}
                         >
                           <img
                             src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
