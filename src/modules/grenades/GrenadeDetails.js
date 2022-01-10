@@ -34,6 +34,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Box } from "@mui/system";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
+import "./style.css";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -142,6 +143,7 @@ export const GrenadeDetails = () => {
                 variant="quilted"
                 rowHeight={200}
                 gap={3}
+                className="inner-border"
               >
                 {grenade && grenade.pictures && grenade.pictures.length > 0 ? (
                   grenade.pictures.map((picture, index) => {
