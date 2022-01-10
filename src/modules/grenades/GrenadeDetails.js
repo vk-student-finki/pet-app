@@ -16,6 +16,7 @@ import {
   Typography,
   Tooltip,
   Fade,
+  ImageListItemBar,
 } from "@mui/material";
 import img1 from "../images/image.jpg";
 import React, { useEffect, useState } from "react";
@@ -130,16 +131,23 @@ export const GrenadeDetails = () => {
           </div>
           <Divider></Divider>
           <Grid container spacing={2}>
-            <Grid item xs={12} md={5} style={{ marginTop: "40px" }}>
-              <Carousel
-                centerMode={false}
-                dynamicHeight={false}
-                infiniteLoop={true}
-                showThumbs={false}
-                useKeyboardArrows={true}
+            <Grid item xs={12} md={5} style={{ marginTop: "15px" }}>
+              <ImageList
+                style={{
+                  width: "100%",
+                  height: "450px",
+                  // Promote the list into its own layer in Chrome. This costs memory, but helps keeping high FPS.
+                  transform: "translateZ(0)",
+                }}
+                variant="quilted"
+                rowHeight={200}
+                gap={3}
               >
                 {grenade && grenade.pictures && grenade.pictures.length > 0 ? (
                   grenade.pictures.map((picture, index) => {
+                    const cols = index == 0 ? 2 : 1;
+                    const rows = index == 0 ? 2 : 1;
+
                     return (
                       <Tooltip
                         title="Click to open image"
@@ -147,21 +155,33 @@ export const GrenadeDetails = () => {
                         TransitionProps={{ timeout: 300 }}
                         placement="bottom-end"
                       >
-                        <div
+                        <ImageListItem
                           onClick={() => handleOpenSlider(index)}
                           key={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
-                          style={{
-                            cursor: "pointer",
-                            width: "auto",
-                            height: "300px",
-                          }}
+                          cols={cols}
+                          rows={rows}
                         >
+                          <ImageListItemBar
+                            sx={{
+                              background:
+                                "linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, " +
+                                "rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
+                            }}
+                            title={picture.type}
+                          />
                           <img
-                            src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
+                            {...srcset(
+                              `${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`,
+                              200,
+                              250,
+                              rows,
+                              cols
+                            )}
+                            style={{ cursor: "pointer" }}
                             loading="lazy"
                             alt={picture.name}
                           />
-                        </div>
+                        </ImageListItem>
                       </Tooltip>
                     );
                   })
@@ -174,7 +194,7 @@ export const GrenadeDetails = () => {
                     }}
                   />
                 )}
-              </Carousel>
+              </ImageList>
 
               {/* <Button onClick={() => handleOpenSlider()}>view pictures</Button> */}
             </Grid>
