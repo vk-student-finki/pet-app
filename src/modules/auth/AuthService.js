@@ -3,13 +3,15 @@ import { useNavigate } from "react-router";
 import { SETTINGS } from "../common/Settings";
 
 export const AuthService = {
-  authenticate: (username, password) => {
+  authenticate: (username, password, mfaToken) => {
+    if (!mfaToken) mfaToken = null;
     return axios({
       url: `${SETTINGS.API_BASE_URL}auth/authenticate`,
       method: "POST",
       data: {
         username: username,
         password: password,
+        mfaToken: mfaToken,
       },
     });
   },

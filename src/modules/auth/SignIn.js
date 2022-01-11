@@ -20,17 +20,33 @@ const theme = createTheme();
 export const SignIn = () => {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [mfaToken, setMfaToken] = React.useState("");
+  const [mfaTokenRequired, setMfaTokenRequired] = React.useState(false);
   const [errorMessage, setErrorMessage] = useState();
   let navigate = useNavigate();
 
   const handleSubmit = () => {
     console.log(username, password);
     setErrorMessage();
-    AuthService.authenticate(username, password)
+    AuthService.authenticate(username, password, mfaToken)
       .then((res) => {
         console.log(res.data);
-        AuthService.storeToken(res.data.jwt);
-        navigate("/");
+        if (res.data.jwt) {
+          AuthService.storeToken(res.data.jwt);
+          navigate("/");
+        } else {
+          if (
+            res.data.additionalActionRequired &&
+            res.data.additionalActionRequired === "MFA_REQUIRED"
+          ) {
+            setMfaTokenRequired(true);
+          } else if (
+            res.data.additionalActionRequired &&
+            res.data.additionalActionRequired === "MFA_TOKEN_INVALID"
+          ) {
+            setErrorMessage("MFA Token is invalid");
+          }
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -73,51 +89,72 @@ export const SignIn = () => {
               Sign in
             </Typography>
             <Box noValidate sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                fullWidth
-                onKeyPress={(e) => {
-                  if (e.key === "Enter") {
-                    handleSubmit();
-                  }
-                }}
-                id="username"
-                size="small"
-                color="warning"
-                label="Username"
-                value={username}
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                }}
-                autoComplete="username"
-                autoFocus
-              />
-              <TextField
-                margin="normal"
-                onKeyPress={(e) => {
-                  if (e.key === "Enter") {
-                    handleSubmit();
-                  }
-                }}
-                fullWidth
-                size="small"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-                label="Password"
-                color="warning"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                style={{ marginTop: "-1px" }}
-              />
-              {/* <FormControlLabel
-                control={
-                  <Checkbox value="remember" style={{ color: "#D35400" }} />
-                }
-                label="Remember me"
-              /> */}
+              {!mfaTokenRequired && (
+                <>
+                  <TextField
+                    margin="normal"
+                    fullWidth
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        handleSubmit();
+                      }
+                    }}
+                    id="username"
+                    size="small"
+                    color="warning"
+                    label="Username"
+                    value={username}
+                    onChange={(e) => {
+                      setUsername(e.target.value);
+                    }}
+                    autoComplete="username"
+                    autoFocus
+                  />
+                  <TextField
+                    margin="normal"
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        handleSubmit();
+                      }
+                    }}
+                    fullWidth
+                    size="small"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                    label="Password"
+                    color="warning"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    style={{ marginTop: "-1px" }}
+                  />
+                </>
+              )}
+
+              {mfaTokenRequired && (
+                <>
+                  <TextField
+                    margin="normal"
+                    fullWidth
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        handleSubmit();
+                      }
+                    }}
+                    id="mfaToken"
+                    size="small"
+                    color="warning"
+                    label="OTP Password (e.g. Google Authenticator Code)"
+                    value={mfaToken}
+                    onChange={(e) => {
+                      setMfaToken(e.target.value);
+                    }}
+                    autoFocus
+                  />
+                </>
+              )}
 
               <Button
                 onClick={() => handleSubmit()}

@@ -12,12 +12,15 @@ import {
   DialogActions,
   Slide,
   DialogContentText,
+  IconButton,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router";
 import { UsersRepository } from "./UsersRepository";
 import React from "react";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import QrCode2Icon from "@mui/icons-material/QrCode2";
+import QRCode from "react-qr-code";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -27,6 +30,7 @@ export const UserDetails = ({}) => {
   const { id } = useParams();
   const [user, setUser] = useState();
   const [redirectTo, setRedirectTo] = useState();
+  const [selectedMfaKey, setSelectedMfaKey] = useState();
 
   useEffect(() => {
     loadData();
@@ -56,6 +60,24 @@ export const UserDetails = ({}) => {
         .join(", ")
     ),
     createData("Phone Number", user?.phoneNumber),
+    createData(
+      "MFA Key",
+      user?.mfaKey ? (
+        <>
+          {user?.mfaKey}{" "}
+          <IconButton
+            onClick={() => {
+              setSelectedMfaKey(user?.mfaKey);
+            }}
+          >
+            <QrCode2Icon />
+          </IconButton>
+        </>
+      ) : (
+        "/"
+      )
+    ),
+    createData("MFA Enabled", user?.mfaEnabled ? "YES" : "NO"),
     createData("Email", user?.email),
   ];
 
@@ -226,6 +248,13 @@ export const UserDetails = ({}) => {
           </Grid>
         </Grid>
       </Grid>
+      <Dialog open={selectedMfaKey} onClose={() => setSelectedMfaKey()}>
+        <DialogContent>
+          <QRCode
+            value={`otpauth://totp/${user?.username}?secret=${selectedMfaKey}&issuer=AuctaDev`}
+          />
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
