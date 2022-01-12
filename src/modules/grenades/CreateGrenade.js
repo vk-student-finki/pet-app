@@ -21,6 +21,13 @@ import { GrenadesRepository } from "./GrenadesRepository";
 import { ProducersRepository } from "../producers/ProducersRepository";
 import { AttributeTypeRepository } from "../attributeTypes/AttributeTypeRepository";
 import { CountriesRepository } from "../countries/CountriesRepository";
+import {
+  Routes,
+  Route,
+  useLocation,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 
 export const CreateGrenade = () => {
   const [globalFormError, setGlobalFormError] = useState();
@@ -34,6 +41,7 @@ export const CreateGrenade = () => {
     description: "",
     attributes: [],
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadDataCountries(0, 1000);
@@ -124,6 +132,7 @@ export const CreateGrenade = () => {
         console.log(res);
         setSuccessMessage("Grenade added!");
         console.log("grenade added");
+        navigate(`/grenades/edit/${res.data.id}`);
       })
       .catch((err) => {
         console.log(err);
