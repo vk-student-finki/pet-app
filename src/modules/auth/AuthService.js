@@ -18,6 +18,7 @@ export const AuthService = {
 
   logout: () => {
     window.localStorage.removeItem("auth");
+    window.localStorage.removeItem("me");
     window.location.href = "/signin";
   },
 
