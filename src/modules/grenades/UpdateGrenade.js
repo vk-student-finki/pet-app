@@ -184,6 +184,7 @@ export const UpdateGrenade = ({}) => {
   };
 
   const handleUpdatePictureType = () => {
+    setSuccessUpdatePicture(null);
     GrenadesRepository.updatePictureType(
       id,
       selectedPicture.id,
@@ -192,6 +193,7 @@ export const UpdateGrenade = ({}) => {
       .then((res) => {
         console.log(res);
         console.log(selectedPicture);
+        setSuccessUpdatePicture("Picture Type is changed");
       })
       .catch((err) => {
         console.log(err);
@@ -211,6 +213,7 @@ export const UpdateGrenade = ({}) => {
           setAttachments([]);
           loadById(id);
           setSuccessUploadPicture("Pictures uploaded successfully");
+
           console.log(pictureType);
         })
         .catch((err) => {
@@ -221,12 +224,11 @@ export const UpdateGrenade = ({}) => {
   };
   const updateType = () => {
     setUpdateError(null);
-    setSuccessUpdatePicture();
+
     GrenadesRepository.updatePictureType(id, selectedPicture.id, pictureType)
       .then((res) => {
         console.log(res.data);
         loadById(id);
-        setSuccessUpdatePicture("Pictures updated successfully");
         console.log(pictureType);
         console.log("passed");
       })
@@ -611,6 +613,7 @@ export const UpdateGrenade = ({}) => {
                 onClick={() => {
                   setPicturesDialogOpen(false);
                   setSuccessUploadPicture(null);
+                  setSuccessUpdatePicture(null);
                 }}
               >
                 <CloseIcon style={{ fontSize: 20 }}></CloseIcon>
@@ -626,6 +629,19 @@ export const UpdateGrenade = ({}) => {
                   style={{ borderRadius: "0px" }}
                 >
                   {successUploadPicture}
+                </Alert>
+              </Grid>
+            </>
+          )}
+          {successUpdatePicture && (
+            <>
+              <Grid style={{}}>
+                <Alert
+                  severity="success"
+                  variant="filled"
+                  style={{ borderRadius: "0px" }}
+                >
+                  {successUpdatePicture}
                 </Alert>
               </Grid>
             </>
@@ -764,6 +780,16 @@ export const UpdateGrenade = ({}) => {
               </Alert>
             </Grid>
           )}
+          {successUpdatePicture && (
+            <Grid item xs={12}>
+              <Alert severity="success">{successUpdatePicture}</Alert>
+            </Grid>
+          )}{" "}
+          {successUploadPicture && (
+            <Grid item xs={12}>
+              <Alert severity="success">{successUploadPicture}</Alert>
+            </Grid>
+          )}
           <Grid item xs={12} style={{ background: "black" }}>
             <DialogTitle
               style={{
@@ -783,6 +809,8 @@ export const UpdateGrenade = ({}) => {
                 }}
                 onClick={() => {
                   setPicturesDialogOpen(false);
+                  setSuccessUpdatePicture(null);
+                  setSuccessUploadPicture(null);
                 }}
               >
                 <CloseIcon style={{ fontSize: 20 }}></CloseIcon>
@@ -1062,7 +1090,6 @@ export const UpdateGrenade = ({}) => {
               <Button
                 onClick={() => {
                   handleClose();
-                  updateType();
                 }}
                 variant="outlined"
                 size="small"
