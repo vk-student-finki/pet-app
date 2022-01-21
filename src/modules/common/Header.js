@@ -277,27 +277,8 @@ export default function Header({}) {
             </Link>
           </Grid>
           <Grid item xs={6} md={1.2}>
-            <Link to="/grenades" style={{ textDecoration: "none" }}>
-              <Button
-                size="small"
-                variant="outlined"
-                style={{
-                  color: "#D9D9D9",
-                  borderColor: "#17202A",
-                  fontSize: "13px",
-                  fontFamily: "Verdana, sans-serif",
-                  fontWeight: "bold",
-                  textTransform: "uppercase",
-                  marginTop: "5px",
-                }}
-              >
-                Grenades
-              </Button>
-            </Link>
-          </Grid>
-          <Grid item xs={6} md={1}>
-            {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
-              <Link to="/users" style={{ textDecoration: "none" }}>
+            {window?.localStorage?.getItem("auth") && (
+              <Link to="/grenades" style={{ textDecoration: "none" }}>
                 <Button
                   size="small"
                   variant="outlined"
@@ -311,52 +292,76 @@ export default function Header({}) {
                     marginTop: "5px",
                   }}
                 >
-                  USERS
+                  Grenades
                 </Button>
               </Link>
             )}
           </Grid>
           <Grid item xs={6} md={1}>
-            {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
-              <Link to="/groups" style={{ textDecoration: "none" }}>
-                <Button
-                  size="small"
-                  variant="outlined"
-                  style={{
-                    color: "#D9D9D9",
-                    borderColor: "#17202A",
-                    fontSize: "13px",
-                    fontFamily: "Verdana, sans-serif",
-                    textTransform: "uppercase",
-                    fontWeight: "bold",
-                    marginTop: "5px",
-                  }}
-                >
-                  GROUPS
-                </Button>
-              </Link>
-            )}
+            {window?.localStorage?.getItem("auth") &&
+              AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+                <Link to="/users" style={{ textDecoration: "none" }}>
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    style={{
+                      color: "#D9D9D9",
+                      borderColor: "#17202A",
+                      fontSize: "13px",
+                      fontFamily: "Verdana, sans-serif",
+                      fontWeight: "bold",
+                      textTransform: "uppercase",
+                      marginTop: "5px",
+                    }}
+                  >
+                    USERS
+                  </Button>
+                </Link>
+              )}
           </Grid>
           <Grid item xs={6} md={1}>
-            {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
-              <Link to="/privileges" style={{ textDecoration: "none" }}>
-                <Button
-                  size="small"
-                  variant="outlined"
-                  style={{
-                    color: "#D9D9D9",
-                    borderColor: "#17202A",
-                    fontSize: "13px",
-                    fontFamily: "Verdana, sans-serif",
-                    fontWeight: "bold",
-                    textTransform: "uppercase",
-                    marginTop: "5px",
-                  }}
-                >
-                  Privileges
-                </Button>
-              </Link>
-            )}
+            {window?.localStorage?.getItem("auth") &&
+              AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+                <Link to="/groups" style={{ textDecoration: "none" }}>
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    style={{
+                      color: "#D9D9D9",
+                      borderColor: "#17202A",
+                      fontSize: "13px",
+                      fontFamily: "Verdana, sans-serif",
+                      textTransform: "uppercase",
+                      fontWeight: "bold",
+                      marginTop: "5px",
+                    }}
+                  >
+                    GROUPS
+                  </Button>
+                </Link>
+              )}
+          </Grid>
+          <Grid item xs={6} md={1}>
+            {window?.localStorage?.getItem("auth") &&
+              AuthService.hasRole("ROLE_ADMINISTRATOR") && (
+                <Link to="/privileges" style={{ textDecoration: "none" }}>
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    style={{
+                      color: "#D9D9D9",
+                      borderColor: "#17202A",
+                      fontSize: "13px",
+                      fontFamily: "Verdana, sans-serif",
+                      fontWeight: "bold",
+                      textTransform: "uppercase",
+                      marginTop: "5px",
+                    }}
+                  >
+                    Privileges
+                  </Button>
+                </Link>
+              )}
           </Grid>
 
           <Grid item xs={6} md={1}>

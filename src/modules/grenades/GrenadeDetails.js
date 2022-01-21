@@ -17,6 +17,9 @@ import {
   Tooltip,
   Fade,
   ImageListItemBar,
+  Table,
+  TableRow,
+  TableCell,
 } from "@mui/material";
 import img1 from "../images/image.jpg";
 import React, { useEffect, useState } from "react";
@@ -136,7 +139,7 @@ export const GrenadeDetails = () => {
               <ImageList
                 style={{
                   width: "100%",
-                  height: "450px",
+                  // height: "450px",
                   // Promote the list into its own layer in Chrome. This costs memory, but helps keeping high FPS.
                   transform: "translateZ(0)",
                 }}
@@ -199,15 +202,12 @@ export const GrenadeDetails = () => {
                   />
                 )}
               </ImageList>
-
-              {/* <Button onClick={() => handleOpenSlider()}>view pictures</Button> */}
             </Grid>
             <Grid item md={7} xs={12}>
               <Grid
                 item
                 xs={12}
                 md={12}
-                item
                 sm={5}
                 style={{
                   textAlign: "center",
@@ -275,10 +275,8 @@ export const GrenadeDetails = () => {
                 md={12}
                 style={{
                   textAlign: "center",
-                  fontFamily: "Monaco, monospace",
                   fontSize: "16px",
-                  marginTop: "10px",
-                  color: "#878786",
+                  marginTop: "15px",
                 }}
               >
                 <div style={{ textAlign: "left" }}>{grenade?.description}</div>
@@ -289,31 +287,43 @@ export const GrenadeDetails = () => {
                 md={12}
                 style={{
                   textAlign: "center",
-                  fontFamily: "Monaco, monospace",
                   fontSize: "16px",
 
                   marginTop: "40px",
-                  color: "#878786",
                 }}
               >
-                <div style={{ textAlign: "left" }}>
-                  Product ID: <b>{grenade?.id}</b>
-                  <br />
-                  Country of origin: <b>{grenade?.country?.name}</b>
-                  <br />
-                  Producer: <b>{grenade?.producer?.name}</b>
-                  <br />
-                  <Divider
-                    style={{ marginTop: "10px", width: "300px" }}
-                  ></Divider>
-                  {grenade?.attributes?.map((attribute) => (
-                    <span>
-                      {attribute.attributeType.name}: <b>{attribute.value}</b>
-                      <br />
-                    </span>
+                <Table size="small">
+                  <TableRow style={{ backgroundColor: "#8080801f" }}>
+                    <TableCell>Product ID:</TableCell>
+                    <TableCell>
+                      <b>{grenade?.id}</b>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Country of origin:</TableCell>
+                    <TableCell>
+                      <b>{grenade?.country?.name}</b>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow style={{ backgroundColor: "#8080801f" }}>
+                    <TableCell>Producer:</TableCell>
+                    <TableCell>
+                      <b>{grenade?.producer?.name}</b>
+                    </TableCell>
+                  </TableRow>
+                  {grenade?.attributes?.map((attribute, index) => (
+                    <TableRow
+                      style={{
+                        backgroundColor: index % 2 ? "#8080801f" : "inherit",
+                      }}
+                    >
+                      <TableCell>{attribute.attributeType.name}:</TableCell>
+                      <TableCell>
+                        <b>{attribute.value}</b>
+                      </TableCell>
+                    </TableRow>
                   ))}
-                  <br />
-                </div>
+                </Table>
               </Grid>
             </Grid>
           </Grid>
