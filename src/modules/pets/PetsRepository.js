@@ -1,11 +1,11 @@
 import axios from "axios";
 import { SETTINGS } from "../common/Settings";
 
-export const GrenadesRepository = {
+export const PetsRepository = {
   all: (page, size, searchParams) => {
     if (!searchParams) searchParams = {};
     return axios({
-      url: `${SETTINGS.API_BASE_URL}grenades`,
+      url: `${SETTINGS.API_BASE_URL}pets`,
       method: "GET",
       params: {
         page: page,
@@ -16,50 +16,49 @@ export const GrenadesRepository = {
   },
   get: (id) => {
     return axios({
-      url: `${SETTINGS.API_BASE_URL}grenades/${id}`,
+      url: `${SETTINGS.API_BASE_URL}pets/${id}`,
       method: "GET",
     });
   },
-  create: (grenade) => {
+  create: (pet) => {
     return axios({
-      url: `${SETTINGS.API_BASE_URL}grenades`,
+      url: `${SETTINGS.API_BASE_URL}pets`,
       method: "POST",
-      data: grenade,
+      data: pet,
     });
   },
 
-  deleteGrenade: (id) => {
+  deletePet: (id) => {
     return axios({
-      url: `${SETTINGS.API_BASE_URL}grenades/${id}`,
+      url: `${SETTINGS.API_BASE_URL}pets/${id}`,
       method: "DELETE",
     });
   },
 
-  updateGrenade: (grenade) => {
+  updatePet: (pet) => {
     return axios({
-      url: `${SETTINGS.API_BASE_URL}grenades`,
+      url: `${SETTINGS.API_BASE_URL}pets`,
       method: "PUT",
-      data: grenade,
+      data: pet,
     });
   },
-  filterGrenades: (producerID, countryID, page, size) => {
+  filterPets: (countryID, page, size) => {
     return axios({
-      url: `${SETTINGS.API_BASE_URL}grenades/filter`,
+      url: `${SETTINGS.API_BASE_URL}pets/filter`,
       method: "GET",
       params: {
-        producerID: producerID,
         countryID: countryID,
         page: page,
         size: size,
       },
     });
   },
-  uploadPictures: (grenadeId, pictureType, files) => {
+  uploadPictures: (petId, pictureType, files) => {
     let data = new FormData();
     Object.keys(files).forEach((key) => data.append("files", files[key]));
     if (!pictureType) pictureType = "OTHER";
     return axios({
-      url: `${SETTINGS.API_BASE_URL}grenades/uploadGrenadeImage/${grenadeId}`,
+      url: `${SETTINGS.API_BASE_URL}pets/uploadPetImage/${petId}`,
       data: data,
       method: "PUT",
       params: {
@@ -67,22 +66,22 @@ export const GrenadesRepository = {
       },
     });
   },
-  removePicture: (grenadeId, picture) => {
+  removePicture: (petId, picture) => {
     return axios({
-      url: `${SETTINGS.API_BASE_URL}grenades/removePicture/${grenadeId}`,
+      url: `${SETTINGS.API_BASE_URL}pets/removePicture/${petId}`,
       method: "DELETE",
       data: picture,
     });
   },
   pictureTypes: () => {
     return axios({
-      url: `${SETTINGS.API_BASE_URL}grenades/pictureTypes`,
+      url: `${SETTINGS.API_BASE_URL}pets/pictureTypes`,
       method: "GET",
     });
   },
-  updatePictureType: (grenadeId, pictureId, pictureType) => {
+  updatePictureType: (petId, pictureId, pictureType) => {
     return axios({
-      url: `${SETTINGS.API_BASE_URL}grenades/updatePictureType/${grenadeId}`,
+      url: `${SETTINGS.API_BASE_URL}pets/updatePictureType/${petId}`,
       method: "PUT",
       params: {
         pictureId: pictureId,

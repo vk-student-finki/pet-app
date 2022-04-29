@@ -24,7 +24,7 @@ import {
 import img1 from "../images/image.jpg";
 import React, { useEffect, useState } from "react";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
-import { GrenadesRepository } from "./GrenadesRepository";
+import { PetsRepository } from "./PetsRepository";
 import { Navigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -56,11 +56,11 @@ function srcset(image, width, height, rows = 1, cols = 1) {
   };
 }
 
-export const GrenadeDetails = () => {
-  const [grenade, setGrenade] = useState();
+export const PetDetails = () => {
+  const [pet, setPet] = useState();
   const { id } = useParams();
   const [redirectTo, setRedirectTo] = useState();
-  const [selectedGrenade, setSelectedGrenade] = useState();
+  const [selectedPet, setSelectedPet] = useState();
   const [openSlider, setOpenSlider] = useState();
   const [selectedPicture, setSelectedPicture] = useState();
   const handleOpenSlider = (index) => {
@@ -71,8 +71,8 @@ export const GrenadeDetails = () => {
 
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = (grenade) => {
-    setSelectedGrenade(grenade);
+  const handleClickOpen = (pet) => {
+    setSelectedPet(pet);
     setOpen(true);
   };
 
@@ -85,9 +85,9 @@ export const GrenadeDetails = () => {
   }, []);
 
   const loadData = () => {
-    GrenadesRepository.get(id)
+    PetsRepository.get(id)
       .then((res) => {
-        setGrenade(res.data);
+        setPet(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -118,18 +118,18 @@ export const GrenadeDetails = () => {
               <Link
                 underline="hover"
                 color="inherit"
-                to="/grenades"
+                to="/pets"
                 style={{ textDecoration: "none", color: "#878786" }}
               >
-                Grenades
+                Pets
               </Link>
               <Link
                 underline="hover"
-                to={`/grenades/details/${grenade?.id}`}
+                to={`/pets/details/${pet?.id}`}
                 aria-current="page"
                 style={{ textDecoration: "none", color: "#D35400" }}
               >
-                {grenade?.name}
+                {pet?.name}
               </Link>
             </Breadcrumbs>
           </div>
@@ -148,8 +148,8 @@ export const GrenadeDetails = () => {
                 gap={3}
                 className="inner-border"
               >
-                {grenade && grenade.pictures && grenade.pictures.length > 0 ? (
-                  grenade.pictures.map((picture, index) => {
+                {pet && pet.pictures && pet.pictures.length > 0 ? (
+                  pet.pictures.map((picture, index) => {
                     const cols = index == 0 ? 2 : 1;
                     const rows = index == 0 ? 2 : 1;
 
@@ -162,7 +162,7 @@ export const GrenadeDetails = () => {
                       >
                         <ImageListItem
                           onClick={() => handleOpenSlider(index)}
-                          key={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
+                          key={`${SETTINGS.API_BASE_URL}pets/downloadPetImage/${picture.id}`}
                           cols={cols}
                           rows={rows}
                         >
@@ -178,7 +178,7 @@ export const GrenadeDetails = () => {
                           />
                           <img
                             {...srcset(
-                              `${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`,
+                              `${SETTINGS.API_BASE_URL}pets/downloadPetImage/${picture.id}`,
                               200,
                               250,
                               rows,
@@ -223,7 +223,7 @@ export const GrenadeDetails = () => {
                     textAlign: "left",
                   }}
                 >
-                  {grenade?.name}
+                  {pet?.name}
                 </div>
                 {window?.localStorage?.getItem("auth") &&
                   AuthService.hasRole("ROLE_ADMINISTRATOR") && (
@@ -234,7 +234,7 @@ export const GrenadeDetails = () => {
                           float: "right",
                           marginLeft: "-25px",
                         }}
-                        onClick={() => handleClickOpen(grenade)}
+                        onClick={() => handleClickOpen(pet)}
                       >
                         <DeleteIcon
                           size="large"
@@ -250,7 +250,7 @@ export const GrenadeDetails = () => {
                           float: "right",
                         }}
                         onClick={() => {
-                          setRedirectTo(`/grenades/edit/${grenade?.id}`);
+                          setRedirectTo(`/pets/edit/${pet?.id}`);
                         }}
                       >
                         <EditIcon
@@ -279,7 +279,7 @@ export const GrenadeDetails = () => {
                   marginTop: "15px",
                 }}
               >
-                <div style={{ textAlign: "left" }}>{grenade?.description}</div>
+                <div style={{ textAlign: "left" }}>{pet?.description}</div>
               </Grid>
               <Grid
                 item
@@ -294,24 +294,19 @@ export const GrenadeDetails = () => {
               >
                 <Table size="small">
                   <TableRow style={{ backgroundColor: "#8080801f" }}>
-                    <TableCell>Product ID:</TableCell>
+                    <TableCell>Pet ID:</TableCell>
                     <TableCell>
-                      <b>{grenade?.id}</b>
+                      <b>{pet?.id}</b>
                     </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Country of origin:</TableCell>
                     <TableCell>
-                      <b>{grenade?.country?.name}</b>
+                      <b>{pet?.country?.name}</b>
                     </TableCell>
                   </TableRow>
-                  <TableRow style={{ backgroundColor: "#8080801f" }}>
-                    <TableCell>Producer:</TableCell>
-                    <TableCell>
-                      <b>{grenade?.producer?.name}</b>
-                    </TableCell>
-                  </TableRow>
-                  {grenade?.attributes?.map((attribute, index) => (
+
+                  {pet?.attributes?.map((attribute, index) => (
                     <TableRow
                       style={{
                         backgroundColor: index % 2 ? "#8080801f" : "inherit",
@@ -340,7 +335,7 @@ export const GrenadeDetails = () => {
                 marginLeft: "-10px",
               }}
               onClick={() => {
-                setRedirectTo(`/grenades`);
+                setRedirectTo(`/pets`);
               }}
             />
           </Grid>
@@ -354,21 +349,21 @@ export const GrenadeDetails = () => {
               rowHeight={200}
               gap={1}
             >
-              {grenade &&
-                grenade.pictures &&
-                grenade.pictures.map((picture, index) => {
+              {pet &&
+                pet.pictures &&
+                pet.pictures.map((picture, index) => {
                   const cols = index == 0 ? 2 : 1;
                   const rows = index == 0 ? 2 : 1;
 
                   return (
                     <ImageListItem
-                      key={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
+                      key={`${SETTINGS.API_BASE_URL}pets/downloadPetImage/${picture.id}`}
                       cols={cols}
                       rows={rows}
                     >
                       <img
                         {...srcset(
-                          `${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`,
+                          `${SETTINGS.API_BASE_URL}pets/downloadPetImage/${picture.id}`,
                           200,
                           250,
                           rows,
@@ -394,7 +389,7 @@ export const GrenadeDetails = () => {
                 marginTop: "10px",
               }}
             >
-              {grenade?.name}
+              {pet?.name}
             </div>
             <Grid
               style={{
@@ -417,7 +412,7 @@ export const GrenadeDetails = () => {
                         color: "#FF6000",
                         marginRight: "-32px",
                       }}
-                      onClick={() => handleClickOpen(grenade)}
+                      onClick={() => handleClickOpen(pet)}
                     />
                   )}
               </Button>
@@ -435,7 +430,7 @@ export const GrenadeDetails = () => {
                         float: "right",
                       }}
                       onClick={() => {
-                        setRedirectTo(`/grenades/edit/${grenade?.id}`);
+                        setRedirectTo(`/pets/edit/${pet?.id}`);
                       }}
                     >
                       <EditIcon
@@ -464,7 +459,7 @@ export const GrenadeDetails = () => {
               color: "#878786",
             }}
           >
-            <div style={{}}>{grenade?.description}</div>
+            <div style={{}}>{pet?.description}</div>
           </Grid>
           <Grid
             item
@@ -478,13 +473,11 @@ export const GrenadeDetails = () => {
             }}
           >
             <div>
-              Product ID: <b>{grenade?.id}</b>
+              Pet ID: <b>{pet?.id}</b>
               <br />
-              Country of origin: <b>{grenade?.country?.name}</b>
+              Country of origin: <b>{pet?.country?.name}</b>
               <br />
-              Producer: <b>{grenade?.producer?.name}</b>
-              <br />
-              {grenade?.attributes?.map((attribute) => (
+              {pet?.attributes?.map((attribute) => (
                 <span>
                   {attribute.attributeType.name}: <b>{attribute.value}</b>
                   <br />
@@ -512,12 +505,12 @@ export const GrenadeDetails = () => {
                 useKeyboardArrows={true}
                 selectedItem={selectedPicture}
               >
-                {grenade &&
-                  grenade.pictures &&
-                  grenade.pictures.map((picture, index) => (
+                {pet &&
+                  pet.pictures &&
+                  pet.pictures.map((picture, index) => (
                     <div style={{}}>
                       <img
-                        src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture?.id}`}
+                        src={`${SETTINGS.API_BASE_URL}pets/downloadPetImage/${picture?.id}`}
                         key={index}
                         style={{
                           height: "auto",
@@ -550,12 +543,12 @@ export const GrenadeDetails = () => {
               useKeyboardArrows={true}
               selectedItem={selectedPicture}
             >
-              {grenade &&
-                grenade.pictures &&
-                grenade.pictures.map((picture, index) => (
+              {pet &&
+                pet.pictures &&
+                pet.pictures.map((picture, index) => (
                   <div style={{ height: "450px" }}>
                     <img
-                      src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture?.id}`}
+                      src={`${SETTINGS.API_BASE_URL}pets/downloadPetImage/${picture?.id}`}
                       key={index}
                       style={{
                         height: "450px",
@@ -593,7 +586,7 @@ export const GrenadeDetails = () => {
           {"Confirm delete"}
         </DialogTitle>
         <DialogContent style={{ textAlign: "center" }}>
-          Are you sure you want to delete this grenade? This action
+          Are you sure you want to delete this pet? This action
           <br /> cannot be undone.
         </DialogContent>
         <DialogActions>
@@ -616,7 +609,7 @@ export const GrenadeDetails = () => {
               color: "white",
             }}
             onClick={() => {
-              setRedirectTo(`/grenades/delete/${selectedGrenade?.id}`);
+              setRedirectTo(`/pets/delete/${selectedPet?.id}`);
             }}
           >
             Delete

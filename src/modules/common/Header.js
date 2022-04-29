@@ -83,27 +83,19 @@ export default function Header({}) {
     >
       {window?.localStorage?.getItem("auth") && (
         <List style={{ backgroundColor: "#F5F5F5" }}>
-          {[
-            "Home",
-            "Grenades",
-            "Producers",
-            "Countries",
-            "Users",
-            "Groups",
-            "Privileges",
-          ]
+          {["Home", "Pets", "Countries", "Users", "Groups", "Privileges"]
             .filter(
               (key) =>
                 (AuthService.hasRole("ROLE_ADMINISTRATOR") &&
                   [
-                    "Grenades",
-                    "Producers",
+                    "Pets",
+
                     "Countries",
                     "Users",
                     "Groups",
                     "Privileges",
                   ].includes(key)) ||
-                ["Home", "Grenades"].includes(key)
+                ["Home", "Pets"].includes(key)
             )
             .map((text, index) => (
               <Link
@@ -112,16 +104,14 @@ export default function Header({}) {
                   index === 0
                     ? "/"
                     : index === 1
-                    ? "/grenades"
+                    ? "/pets"
                     : index === 2
-                    ? "/producers"
-                    : index === 3
                     ? "/countries"
-                    : index === 4
+                    : index === 3
                     ? "/users"
-                    : index === 5
+                    : index === 4
                     ? "/groups"
-                    : index === 6
+                    : index === 5
                     ? "/privileges"
                     : ""
                 }
@@ -278,7 +268,7 @@ export default function Header({}) {
           </Grid>
           <Grid item xs={6} md={1.2}>
             {window?.localStorage?.getItem("auth") && (
-              <Link to="/grenades" style={{ textDecoration: "none" }}>
+              <Link to="/pets" style={{ textDecoration: "none" }}>
                 <Button
                   size="small"
                   variant="outlined"
@@ -292,7 +282,7 @@ export default function Header({}) {
                     marginTop: "5px",
                   }}
                 >
-                  Grenades
+                  Pets
                 </Button>
               </Link>
             )}
@@ -471,19 +461,6 @@ export default function Header({}) {
                     Sign out
                   </MenuItem>
 
-                  {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
-                    <Link
-                      to="/producers"
-                      style={{ textDecoration: "none", color: "#1E1F1C" }}
-                    >
-                      <MenuItem>
-                        <ListItemIcon>
-                          <BusinessIcon fontSize="small" />
-                        </ListItemIcon>
-                        Producers
-                      </MenuItem>
-                    </Link>
-                  )}
                   {AuthService.hasRole("ROLE_ADMINISTRATOR") && (
                     <Link
                       to="/countries"

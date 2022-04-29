@@ -10,9 +10,8 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { styled } from "@mui/material/styles";
-import { GrenadesRepository } from "./GrenadesRepository";
-import { GrenadeBox } from "./GrenadeBox";
+import { PetsRepository } from "./PetsRepository";
+import { PetBox } from "./PetBox";
 import AddIcon from "@mui/icons-material/Add";
 import { Navigate } from "react-router-dom";
 import { AuthService } from "../auth/AuthService";
@@ -20,22 +19,15 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { CountriesRepository } from "../countries/CountriesRepository";
-import { ProducersRepository } from "../producers/ProducersRepository";
-import { Search } from "@mui/icons-material";
 
-export const Grenades = () => {
-  const [grenades, setGrenades] = useState();
+export const Pets = () => {
+  const [pets, setPets] = useState();
   const [redirectTo, setRedirectTo] = useState();
   const [countries, setCountries] = useState();
-  const [producers, setProducers] = useState();
   const [searchParams, setSearchParams] = useState({});
 
   useEffect(() => {
     loadDataCountries(0, 1000);
-  }, []);
-
-  useEffect(() => {
-    loadDataProducers(0, 1000);
   }, []);
 
   useEffect(() => {
@@ -53,11 +45,7 @@ export const Grenades = () => {
       .then((res) => setCountries(res.data))
       .catch((err) => console.log(err));
   };
-  const loadDataProducers = (page, size) => {
-    ProducersRepository.all(page, size, searchParams)
-      .then((res) => setProducers(res.data))
-      .catch((err) => console.log(err));
-  };
+
   useEffect(() => {
     loadData(0, 8);
   }, []);
@@ -68,13 +56,10 @@ export const Grenades = () => {
       filterParams["country.id"] = filterParams.country.id;
       delete filterParams.country;
     }
-    if (filterParams.producer) {
-      filterParams["producer.id"] = filterParams.producer.id;
-      delete filterParams.producer;
-    }
-    GrenadesRepository.all(page, size, filterParams)
+
+    PetsRepository.all(page, size, filterParams)
       .then((res) => {
-        setGrenades(res.data);
+        setPets(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -133,7 +118,7 @@ export const Grenades = () => {
                     marginTop: "-10px",
                   }}
                   onClick={() => {
-                    setRedirectTo(`/grenades/create`);
+                    setRedirectTo(`/pets/create`);
                   }}
                 >
                   <AddIcon
@@ -172,10 +157,10 @@ export const Grenades = () => {
                   marginTop: "20px",
                 }}
                 onClick={() => {
-                  setRedirectTo(`/grenades/create`);
+                  setRedirectTo(`/pets/create`);
                 }}
               >
-                ADD NEW GRENADE
+                ADD NEW PET
               </Button>
             )}
           </Grid>
@@ -202,7 +187,7 @@ export const Grenades = () => {
                     textTransform: "uppercase",
                   }}
                 >
-                  Grenades
+                  Pets
                 </span>
               </Grid>
               <Grid
@@ -276,30 +261,7 @@ export const Grenades = () => {
                       </Select>
                     </FormControl>
                   </Grid>
-                  <Grid
-                    item
-                    md={3}
-                    xs={12}
-                    style={{ marginBottom: "5px", textAlign: "left" }}
-                  >
-                    <FormControl fullWidth size="small" color="warning">
-                      <InputLabel htmlFor="grouped-native-select2">
-                        Producer
-                      </InputLabel>
-                      <Select
-                        onChange={(e) => {
-                          handleChangeSearchParams("producer", e.target.value);
-                        }}
-                        id="grouped-native-select2"
-                        label="Producer"
-                      >
-                        <MenuItem>{""}</MenuItem>
-                        {producers?.content?.map((producer) => (
-                          <MenuItem value={producer}> {producer.name}</MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Grid>
+
                   <Grid
                     item
                     md={12}
@@ -332,25 +294,25 @@ export const Grenades = () => {
           </Grid>
         </Grid>
         <Grid container spacing={2}>
-          {grenades?.content?.map((grenade, index) => (
-            <GrenadeBox grenade={grenade} />
+          {pets?.content?.map((pet, index) => (
+            <PetBox pet={pet} />
           ))}
         </Grid>
       </Grid>
 
       <Grid container spacing={2}>
         <Grid item={12} style={{ marginLeft: "auto", marginRight: "auto" }}>
-          {grenades && grenades.number !== undefined && (
+          {pets && pets.number !== undefined && (
             <Stack spacing={2} style={{ marginTop: "20px" }}>
               <Pagination
                 color="warning"
-                count={Math.floor(grenades?.totalElements / grenades?.size) + 1}
+                count={Math.floor(pets?.totalElements / pets?.size) + 1}
                 showFirstButton
                 showLastButton
                 style={{
                   color: "#D35400",
                 }}
-                page={grenades.number + 1}
+                page={pets.number + 1}
                 onChange={handleChange}
               />
             </Stack>

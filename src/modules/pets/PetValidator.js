@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-export const CreateGrenadeValidator = yup.object().shape({
+export const CreatePetValidator = yup.object().shape({
   description: yup
     .string()
     .min(10, "Description must have at least 10 characters")
@@ -8,7 +8,7 @@ export const CreateGrenadeValidator = yup.object().shape({
   name: yup.string().required("Name is required"),
 });
 
-export const UpdateGrenadeValidator = yup.object().shape({
+export const UpdatePetValidator = yup.object().shape({
   description: yup
     .string()
     .min(10, "Description must have at least 10 characters")

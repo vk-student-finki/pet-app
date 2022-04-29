@@ -28,17 +28,14 @@ import { MyProfile } from "./modules/users/MyProfile";
 import { useEffect } from "react";
 import { AuthService } from "./modules/auth/AuthService";
 import { ForbiddenAccess } from "./modules/common/ForbiddenAccess";
-import { Grenades } from "./modules/grenades/Grenades";
-import { CreateGrenade } from "./modules/grenades/CreateGrenade";
-import { GrenadeDetails } from "./modules/grenades/GrenadeDetails";
-import { Producers } from "./modules/producers/Producers";
-import { CreateProducer } from "./modules/producers/CreateProducer";
+import { Pets } from "./modules/pets/Pets";
+import { CreatePet } from "./modules/pets/CreatePet";
+import { PetDetails } from "./modules/pets/PetDetails";
 import { Countries } from "./modules/countries/Countries";
-import { ProducerDelete } from "./modules/producers/ProducerDelete";
 import { CountryDelete } from "./modules/countries/CountryDelete";
 import { CreateCountry } from "./modules/countries/CreateCountry";
-import { DeleteGrenade } from "./modules/grenades/DeleteGrenade";
-import { UpdateGrenade } from "./modules/grenades/UpdateGrenade";
+import { DeletePet } from "./modules/pets/DeletePet";
+import { UpdatePet } from "./modules/pets/UpdatePet";
 
 export default function App() {
   const location = useLocation();
@@ -80,17 +77,12 @@ export default function App() {
         navigate("/forbidden");
       }
     }
-    if (location.pathname.startsWith("/grenades")) {
+    if (location.pathname.startsWith("/pets")) {
       if (!window?.localStorage?.getItem("auth")) {
         navigate("/forbidden");
       }
     }
-    if (location.pathname == "/grenades/create") {
-      if (!AuthService.hasRole("ROLE_ADMINISTRATOR")) {
-        navigate("/forbidden");
-      }
-    }
-    if (location.pathname.startsWith("/producers")) {
+    if (location.pathname == "/pets/create") {
       if (!AuthService.hasRole("ROLE_ADMINISTRATOR")) {
         navigate("/forbidden");
       }
@@ -145,23 +137,11 @@ export default function App() {
           <Route path="/signin" element={<SignIn />}></Route>
           <Route path="/myprofile/:username" element={<MyProfile />}></Route>
           <Route path="/forbidden" element={<ForbiddenAccess />}></Route>
-          <Route path="/grenades" element={<Grenades />}></Route>
-          <Route path="/grenades/create" element={<CreateGrenade />}></Route>
-          <Route
-            path="grenades/details/:id"
-            element={<GrenadeDetails />}
-          ></Route>
-          <Route
-            path="/grenades/delete/:id"
-            element={<DeleteGrenade />}
-          ></Route>
-          <Route path="/grenades/edit/:id" element={<UpdateGrenade />}></Route>
-          <Route path="/producers" element={<Producers />}></Route>
-          <Route path="/producers/create" element={<CreateProducer />}></Route>
-          <Route
-            path="/producers/delete/:id"
-            element={<ProducerDelete />}
-          ></Route>
+          <Route path="/pets" element={<Pets />}></Route>
+          <Route path="/pets/create" element={<CreatePet />}></Route>
+          <Route path="pets/details/:id" element={<PetDetails />}></Route>
+          <Route path="/pets/delete/:id" element={<DeletePet />}></Route>
+          <Route path="/pets/edit/:id" element={<UpdatePet />}></Route>
           <Route path="/countries" element={<Countries />}></Route>
           <Route
             path="/countries/delete/:id"

@@ -29,13 +29,12 @@ import { Box } from "@mui/system";
 import Lightbox from "react-image-lightbox";
 import React, { useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { GrenadesRepository } from "./GrenadesRepository";
+import { PetsRepository } from "./PetsRepository";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import { ProducersRepository } from "../producers/ProducersRepository";
 import { CountriesRepository } from "../countries/CountriesRepository";
 import EditIcon from "@mui/icons-material/Edit";
-import { UpdateGrenadeValidator } from "./GrenadeValidator";
+import { UpdatePetValidator } from "./PetValidator";
 import { Upload } from "../common/Upload";
 import { SETTINGS } from "../common/Settings";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -71,14 +70,13 @@ const style = {
   boxShadow: 24,
   // p: 1,
 };
-export const UpdateGrenade = ({}) => {
+export const UpdatePet = ({}) => {
   const [globalFormError, setGlobalFormError] = useState();
   const [formFieldErrors, setFormFieldErrors] = useState();
   const [successMessage, setSuccessMessage] = useState(null);
-  const [grenade, setGrenade] = useState({});
+  const [pet, setPet] = useState({});
   const { id } = useParams();
   const [countries, setCountries] = useState();
-  const [producers, setProducers] = useState();
   const [attachments, setAttachments] = useState([]);
   const [picturesDialogOpen, setPicturesDialogOpen] = useState(false);
   const [attributesDialogOpen, setAttributesDialogOpen] = useState(false);
@@ -131,7 +129,7 @@ export const UpdateGrenade = ({}) => {
   }, []);
 
   const loadPictureTypes = () => {
-    GrenadesRepository.pictureTypes()
+    PetsRepository.pictureTypes()
       .then((res) => {
         console.log("picture types");
         console.log(res.data);
@@ -157,7 +155,7 @@ export const UpdateGrenade = ({}) => {
   };
 
   const handleDelete = (picture) => {
-    GrenadesRepository.removePicture(id, picture)
+    PetsRepository.removePicture(id, picture)
       .then((res) => {
         loadById(id);
         console.log(res);
@@ -165,19 +163,14 @@ export const UpdateGrenade = ({}) => {
       .catch((err) => console.log(err));
   };
 
-  const handleClickOpenDeletePicture = (grenade) => {
-    setDeletePictureDialogOpen(grenade);
+  const handleClickOpenDeletePicture = (pet) => {
+    setDeletePictureDialogOpen(pet);
     setOpen(true);
   };
 
   const loadDataAttrubuteType = (page, size) => {
     AttributeTypeRepository.all(page, size)
       .then((res) => {
-        // let values = [];
-        // res.data.content.forEach((key, index) => {
-        //   values[key.id + "_"] = null;
-        // });
-        // setAttributeValues(values);
         setAttributeTypes(res.data);
       })
       .catch((err) => console.log(err));
@@ -185,7 +178,7 @@ export const UpdateGrenade = ({}) => {
 
   const handleUpdatePictureType = () => {
     setSuccessUpdatePicture(null);
-    GrenadesRepository.updatePictureType(
+    PetsRepository.updatePictureType(
       id,
       selectedPicture.id,
       selectedPicture.type
@@ -207,7 +200,7 @@ export const UpdateGrenade = ({}) => {
       );
       setUploadError(null);
       setSuccessUploadPicture();
-      GrenadesRepository.uploadPictures(id, pictureType, attachments)
+      PetsRepository.uploadPictures(id, pictureType, attachments)
         .then((res) => {
           console.log(res.data);
           setAttachments([]);
@@ -225,7 +218,7 @@ export const UpdateGrenade = ({}) => {
   const updateType = () => {
     setUpdateError(null);
 
-    GrenadesRepository.updatePictureType(id, selectedPicture.id, pictureType)
+    PetsRepository.updatePictureType(id, selectedPicture.id, pictureType)
       .then((res) => {
         console.log(res.data);
         loadById(id);
@@ -240,15 +233,13 @@ export const UpdateGrenade = ({}) => {
   };
 
   const loadById = (id) => {
-    GrenadesRepository.get(id)
+    PetsRepository.get(id)
       .then((res) => {
-        setGrenade(res.data);
+        setPet(res.data);
         let values = [];
         attributeTypes?.content?.forEach((key, index) => {
-          // console.log(key);
           console.log(res.data?.attributes);
           values[key.id + "_"] = res.data?.attributes[index]?.value;
-          // console.log(values[key.id + "_"]);
         });
         setAttributeValues(values);
         console.log(values);
@@ -269,35 +260,33 @@ export const UpdateGrenade = ({}) => {
       });
     }
     console.log(attributes);
-    let formData = { ...grenade };
+    let formData = { ...pet };
     formData.attributes = attributes;
-    let valid = UpdateGrenadeValidator.isValidSync(formData);
+    let valid = UpdatePetValidator.isValidSync(formData);
     setGlobalFormError(null);
     setFormFieldErrors();
     if (!valid) {
       let validationErrors = {};
-      UpdateGrenadeValidator.validate(grenade, { abortEarly: false }).catch(
-        (err) => {
-          console.log(err.inner);
-          err.inner.forEach((validationError) => {
-            validationErrors[validationError.path] = {};
-            validationErrors[validationError.path] = validationError.message;
-          });
-          console.log(validationErrors);
-          setFormFieldErrors(validationErrors);
-          setGlobalFormError(err);
-          return;
-        }
-      );
+      UpdatePetValidator.validate(pet, { abortEarly: false }).catch((err) => {
+        console.log(err.inner);
+        err.inner.forEach((validationError) => {
+          validationErrors[validationError.path] = {};
+          validationErrors[validationError.path] = validationError.message;
+        });
+        console.log(validationErrors);
+        setFormFieldErrors(validationErrors);
+        setGlobalFormError(err);
+        return;
+      });
       return;
     }
     setGlobalFormError(null);
     setSuccessMessage(null);
-    GrenadesRepository.updateGrenade(formData)
+    PetsRepository.updatePet(formData)
       .then((res) => {
         console.log(res);
-        setSuccessMessage("Grenade is updated successfully");
-        console.log("grenade updated");
+        setSuccessMessage("Pet is updated successfully");
+        console.log("pet updated");
       })
       .catch((err) => {
         console.log(err);
@@ -311,19 +300,15 @@ export const UpdateGrenade = ({}) => {
     setAttributeValues(data);
     console.log(data);
   };
-  const handleChangeGrenadeData = (name, value) => {
-    let data = { ...grenade };
+  const handleChangePetData = (name, value) => {
+    let data = { ...pet };
     data[name] = value;
-    setGrenade(data);
+    setPet(data);
     console.log(data);
   };
 
   useEffect(() => {
     loadDataCountries(0, 1000);
-  }, []);
-
-  useEffect(() => {
-    loadDataProducers(0, 1000);
   }, []);
 
   const loadDataCountries = (page, size) => {
@@ -334,21 +319,10 @@ export const UpdateGrenade = ({}) => {
 
   const handleChangeCountry = (e) => {
     console.log(e.target.value);
-    handleChangeGrenadeData(
+    handleChangePetData(
       "country",
       countries.content.filter((c) => c.id === e.target.value)[0]
     );
-  };
-
-  const loadDataProducers = (page, size) => {
-    ProducersRepository.all(page, size)
-      .then((res) => setProducers(res.data))
-      .catch((err) => console.log(err));
-  };
-
-  const handleChangeProducer = (e) => {
-    console.log(e.target.value);
-    handleChangeGrenadeData("producer", e.target.value);
   };
 
   function handleClick(event) {
@@ -400,22 +374,22 @@ export const UpdateGrenade = ({}) => {
               <Link
                 underline="hover"
                 color="inherit"
-                to="/grenades"
+                to="/pets"
                 style={{ textDecoration: "none", color: "#878786" }}
               >
-                Grenades
+                Pets
               </Link>
               <Link
                 underline="hover"
-                to={`/grenades/details/${grenade?.id}`}
+                to={`/pets/details/${pet?.id}`}
                 aria-current="page"
                 style={{ textDecoration: "none", color: "#878786" }}
               >
-                {grenade?.name}
+                {pet?.name}
               </Link>
               <Link
                 underline="hover"
-                to={`/grenades/edit/${grenade?.id}`}
+                to={`/pets/edit/${pet?.id}`}
                 aria-current="page"
                 style={{ textDecoration: "none", color: "#D35400" }}
               >
@@ -446,7 +420,7 @@ export const UpdateGrenade = ({}) => {
             fontSize: "20px",
           }}
         >
-          Edit Grenade
+          Edit Pet Info
         </Typography>
       </Box>
       <Container maxWidth="xs" style={{ marginTop: "20px" }}>
@@ -458,8 +432,8 @@ export const UpdateGrenade = ({}) => {
             color="warning"
             autoFocus
             fullWidth
-            value={grenade?.name ? grenade?.name : ""}
-            onChange={(e) => handleChangeGrenadeData("name", e.target.value)}
+            value={pet?.name ? pet?.name : ""}
+            onChange={(e) => handleChangePetData("name", e.target.value)}
             error={formFieldErrors?.name}
             helperText={formFieldErrors?.name}
           />
@@ -473,10 +447,8 @@ export const UpdateGrenade = ({}) => {
             multiline
             rows={4}
             fullWidth
-            value={grenade?.description ? grenade?.description : ""}
-            onChange={(e) =>
-              handleChangeGrenadeData("description", e.target.value)
-            }
+            value={pet?.description ? pet?.description : ""}
+            onChange={(e) => handleChangePetData("description", e.target.value)}
             error={formFieldErrors?.description}
             helperText={formFieldErrors?.description}
             style={{ marginTop: "8px" }}
@@ -490,7 +462,7 @@ export const UpdateGrenade = ({}) => {
                 label="Country"
                 labelId="demo-country-select-label"
                 id="demo-country-select"
-                value={grenade?.country?.id ? grenade?.country?.id : ""}
+                value={pet?.country?.id ? pet?.country?.id : ""}
                 onChange={handleChangeCountry}
                 error={formFieldErrors?.description}
                 helperText={formFieldErrors?.description}
@@ -504,33 +476,9 @@ export const UpdateGrenade = ({}) => {
           )}
         </Grid>
         <Grid item xs={12}>
-          {producers?.content && (
-            <FormControl
-              color="warning"
-              fullWidth
-              style={{ marginTop: "8px", marginBottom: "8px" }}
-            >
-              <InputLabel id="demo-producer-select-label">Producer</InputLabel>
-
-              <Select
-                label="Producer"
-                labelId="demo-producer-select-label"
-                id="demo-producer-select"
-                value={grenade?.producer?.id ? grenade?.producer?.id : ""}
-                onChange={handleChangeProducer}
-              >
-                <MenuItem> / </MenuItem>
-                {producers?.content?.map((producer) => (
-                  <MenuItem value={producer?.id}>{producer.name}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          )}
-
           <Grid container spacing={0.5} style={{ marginTop: "10px" }}>
             <Grid item xs={12} md={6}>
               <Button
-                // color="warning"
                 size="small"
                 variant="contained"
                 fullWidth
@@ -699,9 +647,9 @@ export const UpdateGrenade = ({}) => {
               </Grid>
               <Grid item xs={12}>
                 <Table size="small">
-                  {grenade &&
-                    grenade.pictures &&
-                    grenade.pictures.map((picture, index) => (
+                  {pet &&
+                    pet.pictures &&
+                    pet.pictures.map((picture, index) => (
                       <TableRow>
                         <TableCell style={{ width: "40px" }}>
                           <Tooltip title="Open Image" placement="right">
@@ -714,7 +662,7 @@ export const UpdateGrenade = ({}) => {
                                 height="35px"
                                 key={picture}
                                 alt={picture}
-                                src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
+                                src={`${SETTINGS.API_BASE_URL}pets/downloadPetImage/${picture.id}`}
                               />
                             </IconButton>
                           </Tooltip>
@@ -765,7 +713,7 @@ export const UpdateGrenade = ({}) => {
             <img
               height={"100%"}
               width={"100%"}
-              src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${selectedPicture?.id}`}
+              src={`${SETTINGS.API_BASE_URL}pets/downloadPetImage/${selectedPicture?.id}`}
             />
           </Box>
         </Modal>
@@ -866,9 +814,9 @@ export const UpdateGrenade = ({}) => {
               <Divider></Divider>
               <Grid item xs={12}>
                 <Table size="small">
-                  {grenade &&
-                    grenade.pictures &&
-                    grenade.pictures.map((picture, index) => (
+                  {pet &&
+                    pet.pictures &&
+                    pet.pictures.map((picture, index) => (
                       <TableRow>
                         <TableCell style={{}}>
                           <IconButton
@@ -881,7 +829,7 @@ export const UpdateGrenade = ({}) => {
                               width="40px"
                               key={picture}
                               alt={picture}
-                              src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${picture.id}`}
+                              src={`${SETTINGS.API_BASE_URL}pets/downloadPetImage/${picture.id}`}
                               style={{ marginLeft: "-20px" }}
                             />
                           </IconButton>
@@ -923,7 +871,7 @@ export const UpdateGrenade = ({}) => {
             <img
               height={"100%"}
               width={"100%"}
-              src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${selectedPicture?.id}`}
+              src={`${SETTINGS.API_BASE_URL}pets/downloadPetImage/${selectedPicture?.id}`}
             />
           </Box>
         </Modal>

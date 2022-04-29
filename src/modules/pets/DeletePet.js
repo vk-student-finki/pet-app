@@ -1,43 +1,35 @@
-import { Alert, Button, Container, Grid } from "@mui/material";
+import { Button, Container, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
+import { PetsRepository } from "./PetsRepository";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import { ProducersRepository } from "./ProducersRepository";
-import { useDispatch } from "react-redux";
 
-export const ProducerDelete = ({}) => {
+export const DeletePet = ({}) => {
   const { id } = useParams();
+  const [redirectTo, setRedirectTo] = useState();
   const [deleteError, setDeleteError] = useState(false);
-  const [producerError, setProducerError] = useState();
 
   useEffect(() => {
-    deleteThisProducer(id);
+    deleteThisPet(id);
   }, []);
 
-  const deleteThisProducer = (id) => {
-    setDeleteError(false);
-    setProducerError(null);
-    ProducersRepository.deleteProducer(id)
+  const deleteThisPet = (id) => {
+    PetsRepository.deletePet(id)
       .then((res) => {
         console.log(res.data);
-        setDeleteError(false);
       })
       .catch((err) => {
-        setDeleteError(true);
-        // console.log(err.message);
-        setProducerError(err);
-        console.log(producerError?.response?.data?.message);
+        console.log(err.data);
       });
   };
 
-  const [redirectTo, setRedirectTo] = useState();
   return (
     <>
       {redirectTo && <Navigate to={redirectTo} push></Navigate>}
       {!deleteError && (
         <Container maxWidth="xs" style={{ textAlign: "center" }}>
-          <h2>The producer was successfully deleted!</h2>
+          <h2>The pet was successfully deleted!</h2>
           <CheckCircleOutlineIcon
             sx={{ fontSize: 40 }}
             style={{ color: "#D35400", marginBottom: "20px" }}
@@ -51,31 +43,23 @@ export const ProducerDelete = ({}) => {
                 color: "#D9D9D9",
                 borderColor: "#17202A",
               }}
-              size="medium"
               fullWidth
               onClick={() => {
-                setRedirectTo(`/producers`);
+                setRedirectTo(`/pets`);
               }}
             >
-              Back to Producers
+              Back to Pets
             </Button>
           </Grid>
         </Container>
       )}
       {deleteError && (
         <Container maxWidth="xs" style={{ textAlign: "center" }}>
-          <h2>The producer can not be deleted!</h2>
+          <h2>The pet can not be deleted!</h2>
           <ErrorOutlineIcon
             sx={{ fontSize: 40 }}
             style={{ color: "#D35400", marginBottom: "20px" }}
           />
-          {producerError && (
-            <Grid item xs={12} style={{ marginBottom: "10px" }}>
-              <Alert severity="error">
-                {producerError?.response?.data?.message}
-              </Alert>
-            </Grid>
-          )}
           <Grid xs={12}>
             <Button
               variant="outlined"
@@ -85,13 +69,12 @@ export const ProducerDelete = ({}) => {
                 color: "#D9D9D9",
                 borderColor: "#17202A",
               }}
-              size="medium"
               fullWidth
               onClick={() => {
-                setRedirectTo(`/producers`);
+                setRedirectTo(`/pets`);
               }}
             >
-              Back to Producers
+              Back to Pets
             </Button>
           </Grid>
         </Container>

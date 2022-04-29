@@ -29,14 +29,14 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export const GrenadeBox = ({ grenade }) => {
+export const PetBox = (pet) => {
   const [redirectTo, setRedirectTo] = useState();
-  const [selectedGrenade, setSelectedGrenade] = useState();
+  const [selectedPet, setSelectedPet] = useState();
 
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = (grenade) => {
-    setSelectedGrenade(grenade);
+  const handleClickOpen = (pet) => {
+    setSelectedPet(pet);
     setOpen(true);
   };
 
@@ -56,22 +56,20 @@ export const GrenadeBox = ({ grenade }) => {
           }}
         >
           <Link
-            to={`/grenades/details/${grenade.id}`}
+            to={`/pets/details/${pet.id}`}
             style={{ textDecoration: "none", color: "#1E1F1C" }}
           >
-            {grenade &&
-            grenade.pictures &&
-            grenade.pictures.filter((g) => g.type === "GRENADE").length > 0 &&
-            grenade.pictures.filter((g) => g.type === "GRENADE")[0] ? (
+            {pet &&
+            pet.pictures &&
+            pet.pictures.filter((g) => g.type === "PET").length > 0 &&
+            pet.pictures.filter((g) => g.type === "PET")[0] ? (
               <CardMedia
                 style={{ height: "270px" }}
                 component="img"
-                alt={
-                  grenade.pictures.filter((g) => g.type === "GRENADE")[0].name
-                }
+                alt={pet.pictures.filter((g) => g.type === "PET")[0].name}
                 // height="140"
-                src={`${SETTINGS.API_BASE_URL}grenades/downloadGrenadeImage/${
-                  grenade.pictures.filter((g) => g.type === "GRENADE")[0].id
+                src={`${SETTINGS.API_BASE_URL}pets/downloadPetImage/${
+                  pet.pictures.filter((g) => g.type === "PET")[0].id
                 }`}
               />
             ) : (
@@ -85,7 +83,7 @@ export const GrenadeBox = ({ grenade }) => {
             )}
           </Link>
           <Link
-            to={`/grenades/details/${grenade.id}`}
+            to={`/pets/details/${pet.id}`}
             style={{ textDecoration: "none", color: "#1E1F1C" }}
           >
             <CardContent style={{ height: "50px" }}>
@@ -101,7 +99,7 @@ export const GrenadeBox = ({ grenade }) => {
                   textAlign: "center",
                 }}
               >
-                {grenade.name}
+                {pet.name}
               </Typography>
             </CardContent>
           </Link>
@@ -116,7 +114,7 @@ export const GrenadeBox = ({ grenade }) => {
                         color: "#FF6000",
                         marginRight: "145px",
                       }}
-                      onClick={() => handleClickOpen(grenade)}
+                      onClick={() => handleClickOpen(pet)}
                     />
                   )}
               </Button>
@@ -128,7 +126,7 @@ export const GrenadeBox = ({ grenade }) => {
                   fontSize: 20,
                 }}
                 onClick={() => {
-                  setRedirectTo(`/grenades/details/${grenade.id}`);
+                  setRedirectTo(`/pets/details/${pet.id}`);
                 }}
               >
                 <Tooltip
@@ -161,7 +159,7 @@ export const GrenadeBox = ({ grenade }) => {
                           style={{
                             color: "#FF6000",
                           }}
-                          onClick={() => handleClickOpen(grenade)}
+                          onClick={() => handleClickOpen(pet)}
                         />
                       )}
                   </Button>
@@ -178,7 +176,7 @@ export const GrenadeBox = ({ grenade }) => {
                   color: "#1E1F1C",
                 }}
                 onClick={() => {
-                  setRedirectTo(`/grenades/details/${grenade.id}`);
+                  setRedirectTo(`/pets/details/${pet.id}`);
                 }}
               >
                 <InfoOutlinedIcon
@@ -217,7 +215,7 @@ export const GrenadeBox = ({ grenade }) => {
           {"Confirm delete"}
         </DialogTitle>
         <DialogContent style={{ textAlign: "center" }}>
-          Are you sure you want to delete this grenade? This action
+          Are you sure you want to delete this pet? This action
           <br /> cannot be undone.
         </DialogContent>
         <DialogActions>
@@ -240,7 +238,7 @@ export const GrenadeBox = ({ grenade }) => {
               color: "white",
             }}
             onClick={() => {
-              setRedirectTo(`/grenades/delete/${selectedGrenade?.id}`);
+              setRedirectTo(`/pets/delete/${selectedPet?.id}`);
             }}
           >
             Delete

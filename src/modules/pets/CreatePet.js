@@ -16,9 +16,8 @@ import React, { useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import AddIcon from "@mui/icons-material/Add";
 import Typography from "@mui/material/Typography";
-import { CreateGrenadeValidator } from "./GrenadeValidator";
-import { GrenadesRepository } from "./GrenadesRepository";
-import { ProducersRepository } from "../producers/ProducersRepository";
+import { CreatePetValidator } from "./PetValidator";
+import { PetsRepository } from "./PetsRepository";
 import { AttributeTypeRepository } from "../attributeTypes/AttributeTypeRepository";
 import { CountriesRepository } from "../countries/CountriesRepository";
 import {
@@ -29,14 +28,13 @@ import {
   useNavigate,
 } from "react-router-dom";
 
-export const CreateGrenade = () => {
+export const CreatePet = () => {
   const [globalFormError, setGlobalFormError] = useState();
   const [formFieldErrors, setFormFieldErrors] = useState();
   const [successMessage, setSuccessMessage] = useState(null);
-  const [producers, setProducers] = useState();
   const [attributeValues, setAttributeValues] = useState();
   const [countries, setCountries] = useState();
-  const [grenade, setGrenade] = useState({
+  const [pet, setPet] = useState({
     name: "",
     description: "",
     attributes: [],
@@ -46,20 +44,13 @@ export const CreateGrenade = () => {
   useEffect(() => {
     loadDataCountries(0, 1000);
   }, []);
-  useEffect(() => {
-    loadDataProducers(0, 1000);
-  }, []);
 
   const loadDataCountries = (page, size) => {
     CountriesRepository.all(page, size)
       .then((res) => setCountries(res.data))
       .catch((err) => console.log(err));
   };
-  const loadDataProducers = (page, size) => {
-    ProducersRepository.all(page, size)
-      .then((res) => setProducers(res.data))
-      .catch((err) => console.log(err));
-  };
+
   const [attributeTypes, setAttributeTypes] = useState();
 
   useEffect(() => {
@@ -86,10 +77,10 @@ export const CreateGrenade = () => {
     console.log(data);
   };
 
-  const handleChangeGrenadeData = (name, value) => {
-    let data = { ...grenade };
+  const handleChangePetData = (name, value) => {
+    let data = { ...pet };
     data[name] = value;
-    setGrenade(data);
+    setPet(data);
     console.log(data);
   };
 
@@ -104,13 +95,13 @@ export const CreateGrenade = () => {
       });
     }
     console.log(attributes);
-    let formData = { ...grenade };
+    let formData = { ...pet };
     formData.attributes = attributes;
-    let valid = CreateGrenadeValidator.isValidSync(formData);
+    let valid = CreatePetValidator.isValidSync(formData);
     setFormFieldErrors();
     if (!valid) {
       let validationErrors = {};
-      CreateGrenadeValidator.validate(formData, { abortEarly: false }).catch(
+      CreatePetValidator.validate(formData, { abortEarly: false }).catch(
         (err) => {
           console.log(err.inner);
           err.inner.forEach((validationError) => {
@@ -127,12 +118,12 @@ export const CreateGrenade = () => {
 
     setGlobalFormError(null);
     setSuccessMessage(null);
-    GrenadesRepository.create(formData)
+    PetsRepository.create(formData)
       .then((res) => {
         console.log(res);
-        setSuccessMessage("Grenade added!");
-        console.log("grenade added");
-        navigate(`/grenades/edit/${res.data.id}`);
+        setSuccessMessage("Pet added!");
+        console.log("pet added");
+        navigate(`/pets/edit/${res.data.id}`);
       })
       .catch((err) => {
         console.log(err);
@@ -140,13 +131,9 @@ export const CreateGrenade = () => {
       });
   };
 
-  const handleChangeProducer = (e) => {
-    console.log(e.target.value);
-    handleChangeGrenadeData("producer", e.target.value);
-  };
   const handleChangeCountry = (e) => {
     console.log(e.target.value);
-    handleChangeGrenadeData("country", e.target.value);
+    handleChangePetData("country", e.target.value);
   };
 
   return (
@@ -167,7 +154,7 @@ export const CreateGrenade = () => {
           variant="h5"
           style={{ textAlign: "center", fontFamily: "Copperplate, fantasy" }}
         >
-          Add new grenade
+          Add new pet
         </Typography>
       </Box>
 
@@ -180,8 +167,8 @@ export const CreateGrenade = () => {
             color="warning"
             autoFocus
             fullWidth
-            value={grenade?.name ? grenade?.name : ""}
-            onChange={(e) => handleChangeGrenadeData("name", e.target.value)}
+            value={pet?.name ? pet?.name : ""}
+            onChange={(e) => handleChangePetData("name", e.target.value)}
             error={formFieldErrors?.name}
             helperText={formFieldErrors?.name}
           />
@@ -197,10 +184,8 @@ export const CreateGrenade = () => {
             multiline
             rows={4}
             fullWidth
-            value={grenade?.description ? grenade?.description : ""}
-            onChange={(e) =>
-              handleChangeGrenadeData("description", e.target.value)
-            }
+            value={pet?.description ? pet?.description : ""}
+            onChange={(e) => handleChangePetData("description", e.target.value)}
             error={formFieldErrors?.description}
             helperText={formFieldErrors?.description}
             style={{ marginTop: "8px" }}
@@ -214,35 +199,12 @@ export const CreateGrenade = () => {
               label="Country"
               labelId="demo-country-select-label"
               id="demo-country-select"
-              value={grenade?.country}
+              value={pet?.country}
               onChange={handleChangeCountry}
             >
               <MenuItem> / </MenuItem>
               {countries?.content.map((country) => (
                 <MenuItem value={country}>{country.name}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Grid>
-
-        <Grid item xs={12}>
-          <FormControl
-            color="warning"
-            fullWidth
-            style={{ marginTop: "8px", marginBottom: "8px" }}
-          >
-            <InputLabel id="demo-producer-select-label">Producer</InputLabel>
-
-            <Select
-              label="Producer"
-              labelId="demo-producer-select-label"
-              id="demo-producer-select"
-              value={grenade?.producer}
-              onChange={handleChangeProducer}
-            >
-              <MenuItem> / </MenuItem>
-              {producers?.content?.map((producer) => (
-                <MenuItem value={producer}>{producer.name}</MenuItem>
               ))}
             </Select>
           </FormControl>
