@@ -82,14 +82,17 @@ export default function Header({}) {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       {window?.localStorage?.getItem("auth") && (
-        <List style={{ backgroundColor: "#F5F5F5" }}>
+        <List
+          style={{
+            backgroundColor: "#0B648A",
+          }}
+        >
           {["Home", "Pets", "Countries", "Users", "Groups", "Privileges"]
             .filter(
               (key) =>
                 (AuthService.hasRole("ROLE_ADMINISTRATOR") &&
                   [
                     "Pets",
-
                     "Countries",
                     "Users",
                     "Groups",
@@ -118,11 +121,11 @@ export default function Header({}) {
                 style={{
                   textDecoration: "none",
                   color: "#D35400",
-                  fontFamily: "Monaco, monospace",
+                  fontFamily: "Sans-serif, Verdana",
                 }}
               >
                 <ListItem button key={text}>
-                  <ListItemIcon style={{ color: "#D35400" }}>
+                  <ListItemIcon style={{ color: "#FFFFFF" }}>
                     {index === 0 ? (
                       <HomeIcon />
                     ) : index === 1 ? (
@@ -158,7 +161,8 @@ export default function Header({}) {
                 style={{
                   textDecoration: "none",
                   color: "#D35400",
-                  fontFamily: "Monaco, monospace",
+                  border: "none",
+                  fontFamily: "Sans-serif, Verdana",
                 }}
                 primary={
                   AuthService.getCurrentUser()?.firstName +
@@ -187,7 +191,7 @@ export default function Header({}) {
       )}
 
       {!window?.localStorage?.getItem("auth") && (
-        <List style={{ backgroundColor: "#F5F5F5" }}>
+        <List style={{ backgroundColor: "#0B648A" }}>
           {["Home", "Sign In"].map((text, index) => (
             <Link
               key={index}
@@ -251,7 +255,7 @@ export default function Header({}) {
         <Grid
           container
           style={{
-            backgroundColor: "#1E1F1C",
+            backgroundColor: "#0B648A",
             padding: "10px",
             position: "sticky",
             top: 0,

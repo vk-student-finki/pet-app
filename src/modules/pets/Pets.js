@@ -60,6 +60,7 @@ export const Pets = () => {
     PetsRepository.all(page, size, filterParams)
       .then((res) => {
         setPets(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -74,39 +75,13 @@ export const Pets = () => {
     <>
       {redirectTo && <Navigate to={redirectTo} push />}
       <Grid
-        conatiner
-        spacing={2}
+        container
         style={{
-          backgroundColor: "#1E1F1C",
+          backgroundColor: "#0B648A",
           height: "200px",
         }}
       >
         <Grid item xs={12} style={{ textAlign: "center" }}>
-          <span
-            style={{
-              fontFamily: "Copperplate, fantasy",
-              fontSize: "30px",
-              color: "#FFFFFF",
-              display: "block",
-              paddingTop: "50px",
-            }}
-          >
-            Browse current inventory
-          </span>
-
-          <span
-            style={{
-              // fontFamily: "Monaco, monospace",
-              fontFamily: "Trebuchet MS, sans-serif",
-              fontSize: "15px",
-              fontStyle: "oblique",
-              color: "#FFFFFF",
-              display: "block",
-              paddingTop: "7px",
-            }}
-          >
-            Review the newest additions.
-          </span>
           <Hidden mdUp>
             <Grid item xs={12} md={6}>
               {AuthService.hasRole("ROLE_ADMINISTRATOR") && (

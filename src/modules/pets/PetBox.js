@@ -29,7 +29,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export const PetBox = (pet) => {
+export const PetBox = ({ pet }) => {
   const [redirectTo, setRedirectTo] = useState();
   const [selectedPet, setSelectedPet] = useState();
 
@@ -99,7 +99,7 @@ export const PetBox = (pet) => {
                   textAlign: "center",
                 }}
               >
-                {pet.name}
+                {pet?.name}
               </Typography>
             </CardContent>
           </Link>
@@ -238,7 +238,7 @@ export const PetBox = (pet) => {
               color: "white",
             }}
             onClick={() => {
-              setRedirectTo(`/pets/delete/${selectedPet?.id}`);
+              setRedirectTo(`/pets/delete/${selectedPet.id}`);
             }}
           >
             Delete
