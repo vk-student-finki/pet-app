@@ -36,6 +36,7 @@ import Logout from "@mui/icons-material/Logout";
 import PublicIcon from "@mui/icons-material/Public";
 import BusinessIcon from "@mui/icons-material/Business";
 import FlagIcon from "@mui/icons-material/Flag";
+import PetsIcon from "@mui/icons-material/Pets";
 
 export default function Header({}) {
   const [redirectTo, setRedirectTo] = useState();
@@ -264,13 +265,13 @@ export default function Header({}) {
         >
           <Grid item xs={6} md={0.7}>
             <Link to="/" style={{ textDecoration: "none" }}>
-              <HomeIcon
+              <PetsIcon
                 sx={{ fontSize: 40 }}
-                style={{ color: "#D35400" }}
-              ></HomeIcon>
+                style={{ color: "white" }}
+              ></PetsIcon>
             </Link>
           </Grid>
-          <Grid item xs={6} md={1.2}>
+          <Grid item xs={6} md={1}>
             {window?.localStorage?.getItem("auth") && (
               <Link to="/pets" style={{ textDecoration: "none" }}>
                 <Button
@@ -278,9 +279,9 @@ export default function Header({}) {
                   variant="outlined"
                   style={{
                     color: "#D9D9D9",
-                    borderColor: "#17202A",
+                    border: "none",
                     fontSize: "13px",
-                    fontFamily: "Verdana, sans-serif",
+                    fontFamily: "Sans-serif , verdana",
                     fontWeight: "bold",
                     textTransform: "uppercase",
                     marginTop: "5px",
@@ -300,9 +301,9 @@ export default function Header({}) {
                     variant="outlined"
                     style={{
                       color: "#D9D9D9",
-                      borderColor: "#17202A",
+                      border: "none",
                       fontSize: "13px",
-                      fontFamily: "Verdana, sans-serif",
+                      fontFamily: "Sans-serif , verdana",
                       fontWeight: "bold",
                       textTransform: "uppercase",
                       marginTop: "5px",
@@ -322,9 +323,9 @@ export default function Header({}) {
                     variant="outlined"
                     style={{
                       color: "#D9D9D9",
-                      borderColor: "#17202A",
+                      border: "none",
                       fontSize: "13px",
-                      fontFamily: "Verdana, sans-serif",
+                      fontFamily: "Sans-serif , verdana",
                       textTransform: "uppercase",
                       fontWeight: "bold",
                       marginTop: "5px",
@@ -344,9 +345,9 @@ export default function Header({}) {
                     variant="outlined"
                     style={{
                       color: "#D9D9D9",
-                      borderColor: "#17202A",
+                      border: "none",
                       fontSize: "13px",
-                      fontFamily: "Verdana, sans-serif",
+                      fontFamily: "Sans-serif , verdana",
                       fontWeight: "bold",
                       textTransform: "uppercase",
                       marginTop: "5px",
@@ -366,9 +367,9 @@ export default function Header({}) {
                   variant="outlined"
                   style={{
                     color: "#D9D9D9",
-                    borderColor: "#17202A",
+                    border: "none",
                     marginLeft: "500px",
-                    fontFamily: "Lucida Console , monospace",
+                    fontFamily: "Sans-serif , verdana",
                     fontSize: "16px",
                     whiteSpace: "nowrap",
                   }}

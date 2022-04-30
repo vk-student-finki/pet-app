@@ -29,6 +29,7 @@ import { useDispatch } from "react-redux";
 import { COMMON_ACTIONS } from "../common/CommonActions";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import AddIcon from "@mui/icons-material/Add";
+import img from "../images/petsimage.jpg";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -101,7 +102,7 @@ export const Users = () => {
           item
           xs={12}
           style={{
-            backgroundColor: "#f1f2f6",
+            backgroundColor: "#F1F2F6",
           }}
         >
           <Grid item xs={12} style={{ textAlign: "center" }}>
@@ -111,7 +112,7 @@ export const Users = () => {
                   style={{
                     fontFamily: "Copperplate, fantasy",
                     fontSize: "30px",
-                    color: "#1E1F1C",
+                    color: "#0B648A",
                     display: "block",
                     paddingTop: "50px",
                     textTransform: "uppercase",

@@ -49,7 +49,6 @@ export const CountryDelete = ({}) => {
                 color: "#D9D9D9",
                 borderColor: "#17202A",
               }}
-              size="medium"
               fullWidth
               onClick={() => {
                 setRedirectTo(`/countries`);
@@ -83,7 +82,6 @@ export const CountryDelete = ({}) => {
                 color: "#D9D9D9",
                 borderColor: "#17202A",
               }}
-              size="medium"
               fullWidth
               onClick={() => {
                 setRedirectTo(`/countries`);

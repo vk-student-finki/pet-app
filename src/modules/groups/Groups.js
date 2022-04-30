@@ -91,7 +91,7 @@ export const Groups = () => {
                 style={{
                   fontFamily: "Copperplate, fantasy",
                   fontSize: "30px",
-                  color: "#1E1F1C",
+                  color: "#0B648A",
                   display: "block",
                   paddingTop: "50px",
                   textTransform: "uppercase",

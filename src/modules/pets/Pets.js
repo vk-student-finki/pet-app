@@ -19,6 +19,7 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { CountriesRepository } from "../countries/CountriesRepository";
+import img1 from "../images/petsimage.jpg";
 
 export const Pets = () => {
   const [pets, setPets] = useState();
@@ -78,6 +79,7 @@ export const Pets = () => {
         container
         style={{
           backgroundColor: "#0B648A",
+          backgroundImage: `url(${img1}`,
           height: "200px",
         }}
       >
@@ -117,7 +119,7 @@ export const Pets = () => {
             xs={12}
             md={12}
             style={{
-              marginTop: "5px",
+              marginTop: "170px",
               textAlign: "center",
             }}
           >
@@ -154,9 +156,10 @@ export const Pets = () => {
               <Grid item xs={12}>
                 <span
                   style={{
-                    fontFamily: "Copperplate, fantasy",
+                    fontFamily: "Sans-serif, verdana",
+                    fontWeight: "bold",
                     fontSize: "30px",
-                    color: "#1E1F1C",
+                    color: "#0B648A",
                     display: "block",
                     paddingTop: "50px",
                     textTransform: "uppercase",
@@ -172,9 +175,10 @@ export const Pets = () => {
               >
                 <span
                   style={{
-                    fontFamily: "Copperplate, fantasy",
+                    fontFamily: "Sans-serif, verdana",
                     fontSize: "16px",
-                    color: "#6c757d",
+                    fontWeight: "bold",
+                    color: "#0B648A",
                     display: "block",
                     textTransform: "uppercase",
                     letterSpacing: ".05rem",
@@ -186,7 +190,7 @@ export const Pets = () => {
                 </span>
 
                 <Grid container spacing={2}>
-                  <Grid item md={3} xs={12}>
+                  <Grid item md={4} xs={12}>
                     <TextField
                       fullWidth
                       label="Name"
@@ -200,7 +204,7 @@ export const Pets = () => {
                     />
                   </Grid>
 
-                  <Grid item md={3} xs={12}>
+                  <Grid item md={4} xs={12}>
                     <TextField
                       fullWidth
                       label="Description"
@@ -217,7 +221,8 @@ export const Pets = () => {
                       }}
                     />
                   </Grid>
-                  <Grid item md={3} xs={12} style={{ textAlign: "left" }}>
+
+                  <Grid item md={4} xs={12} style={{ textAlign: "left" }}>
                     <FormControl fullWidth size="small" color="warning">
                       <InputLabel htmlFor="grouped-native-select">
                         Country
