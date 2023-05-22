@@ -186,7 +186,7 @@ export const Pets = () => {
                     marginBottom: "6px",
                   }}
                 >
-                  search
+                  FILTER BY
                 </span>
 
                 <Grid container spacing={2}>
@@ -246,7 +246,7 @@ export const Pets = () => {
                     item
                     md={12}
                     xs={12}
-                    style={{ marginBottom: "20px", textAlign: "left" }}
+                    style={{ textAlign: "left", marginTop: 5 }}
                   >
                     <TextField
                       fullWidth

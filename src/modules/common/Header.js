@@ -121,7 +121,7 @@ export default function Header({}) {
                 }
                 style={{
                   textDecoration: "none",
-                  color: "#D35400",
+                  color: "white",
                   fontFamily: "Sans-serif, Verdana",
                 }}
               >
@@ -156,12 +156,12 @@ export default function Header({}) {
           >
             <ListItem>
               <ListItemIcon>
-                <AccountCircleIcon style={{ color: "#D35400" }} />
+                <AccountCircleIcon style={{ color: "white" }} />
               </ListItemIcon>
               <ListItemText
                 style={{
                   textDecoration: "none",
-                  color: "#D35400",
+                  color: "white",
                   border: "none",
                   fontFamily: "Sans-serif, Verdana",
                 }}
@@ -176,12 +176,12 @@ export default function Header({}) {
           <Link to={`/signin`} style={{ textDecoration: "none" }}>
             <ListItem>
               <ListItemIcon>
-                <LogoutIcon style={{ color: "#D35400" }} />
+                <LogoutIcon style={{ color: "white" }} />
               </ListItemIcon>
               <ListItemText
                 style={{
                   textDecoration: "none",
-                  color: "#D35400",
+                  color: "white",
                   fontFamily: "Monaco, monospace",
                 }}
                 primary={"Sign Out"}
@@ -399,7 +399,7 @@ export default function Header({}) {
                     >
                       <AccountCircleOutlinedIcon
                         style={{
-                          color: "#D35400",
+                          color: "white",
                           verticalAlign: "middle",
                           marginBottom: "3px",
                         }}
