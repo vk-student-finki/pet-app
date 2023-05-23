@@ -38,6 +38,7 @@ import { Box } from "@mui/system";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import "./style.css";
+import { QuestionAnswer, QuestionMark } from "@mui/icons-material";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -68,6 +69,7 @@ export const PetDetails = () => {
     setSelectedPicture(index);
   };
   const handleCloseSlider = () => setOpenSlider(false);
+  const [openAdoptionDialog, setOpenAdoptionDialog] = useState(false);
 
   const [open, setOpen] = React.useState(false);
 
@@ -78,6 +80,7 @@ export const PetDetails = () => {
 
   const handleClose = () => {
     setOpen(false);
+    setOpenAdoptionDialog(false);
   };
 
   useEffect(() => {
@@ -281,6 +284,22 @@ export const PetDetails = () => {
               >
                 <div style={{ textAlign: "left" }}>{pet?.description}</div>
               </Grid>
+              <Grid item xs={12}>
+                <Button
+                  style={{
+                    backgroundColor: "#F15E5E",
+                    color: "white",
+                    marginTop: "20px",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                  }}
+                  onClick={() => {
+                    setOpenAdoptionDialog(true);
+                  }}
+                >
+                  Adopt me
+                </Button>
+              </Grid>
               <Grid
                 item
                 xs={12}
@@ -461,6 +480,22 @@ export const PetDetails = () => {
           >
             <div style={{}}>{pet?.description}</div>
           </Grid>
+          <Grid item xs={12}>
+            <Button
+              style={{
+                backgroundColor: "#F15E5E",
+                color: "white",
+                marginTop: "20px",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+              onClick={() => {
+                setOpenAdoptionDialog(true);
+              }}
+            >
+              Adopt me
+            </Button>
+          </Grid>
           <Grid
             item
             xs={12}
@@ -613,6 +648,64 @@ export const PetDetails = () => {
             }}
           >
             Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={openAdoptionDialog}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <QuestionMark
+          style={{
+            color: "#F15E5E",
+            marginLeft: "auto",
+            marginRight: "auto",
+            fontSize: "70px",
+            marginTop: "10px",
+          }}
+        />
+        <DialogTitle
+          style={{
+            fontWeight: "bold",
+            fontFamily: "Monaco, monospace",
+          }}
+        >
+          {"Confirm adoption"}
+        </DialogTitle>
+        <DialogContent style={{ textAlign: "center" }}>
+          Are you sure you want to adopt this pet? This action
+          <br /> cannot be undone.
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={handleClose}
+            variant="outlined"
+            size="large"
+            style={{
+              backgroundColor: "#C1C1C1",
+              color: "white",
+              border: "#C1C1C1",
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            size="large"
+            style={{
+              backgroundColor: "#F15E5E",
+              color: "white",
+            }}
+            onClick={() => {
+              alert(
+                "Admin will contact you soon for further details about adoption"
+              );
+              setRedirectTo(`/`);
+            }}
+          >
+            Adopt
           </Button>
         </DialogActions>
       </Dialog>
